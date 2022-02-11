@@ -557,10 +557,19 @@ class SessionListenerTest extends TestCase
     public function testSurrogateMainRequestIsPublic()
     {
         $session = $this->createMock(Session::class);
+<<<<<<< HEAD
         $session->expects($this->exactly(1))->method('getName')->willReturn('PHPSESSID');
+=======
+<<<<<<< HEAD
+        $session->expects($this->exactly(2))->method('getName')->willReturn('PHPSESSID');
+>>>>>>> 9044b30476 ([HttpKernel] Use the existing session id if available.)
         $session->expects($this->exactly(2))->method('getUsageIndex')->will($this->onConsecutiveCalls(0, 1));
         $sessionFactory = $this->createMock(SessionFactory::class);
         $sessionFactory->expects($this->once())->method('createSession')->willReturn($session);
+=======
+        $session->expects($this->exactly(1))->method('getName')->willReturn('PHPSESSID');
+        $session->expects($this->exactly(4))->method('getUsageIndex')->will($this->onConsecutiveCalls(0, 1, 1, 1));
+>>>>>>> 8e98edcdde ([HttpKernel] Use the existing session id if available.)
 
         $container = new Container();
         $container->set('session_factory', $sessionFactory);
@@ -597,9 +606,18 @@ class SessionListenerTest extends TestCase
     public function testGetSessionIsCalledOnce()
     {
         $session = $this->createMock(Session::class);
+<<<<<<< HEAD
         $session->expects($this->exactly(1))->method('getName')->willReturn('PHPSESSID');
+=======
+<<<<<<< HEAD
+        $session->expects($this->exactly(2))->method('getName')->willReturn('PHPSESSID');
+>>>>>>> 9044b30476 ([HttpKernel] Use the existing session id if available.)
         $sessionFactory = $this->createMock(SessionFactory::class);
         $sessionFactory->expects($this->once())->method('createSession')->willReturn($session);
+=======
+        $session->expects($this->exactly(1))->method('getName')->willReturn('PHPSESSID');
+        $sessionStorage = $this->createMock(NativeSessionStorage::class);
+>>>>>>> 8e98edcdde ([HttpKernel] Use the existing session id if available.)
         $kernel = $this->createMock(KernelInterface::class);
 
         $requestStack = new RequestStack();
