@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-6.1
----
-
- * Add support for ACL auth in RedisAdapter
-
 6.0
 ---
 

@@ -18,7 +18,7 @@ use Symfony\Component\Notifier\Recipient\SmsRecipientInterface;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class SmsMessage implements MessageInterface
+final class SmsMessage implements MessageInterface
 {
     private ?string $transport = null;
     private string $subject;

@@ -39,7 +39,15 @@ final class SignalRegistry
 
     public static function isSupported(): bool
     {
-        return \function_exists('pcntl_signal');
+        if (!\function_exists('pcntl_signal')) {
+            return false;
+        }
+
+        if (\in_array('pcntl_signal', explode(',', ini_get('disable_functions')))) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

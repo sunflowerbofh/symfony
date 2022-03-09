@@ -28,8 +28,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ViolationMapper implements ViolationMapperInterface
 {
-    private ?FormRendererInterface $formRenderer;
-    private ?TranslatorInterface $translator;
+    private $formRenderer;
+    private $translator;
     private bool $allowNonSynchronized = false;
 
     public function __construct(FormRendererInterface $formRenderer = null, TranslatorInterface $translator = null)
@@ -153,7 +153,7 @@ class ViolationMapper implements ViolationMapperInterface
             $message = $violation->getMessage();
             $messageTemplate = $violation->getMessageTemplate();
 
-            if (str_contains($message, '{{ label }}') || str_contains($messageTemplate, '{{ label }}')) {
+            if (false !== strpos($message, '{{ label }}') || false !== strpos($messageTemplate, '{{ label }}')) {
                 $form = $scope;
 
                 do {

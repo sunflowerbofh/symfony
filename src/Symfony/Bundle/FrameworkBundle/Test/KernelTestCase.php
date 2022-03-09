@@ -40,7 +40,6 @@ abstract class KernelTestCase extends TestCase
     protected function tearDown(): void
     {
         static::ensureKernelShutdown();
-        static::$class = null;
         static::$kernel = null;
         static::$booted = false;
     }
@@ -85,8 +84,6 @@ abstract class KernelTestCase extends TestCase
      * used by other services.
      *
      * Using this method is the best way to get a container from your test code.
-     *
-     * @return TestContainer
      */
     protected static function getContainer(): ContainerInterface
     {

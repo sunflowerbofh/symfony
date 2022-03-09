@@ -36,10 +36,10 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
  */
 abstract class AbstractPreAuthenticatedAuthenticator implements InteractiveAuthenticatorInterface
 {
-    private UserProviderInterface $userProvider;
-    private TokenStorageInterface $tokenStorage;
+    private $userProvider;
+    private $tokenStorage;
     private string $firewallName;
-    private ?LoggerInterface $logger;
+    private $logger;
 
     public function __construct(UserProviderInterface $userProvider, TokenStorageInterface $tokenStorage, string $firewallName, LoggerInterface $logger = null)
     {
@@ -64,13 +64,17 @@ abstract class AbstractPreAuthenticatedAuthenticator implements InteractiveAuthe
         } catch (BadCredentialsException $e) {
             $this->clearToken($e);
 
-            $this->logger?->debug('Skipping pre-authenticated authenticator as a BadCredentialsException is thrown.', ['exception' => $e, 'authenticator' => static::class]);
+            if (null !== $this->logger) {
+                $this->logger->debug('Skipping pre-authenticated authenticator as a BadCredentialsException is thrown.', ['exception' => $e, 'authenticator' => static::class]);
+            }
 
             return false;
         }
 
         if (null === $username) {
-            $this->logger?->debug('Skipping pre-authenticated authenticator no username could be extracted.', ['authenticator' => static::class]);
+            if (null !== $this->logger) {
+                $this->logger->debug('Skipping pre-authenticated authenticator no username could be extracted.', ['authenticator' => static::class]);
+            }
 
             return false;
         }
@@ -79,7 +83,9 @@ abstract class AbstractPreAuthenticatedAuthenticator implements InteractiveAuthe
         $token = $this->tokenStorage->getToken();
 
         if ($token instanceof PreAuthenticatedToken && $this->firewallName === $token->getFirewallName() && $token->getUserIdentifier() === $username) {
-            $this->logger?->debug('Skipping pre-authenticated authenticator as the user already has an existing session.', ['authenticator' => static::class]);
+            if (null !== $this->logger) {
+                $this->logger->debug('Skipping pre-authenticated authenticator as the user already has an existing session.', ['authenticator' => static::class]);
+            }
 
             return false;
         }
@@ -125,7 +131,9 @@ abstract class AbstractPreAuthenticatedAuthenticator implements InteractiveAuthe
         if ($token instanceof PreAuthenticatedToken && $this->firewallName === $token->getFirewallName()) {
             $this->tokenStorage->setToken(null);
 
-            $this->logger?->info('Cleared pre-authenticated token due to an exception.', ['exception' => $exception]);
+            if (null !== $this->logger) {
+                $this->logger->info('Cleared pre-authenticated token due to an exception.', ['exception' => $exception]);
+            }
         }
     }
 }

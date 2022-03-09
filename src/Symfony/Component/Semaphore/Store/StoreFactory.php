@@ -37,8 +37,8 @@ class StoreFactory
 
             case !\is_string($connection):
                 throw new InvalidArgumentException(sprintf('Unsupported Connection: "%s".', \get_class($connection)));
-            case str_starts_with($connection, 'redis://'):
-            case str_starts_with($connection, 'rediss://'):
+            case 0 === strpos($connection, 'redis://'):
+            case 0 === strpos($connection, 'rediss://'):
                 if (!class_exists(AbstractAdapter::class)) {
                     throw new InvalidArgumentException(sprintf('Unsupported DSN "%s". Try running "composer require symfony/cache".', $connection));
                 }

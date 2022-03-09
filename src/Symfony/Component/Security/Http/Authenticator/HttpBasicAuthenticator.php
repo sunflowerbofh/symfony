@@ -34,8 +34,8 @@ use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface
 class HttpBasicAuthenticator implements AuthenticatorInterface, AuthenticationEntryPointInterface
 {
     private string $realmName;
-    private UserProviderInterface $userProvider;
-    private ?LoggerInterface $logger;
+    private $userProvider;
+    private $logger;
 
     public function __construct(string $realmName, UserProviderInterface $userProvider, LoggerInterface $logger = null)
     {
@@ -86,7 +86,9 @@ class HttpBasicAuthenticator implements AuthenticatorInterface, AuthenticationEn
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        $this->logger?->info('Basic authentication failed for user.', ['username' => $request->headers->get('PHP_AUTH_USER'), 'exception' => $exception]);
+        if (null !== $this->logger) {
+            $this->logger->info('Basic authentication failed for user.', ['username' => $request->headers->get('PHP_AUTH_USER'), 'exception' => $exception]);
+        }
 
         return $this->start($request, $exception);
     }

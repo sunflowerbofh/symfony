@@ -23,16 +23,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ResolvedFormType implements ResolvedFormTypeInterface
 {
-    private FormTypeInterface $innerType;
+    private $innerType;
 
     /**
      * @var FormTypeExtensionInterface[]
      */
     private array $typeExtensions;
 
-    private ?ResolvedFormTypeInterface $parent;
+    private $parent;
 
-    private OptionsResolver $optionsResolver;
+    private $optionsResolver;
 
     /**
      * @param FormTypeExtensionInterface[] $typeExtensions
@@ -115,7 +115,9 @@ class ResolvedFormType implements ResolvedFormTypeInterface
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->parent?->buildForm($builder, $options);
+        if (null !== $this->parent) {
+            $this->parent->buildForm($builder, $options);
+        }
 
         $this->innerType->buildForm($builder, $options);
 
@@ -129,7 +131,9 @@ class ResolvedFormType implements ResolvedFormTypeInterface
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $this->parent?->buildView($view, $form, $options);
+        if (null !== $this->parent) {
+            $this->parent->buildView($view, $form, $options);
+        }
 
         $this->innerType->buildView($view, $form, $options);
 
@@ -143,7 +147,9 @@ class ResolvedFormType implements ResolvedFormTypeInterface
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $this->parent?->finishView($view, $form, $options);
+        if (null !== $this->parent) {
+            $this->parent->finishView($view, $form, $options);
+        }
 
         $this->innerType->finishView($view, $form, $options);
 

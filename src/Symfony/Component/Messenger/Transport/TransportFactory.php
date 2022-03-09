@@ -39,15 +39,15 @@ class TransportFactory implements TransportFactoryInterface
 
         // Help the user to select Symfony packages based on protocol.
         $packageSuggestion = '';
-        if (str_starts_with($dsn, 'amqp://')) {
+        if (0 === strpos($dsn, 'amqp://')) {
             $packageSuggestion = ' Run "composer require symfony/amqp-messenger" to install AMQP transport.';
-        } elseif (str_starts_with($dsn, 'doctrine://')) {
+        } elseif (0 === strpos($dsn, 'doctrine://')) {
             $packageSuggestion = ' Run "composer require symfony/doctrine-messenger" to install Doctrine transport.';
-        } elseif (str_starts_with($dsn, 'redis://') || str_starts_with($dsn, 'rediss://')) {
+        } elseif (0 === strpos($dsn, 'redis://') || 0 === strpos($dsn, 'rediss://')) {
             $packageSuggestion = ' Run "composer require symfony/redis-messenger" to install Redis transport.';
-        } elseif (str_starts_with($dsn, 'sqs://') || preg_match('#^https://sqs\.[\w\-]+\.amazonaws\.com/.+#', $dsn)) {
+        } elseif (0 === strpos($dsn, 'sqs://') || preg_match('#^https://sqs\.[\w\-]+\.amazonaws\.com/.+#', $dsn)) {
             $packageSuggestion = ' Run "composer require symfony/amazon-sqs-messenger" to install Amazon SQS transport.';
-        } elseif (str_starts_with($dsn, 'beanstalkd://')) {
+        } elseif (0 === strpos($dsn, 'beanstalkd://')) {
             $packageSuggestion = ' Run "composer require symfony/beanstalkd-messenger" to install Beanstalkd transport.';
         }
 

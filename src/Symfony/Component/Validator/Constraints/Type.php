@@ -24,14 +24,9 @@ class Type extends Constraint
 {
     public const INVALID_TYPE_ERROR = 'ba785a8c-82cb-4283-967c-3cf342181b40';
 
-    protected const ERROR_NAMES = [
+    protected static $errorNames = [
         self::INVALID_TYPE_ERROR => 'INVALID_TYPE_ERROR',
     ];
-
-    /**
-     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
-     */
-    protected static $errorNames = self::ERROR_NAMES;
 
     public $message = 'This value should be of type {{ type }}.';
     public $type;

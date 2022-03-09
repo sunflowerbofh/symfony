@@ -71,10 +71,8 @@ class DateTimeNormalizer implements NormalizerInterface, DenormalizerInterface, 
 
     /**
      * {@inheritdoc}
-     *
-     * @param array $context
      */
-    public function supportsNormalization(mixed $data, string $format = null /*, array $context = [] */): bool
+    public function supportsNormalization(mixed $data, string $format = null): bool
     {
         return $data instanceof \DateTimeInterface;
     }
@@ -114,10 +112,8 @@ class DateTimeNormalizer implements NormalizerInterface, DenormalizerInterface, 
 
     /**
      * {@inheritdoc}
-     *
-     * @param array $context
      */
-    public function supportsDenormalization(mixed $data, string $type, string $format = null /*, array $context = [] */): bool
+    public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
     {
         return isset(self::SUPPORTED_TYPES[$type]);
     }

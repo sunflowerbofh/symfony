@@ -153,10 +153,10 @@
         "async-aws/core": "<1.5",
         "doctrine/annotations": "<1.13.1",
         "doctrine/dbal": "<2.13.1",
-        "egulias/email-validator": "~3.0.0",
+        "egulias/email-validator": ">3",
         "masterminds/html5": "<2.6",
         "phpdocumentor/reflection-docblock": "<5.2",
-        "phpdocumentor/type-resolver": "<1.5.1",
+        "phpdocumentor/type-resolver": "<1.4.0",
         "ocramius/proxy-manager": "<2.1",
         "phpunit/phpunit": "<5.4.3"
     },
@@ -192,7 +192,7 @@
             "url": "src/Symfony/Contracts",
             "options": {
                 "versions": {
-                    "symfony/contracts": "3.1.x-dev"
+                    "symfony/contracts": "3.0.x-dev"
                 }
             }
         },

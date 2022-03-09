@@ -36,8 +36,8 @@ class CouchbaseBucketAdapter extends AbstractAdapter
         'durabilityTimeout',
     ];
 
-    private \CouchbaseBucket $bucket;
-    private MarshallerInterface $marshaller;
+    private $bucket;
+    private $marshaller;
 
     public function __construct(\CouchbaseBucket $bucket, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null)
     {
@@ -77,7 +77,7 @@ class CouchbaseBucketAdapter extends AbstractAdapter
             $password = $options['password'];
 
             foreach ($servers as $dsn) {
-                if (!str_starts_with($dsn, 'couchbase:')) {
+                if (0 !== strpos($dsn, 'couchbase:')) {
                     throw new InvalidArgumentException(sprintf('Invalid Couchbase DSN: "%s" does not start with "couchbase:".', $dsn));
                 }
 

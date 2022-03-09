@@ -14,9 +14,9 @@ namespace Symfony\Component\Notifier\Message;
 /**
  * @author Jérémy Romey <jeremy@free-agent.fr>
  */
-class SentMessage
+final class SentMessage
 {
-    private MessageInterface $original;
+    private $original;
     private string $transport;
     private ?string $messageId = null;
 

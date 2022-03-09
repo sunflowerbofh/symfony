@@ -49,7 +49,7 @@ final class CurlHttpClient implements HttpClientInterface, LoggerAwareInterface,
     /**
      * An internal object to share state between the client and its responses.
      */
-    private CurlClientState $multi;
+    private $multi;
 
     /**
      * @param array $defaultOptions     Default request's options
@@ -267,21 +267,21 @@ final class CurlHttpClient implements HttpClientInterface, LoggerAwareInterface,
             unset($this->multi->pushedResponses[$url]);
 
             if (self::acceptPushForRequest($method, $options, $pushedResponse)) {
-                $this->logger?->debug(sprintf('Accepting pushed response: "%s %s"', $method, $url));
+                $this->logger && $this->logger->debug(sprintf('Accepting pushed response: "%s %s"', $method, $url));
 
                 // Reinitialize the pushed response with request's options
                 $ch = $pushedResponse->handle;
                 $pushedResponse = $pushedResponse->response;
                 $pushedResponse->__construct($this->multi, $url, $options, $this->logger);
             } else {
-                $this->logger?->debug(sprintf('Rejecting pushed response: "%s"', $url));
+                $this->logger && $this->logger->debug(sprintf('Rejecting pushed response: "%s"', $url));
                 $pushedResponse = null;
             }
         }
 
         if (!$pushedResponse) {
             $ch = curl_init();
-            $this->logger?->info(sprintf('Request: "%s %s"', $method, $url));
+            $this->logger && $this->logger->info(sprintf('Request: "%s %s"', $method, $url));
             $curlopts += [\CURLOPT_SHARE => $this->multi->share];
         }
 

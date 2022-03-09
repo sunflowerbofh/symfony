@@ -32,9 +32,9 @@ final class LokaliseProvider implements ProviderInterface
 {
     private const LOKALISE_GET_KEYS_LIMIT = 5000;
 
-    private HttpClientInterface $client;
-    private LoaderInterface $loader;
-    private LoggerInterface $logger;
+    private $client;
+    private $loader;
+    private $logger;
     private string $defaultLocale;
     private string $endpoint;
 

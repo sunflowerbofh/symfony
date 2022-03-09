@@ -28,8 +28,8 @@ use Symfony\Component\RateLimiter\Storage\StorageInterface;
 final class RateLimiterFactory
 {
     private array $config;
-    private StorageInterface $storage;
-    private ?LockFactory $lockFactory;
+    private $storage;
+    private $lockFactory;
 
     public function __construct(array $config, StorageInterface $storage, LockFactory $lockFactory = null)
     {
@@ -47,13 +47,22 @@ final class RateLimiterFactory
         $id = $this->config['id'].'-'.$key;
         $lock = $this->lockFactory ? $this->lockFactory->createLock($id) : new NoLock();
 
-        return match ($this->config['policy']) {
-            'token_bucket' => new TokenBucketLimiter($id, $this->config['limit'], $this->config['rate'], $this->storage, $lock),
-            'fixed_window' => new FixedWindowLimiter($id, $this->config['limit'], $this->config['interval'], $this->storage, $lock),
-            'sliding_window' => new SlidingWindowLimiter($id, $this->config['limit'], $this->config['interval'], $this->storage, $lock),
-            'no_limit' => new NoLimiter(),
-            default => throw new \LogicException(sprintf('Limiter policy "%s" does not exists, it must be either "token_bucket", "sliding_window", "fixed_window" or "no_limit".', $this->config['policy'])),
-        };
+        switch ($this->config['policy']) {
+            case 'token_bucket':
+                return new TokenBucketLimiter($id, $this->config['limit'], $this->config['rate'], $this->storage, $lock);
+
+            case 'fixed_window':
+                return new FixedWindowLimiter($id, $this->config['limit'], $this->config['interval'], $this->storage, $lock);
+
+            case 'sliding_window':
+                return new SlidingWindowLimiter($id, $this->config['limit'], $this->config['interval'], $this->storage, $lock);
+
+            case 'no_limit':
+                return new NoLimiter();
+
+            default:
+                throw new \LogicException(sprintf('Limiter policy "%s" does not exists, it must be either "token_bucket", "sliding_window", "fixed_window" or "no_limit".', $this->config['policy']));
+        }
     }
 
     protected static function configureOptions(OptionsResolver $options): void

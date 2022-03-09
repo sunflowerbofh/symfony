@@ -58,7 +58,7 @@ class Crawler implements \Countable, \IteratorAggregate
      */
     private bool $isHtml = true;
 
-    private ?HTML5 $html5Parser;
+    private $html5Parser;
 
     /**
      * @param \DOMNodeList|\DOMNode|\DOMNode[]|string|null $node A Node to use as the base for the crawling
@@ -142,17 +142,24 @@ class Crawler implements \Countable, \IteratorAggregate
             return;
         }
 
-        $charset = preg_match('//u', $content) ? 'UTF-8' : 'ISO-8859-1';
+        $charset = null;
+        if (false !== $pos = stripos($type, 'charset=')) {
+            $charset = substr($type, $pos + 8);
+            if (false !== $pos = strpos($charset, ';')) {
+                $charset = substr($charset, 0, $pos);
+            }
+        }
 
         // http://www.w3.org/TR/encoding/#encodings
         // http://www.w3.org/TR/REC-xml/#NT-EncName
-        $content = preg_replace_callback('/(charset *= *["\']?)([a-zA-Z\-0-9_:.]+)/i', function ($m) use (&$charset) {
-            if ('charset=' === $this->convertToHtmlEntities('charset=', $m[2])) {
-                $charset = $m[2];
-            }
+        if (null === $charset &&
+            preg_match('/\<meta[^\>]+charset *= *["\']?([a-zA-Z\-0-9_:.]+)/i', $content, $matches)) {
+            $charset = $matches[1];
+        }
 
-            return $m[1].$charset;
-        }, $content, 1);
+        if (null === $charset) {
+            $charset = preg_match('//u', $content) ? 'UTF-8' : 'ISO-8859-1';
+        }
 
         if ('x' === $xmlMatches[1]) {
             $this->addXmlContent($content, $charset);
@@ -208,7 +215,7 @@ class Crawler implements \Countable, \IteratorAggregate
     public function addXmlContent(string $content, string $charset = 'UTF-8', int $options = \LIBXML_NONET)
     {
         // remove the default namespace if it's the only namespace to make XPath expressions simpler
-        if (!str_contains($content, 'xmlns:')) {
+        if (!preg_match('/xmlns:/', $content)) {
             $content = str_replace('xmlns', 'ns', $content);
         }
 

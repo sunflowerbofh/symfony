@@ -16,7 +16,7 @@ use Symfony\Component\Notifier\Notification\Notification;
 /**
  * @author Tomas Norkūnas <norkunas.tom@gmail.com>
  */
-class PushMessage implements MessageInterface
+final class PushMessage implements MessageInterface
 {
     private $transport;
     private $subject;
@@ -41,7 +41,7 @@ class PushMessage implements MessageInterface
 
     public function getRecipientId(): ?string
     {
-        return $this->options?->getRecipientId();
+        return $this->options ? $this->options->getRecipientId() : null;
     }
 
     public function subject(string $subject): self

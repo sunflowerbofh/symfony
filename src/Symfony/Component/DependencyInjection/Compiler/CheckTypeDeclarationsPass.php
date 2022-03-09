@@ -62,7 +62,7 @@ final class CheckTypeDeclarationsPass extends AbstractRecursivePass
     private bool $autoload;
     private array $skippedIds;
 
-    private ExpressionLanguage $expressionLanguage;
+    private $expressionLanguage;
 
     /**
      * @param bool  $autoload   Whether services who's class in not loaded should be checked or not.
@@ -160,7 +160,7 @@ final class CheckTypeDeclarationsPass extends AbstractRecursivePass
      */
     private function checkType(Definition $checkedDefinition, mixed $value, \ReflectionParameter $parameter, ?string $envPlaceholderUniquePrefix, \ReflectionType $reflectionType = null): void
     {
-        $reflectionType ??= $parameter->getType();
+        $reflectionType = $reflectionType ?? $parameter->getType();
 
         if ($reflectionType instanceof \ReflectionUnionType) {
             foreach ($reflectionType->getTypes() as $t) {

@@ -40,7 +40,7 @@ class Notification
     private string $subject = '';
     private string $content = '';
     private string $emoji = '';
-    private ?FlattenException $exception = null;
+    private $exception = null;
     private string $exceptionAsString = '';
     private string $importance = self::IMPORTANCE_HIGH;
 
@@ -167,12 +167,17 @@ class Notification
             return '';
         }
 
-        return match ($this->importance) {
-            self::IMPORTANCE_URGENT => '🌩️',
-            self::IMPORTANCE_HIGH => '🌧️',
-            self::IMPORTANCE_MEDIUM => '🌦️',
-            default => '⛅',
-        };
+        switch ($this->importance) {
+            case self::IMPORTANCE_URGENT:
+                return '🌩️';
+            case self::IMPORTANCE_HIGH:
+                return '🌧️';
+            case self::IMPORTANCE_MEDIUM:
+                return '🌦️';
+            case self::IMPORTANCE_LOW:
+            default:
+                return '⛅';
+        }
     }
 
     private function computeExceptionAsString(\Throwable $exception): string

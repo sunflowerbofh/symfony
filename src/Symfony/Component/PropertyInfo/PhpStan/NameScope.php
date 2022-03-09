@@ -36,7 +36,7 @@ final class NameScope
 
     public function resolveStringName(string $name): string
     {
-        if (str_starts_with($name, '\\')) {
+        if (0 === strpos($name, '\\')) {
             return ltrim($name, '\\');
         }
 

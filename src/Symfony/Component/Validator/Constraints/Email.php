@@ -37,14 +37,9 @@ class Email extends Constraint
         self::VALIDATION_MODE_LOOSE,
     ];
 
-    protected const ERROR_NAMES = [
+    protected static $errorNames = [
         self::INVALID_FORMAT_ERROR => 'STRICT_CHECK_FAILED_ERROR',
     ];
-
-    /**
-     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
-     */
-    protected static $errorNames = self::ERROR_NAMES;
 
     public $message = 'This value is not a valid email address.';
     public $mode;

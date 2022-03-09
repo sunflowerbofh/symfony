@@ -81,7 +81,7 @@ class AmpListener implements EventListener
     {
         $host = $stream->getRemoteAddress()->getHost();
 
-        if (str_contains($host, ':')) {
+        if (false !== strpos($host, ':')) {
             $host = '['.$host.']';
         }
 

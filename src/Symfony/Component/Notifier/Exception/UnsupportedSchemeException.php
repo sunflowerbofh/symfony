@@ -52,10 +52,6 @@ class UnsupportedSchemeException extends LogicException
             'class' => Bridge\Firebase\FirebaseTransportFactory::class,
             'package' => 'symfony/firebase-notifier',
         ],
-        'forty-six-elks' => [
-            'class' => Bridge\FortySixElks\FortySixElksTransportFactory::class,
-            'package' => 'symfony/forty-six-elks-notifier',
-        ],
         'freemobile' => [
             'class' => Bridge\FreeMobile\FreeMobileTransportFactory::class,
             'package' => 'symfony/free-mobile-notifier',
@@ -123,10 +119,6 @@ class UnsupportedSchemeException extends LogicException
         'onesignal' => [
             'class' => Bridge\OneSignal\OneSignalTransportFactory::class,
             'package' => 'symfony/one-signal-notifier',
-        ],
-        'orange-sms' => [
-            'class' => Bridge\OrangeSms\OrangeSmsTransportFactory::class,
-            'package' => 'symfony/orange-sms-notifier',
         ],
         'ovhcloud' => [
             'class' => Bridge\OvhCloud\OvhCloudTransportFactory::class,

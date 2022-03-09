@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-6.1
----
-
- * Allow yielding `Exception` from MockResponse's `$body` to mock transport errors
-
 5.4
 ---
 

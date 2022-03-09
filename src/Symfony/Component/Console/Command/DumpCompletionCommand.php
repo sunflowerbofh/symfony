@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\Console\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\CompletionSuggestions;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,17 +25,9 @@ use Symfony\Component\Process\Process;
  *
  * @author Wouter de Jong <wouter@wouterj.nl>
  */
-#[AsCommand(name: 'completion', description: 'Dump the shell completion script')]
 final class DumpCompletionCommand extends Command
 {
-    /**
-     * @deprecated since Symfony 6.1
-     */
     protected static $defaultName = 'completion';
-
-    /**
-     * @deprecated since Symfony 6.1
-     */
     protected static $defaultDescription = 'Dump the shell completion script';
 
     public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
@@ -77,7 +68,7 @@ Or dump the script to a local file and source it:
 <comment>Dynamic installation
 --------------------</>
 
-Add this to the end of your shell configuration file (e.g. <info>"~/.bashrc"</>):
+Add this add the end of your shell configuration file (e.g. <info>"~/.bashrc"</>):
 
     <info>eval "$(${fullCommand} completion bash)"</>
 EOH

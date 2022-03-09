@@ -25,7 +25,7 @@ class AnnotationDirectoryLoader extends AnnotationFileLoader
     /**
      * @throws \InvalidArgumentException When the directory does not exist or its routes cannot be parsed
      */
-    public function load(mixed $path, string $type = null): ?RouteCollection
+    public function load(mixed $path, string $type = null): RouteCollection
     {
         if (!is_dir($dir = $this->locator->locate($path))) {
             return parent::supports($path, $type) ? parent::load($path, $type) : new RouteCollection();
@@ -37,7 +37,7 @@ class AnnotationDirectoryLoader extends AnnotationFileLoader
             new \RecursiveCallbackFilterIterator(
                 new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
                 function (\SplFileInfo $current) {
-                    return !str_starts_with($current->getBasename(), '.');
+                    return '.' !== substr($current->getBasename(), 0, 1);
                 }
             ),
             \RecursiveIteratorIterator::LEAVES_ONLY

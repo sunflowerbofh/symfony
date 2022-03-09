@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\User\InMemoryUser;
  */
 abstract class AbstractToken implements TokenInterface, \Serializable
 {
-    private ?UserInterface $user = null;
+    private $user = null;
     private array $roleNames = [];
     private array $attributes = [];
 

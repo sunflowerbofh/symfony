@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Profiler\Profile as HttpProfile;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * Simulates a browser and makes requests to a Kernel object.
@@ -157,12 +156,7 @@ class KernelBrowser extends HttpKernelBrowser
         // avoid shutting down the Kernel if no request has been performed yet
         // WebTestCase::createClient() boots the Kernel but do not handle a request
         if ($this->hasPerformedRequest && $this->reboot) {
-            $container = $this->kernel->getContainer();
             $this->kernel->shutdown();
-
-            if ($container instanceof ResetInterface) {
-                $container->reset();
-            }
         } else {
             $this->hasPerformedRequest = true;
         }
@@ -209,7 +203,7 @@ class KernelBrowser extends HttpKernelBrowser
 
         $requires = '';
         foreach (get_declared_classes() as $class) {
-            if (str_starts_with($class, 'ComposerAutoloaderInit')) {
+            if (0 === strpos($class, 'ComposerAutoloaderInit')) {
                 $r = new \ReflectionClass($class);
                 $file = \dirname($r->getFileName(), 2).'/autoload.php';
                 if (is_file($file)) {

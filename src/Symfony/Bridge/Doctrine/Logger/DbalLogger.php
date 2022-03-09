@@ -37,7 +37,9 @@ class DbalLogger implements SQLLogger
      */
     public function startQuery($sql, array $params = null, array $types = null): void
     {
-        $this->stopwatch?->start('doctrine', 'doctrine');
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->start('doctrine', 'doctrine');
+        }
 
         if (null !== $this->logger) {
             $this->log($sql, null === $params ? [] : $this->normalizeParams($params));
@@ -49,7 +51,9 @@ class DbalLogger implements SQLLogger
      */
     public function stopQuery(): void
     {
-        $this->stopwatch?->stop('doctrine');
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->stop('doctrine');
+        }
     }
 
     /**

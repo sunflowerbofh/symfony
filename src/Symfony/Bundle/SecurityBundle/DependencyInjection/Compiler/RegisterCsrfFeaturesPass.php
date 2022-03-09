@@ -14,7 +14,6 @@ namespace Symfony\Bundle\SecurityBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface;
 use Symfony\Component\Security\Http\EventListener\CsrfProtectionListener;
 use Symfony\Component\Security\Http\EventListener\CsrfTokenClearingLogoutListener;
 
@@ -53,7 +52,7 @@ class RegisterCsrfFeaturesPass implements CompilerPassInterface
         $csrfTokenStorage = $container->findDefinition('security.csrf.token_storage');
         $csrfTokenStorageClass = $container->getParameterBag()->resolveValue($csrfTokenStorage->getClass());
 
-        if (!is_subclass_of($csrfTokenStorageClass, ClearableTokenStorageInterface::class)) {
+        if (!is_subclass_of($csrfTokenStorageClass, 'Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface')) {
             return;
         }
 

@@ -37,7 +37,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class YamlDumper extends Dumper
 {
-    private YmlDumper $dumper;
+    private $dumper;
 
     /**
      * Dumps the service container as an YAML string.
@@ -57,7 +57,7 @@ class YamlDumper extends Dumper
     {
         $code = "    $id:\n";
         if ($class = $definition->getClass()) {
-            if (str_starts_with($class, '\\')) {
+            if ('\\' === substr($class, 0, 1)) {
                 $class = substr($class, 1);
             }
 

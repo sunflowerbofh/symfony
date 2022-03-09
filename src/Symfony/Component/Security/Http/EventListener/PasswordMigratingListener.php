@@ -27,7 +27,7 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
  */
 class PasswordMigratingListener implements EventSubscriberInterface
 {
-    private PasswordHasherFactoryInterface $hasherFactory;
+    private $hasherFactory;
 
     public function __construct(PasswordHasherFactoryInterface $hasherFactory)
     {
@@ -71,9 +71,7 @@ class PasswordMigratingListener implements EventSubscriberInterface
             $userLoader = $userBadge->getUserLoader();
             if (\is_array($userLoader) && $userLoader[0] instanceof PasswordUpgraderInterface) {
                 $passwordUpgrader = $userLoader[0];
-            } elseif (!$userLoader instanceof \Closure
-                || !($passwordUpgrader = (new \ReflectionFunction($userLoader))->getClosureThis()) instanceof PasswordUpgraderInterface
-            ) {
+            } else {
                 return;
             }
         }

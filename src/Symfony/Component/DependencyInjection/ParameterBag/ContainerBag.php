@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class ContainerBag extends FrozenParameterBag implements ContainerBagInterface
 {
-    private Container $container;
+    private $container;
 
     public function __construct(Container $container)
     {
@@ -36,7 +36,7 @@ class ContainerBag extends FrozenParameterBag implements ContainerBagInterface
     /**
      * {@inheritdoc}
      */
-    public function get(string $name): array|bool|string|int|float|\UnitEnum|null
+    public function get(string $name): array|bool|string|int|float|null
     {
         return $this->container->getParameter($name);
     }

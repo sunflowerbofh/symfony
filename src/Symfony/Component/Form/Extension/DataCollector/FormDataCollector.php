@@ -33,7 +33,7 @@ use Symfony\Component\VarDumper\Cloner\Stub;
  */
 class FormDataCollector extends DataCollector implements FormDataCollectorInterface
 {
-    private FormDataExtractorInterface $dataExtractor;
+    private $dataExtractor;
 
     /**
      * Stores the collected data per {@link FormInterface} instance.
@@ -326,7 +326,9 @@ class FormDataCollector extends DataCollector implements FormDataCollectorInterf
         foreach ($view->children as $name => $childView) {
             // The CSRF token, for example, is never added to the form tree.
             // It is only present in the view.
-            $childForm = $form?->has($name) ? $form->get($name) : null;
+            $childForm = null !== $form && $form->has($name)
+                ? $form->get($name)
+                : null;
 
             $output['children'][$name] = &$this->recursiveBuildFinalFormTree($childForm, $childView, $outputByHash);
         }

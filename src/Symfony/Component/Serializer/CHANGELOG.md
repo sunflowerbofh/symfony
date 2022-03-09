@@ -1,16 +1,6 @@
 CHANGELOG
 =========
 
-6.1
----
-
- * Add the ability to create contexts using context builders
- * Set `Context` annotation as not final
- * Deprecate `ContextAwareNormalizerInterface`, use `NormalizerInterface` instead
- * Deprecate `ContextAwareDenormalizerInterface`, use `DenormalizerInterface` instead
- * Deprecate `ContextAwareEncoderInterface`, use `EncoderInterface` instead
- * Deprecate `ContextAwareDecoderInterface`, use `DecoderInterface` instead
-
 6.0
 ---
 

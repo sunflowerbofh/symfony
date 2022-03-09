@@ -25,12 +25,6 @@ final class UidNormalizer implements NormalizerInterface, DenormalizerInterface,
     public const NORMALIZATION_FORMAT_BASE58 = 'base58';
     public const NORMALIZATION_FORMAT_BASE32 = 'base32';
     public const NORMALIZATION_FORMAT_RFC4122 = 'rfc4122';
-    public const NORMALIZATION_FORMATS = [
-        self::NORMALIZATION_FORMAT_CANONICAL,
-        self::NORMALIZATION_FORMAT_BASE58,
-        self::NORMALIZATION_FORMAT_BASE32,
-        self::NORMALIZATION_FORMAT_RFC4122,
-    ];
 
     private $defaultContext = [
         self::NORMALIZATION_FORMAT_KEY => self::NORMALIZATION_FORMAT_CANONICAL,
@@ -65,7 +59,7 @@ final class UidNormalizer implements NormalizerInterface, DenormalizerInterface,
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, string $format = null): bool
     {
         return $data instanceof AbstractUid;
     }
@@ -91,7 +85,7 @@ final class UidNormalizer implements NormalizerInterface, DenormalizerInterface,
     /**
      * {@inheritdoc}
      */
-    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
+    public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
     {
         return is_a($type, AbstractUid::class, true);
     }

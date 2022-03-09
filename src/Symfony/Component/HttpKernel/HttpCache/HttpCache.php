@@ -29,11 +29,11 @@ use Symfony\Component\HttpKernel\TerminableInterface;
  */
 class HttpCache implements HttpKernelInterface, TerminableInterface
 {
-    private HttpKernelInterface $kernel;
-    private StoreInterface $store;
-    private Request $request;
-    private ?SurrogateInterface $surrogate;
-    private ?ResponseCacheStrategyInterface $surrogateCacheStrategy = null;
+    private $kernel;
+    private $store;
+    private $request;
+    private $surrogate;
+    private $surrogateCacheStrategy = null;
     private array $options = [];
     private array $traces = [];
 
@@ -449,7 +449,9 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
      */
     protected function forward(Request $request, bool $catch = false, Response $entry = null)
     {
-        $this->surrogate?->addSurrogateCapability($request);
+        if ($this->surrogate) {
+            $this->surrogate->addSurrogateCapability($request);
+        }
 
         // always a "master" request (as the real master request can be in cache)
         $response = SubRequestHandler::handle($this->kernel, $request, HttpKernelInterface::MAIN_REQUEST, $catch);
@@ -633,7 +635,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
 
     protected function processResponseBody(Request $request, Response $response)
     {
-        if ($this->surrogate?->needsParsing($response)) {
+        if (null !== $this->surrogate && $this->surrogate->needsParsing($response)) {
             $this->surrogate->process($request, $response);
         }
     }

@@ -46,12 +46,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class JsonLoginAuthenticator implements InteractiveAuthenticatorInterface
 {
     private array $options;
-    private HttpUtils $httpUtils;
-    private UserProviderInterface $userProvider;
-    private PropertyAccessorInterface $propertyAccessor;
-    private ?AuthenticationSuccessHandlerInterface $successHandler;
-    private ?AuthenticationFailureHandlerInterface $failureHandler;
-    private ?TranslatorInterface $translator = null;
+    private $httpUtils;
+    private $userProvider;
+    private $propertyAccessor;
+    private $successHandler;
+    private $failureHandler;
+    private $translator = null;
 
     public function __construct(HttpUtils $httpUtils, UserProviderInterface $userProvider, AuthenticationSuccessHandlerInterface $successHandler = null, AuthenticationFailureHandlerInterface $failureHandler = null, array $options = [], PropertyAccessorInterface $propertyAccessor = null)
     {
@@ -65,7 +65,7 @@ class JsonLoginAuthenticator implements InteractiveAuthenticatorInterface
 
     public function supports(Request $request): ?bool
     {
-        if (!str_contains($request->getRequestFormat() ?? '', 'json') && !str_contains($request->getContentType() ?? '', 'json')) {
+        if (false === strpos($request->getRequestFormat() ?? '', 'json') && false === strpos($request->getContentType() ?? '', 'json')) {
             return false;
         }
 

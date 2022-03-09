@@ -24,14 +24,10 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
  */
 class ProblemNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
-    public const TITLE = 'title';
-    public const TYPE = 'type';
-    public const STATUS = 'status';
-
     private $debug;
     private $defaultContext = [
-        self::TYPE => 'https://tools.ietf.org/html/rfc2616#section-10',
-        self::TITLE => 'An error occurred',
+        'type' => 'https://tools.ietf.org/html/rfc2616#section-10',
+        'title' => 'An error occurred',
     ];
 
     public function __construct(bool $debug = false, array $defaultContext = [])
@@ -53,9 +49,9 @@ class ProblemNormalizer implements NormalizerInterface, CacheableSupportsMethodI
         $debug = $this->debug && ($context['debug'] ?? true);
 
         $data = [
-            self::TYPE => $context['type'],
-            self::TITLE => $context['title'],
-            self::STATUS => $context['status'] ?? $object->getStatusCode(),
+            'type' => $context['type'],
+            'title' => $context['title'],
+            'status' => $context['status'] ?? $object->getStatusCode(),
             'detail' => $debug ? $object->getMessage() : $object->getStatusText(),
         ];
         if ($debug) {
@@ -68,10 +64,8 @@ class ProblemNormalizer implements NormalizerInterface, CacheableSupportsMethodI
 
     /**
      * {@inheritdoc}
-     *
-     * @param array $context
      */
-    public function supportsNormalization(mixed $data, string $format = null /*, array $context = [] */): bool
+    public function supportsNormalization(mixed $data, string $format = null): bool
     {
         return $data instanceof FlattenException;
     }

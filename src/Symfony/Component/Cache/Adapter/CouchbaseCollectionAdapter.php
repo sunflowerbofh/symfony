@@ -29,8 +29,8 @@ class CouchbaseCollectionAdapter extends AbstractAdapter
 {
     private const MAX_KEY_LENGTH = 250;
 
-    private Collection $connection;
-    private MarshallerInterface $marshaller;
+    private $connection;
+    private $marshaller;
 
     public function __construct(Collection $connection, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null)
     {
@@ -70,7 +70,7 @@ class CouchbaseCollectionAdapter extends AbstractAdapter
             $password = $options['password'] ?? '';
 
             foreach ($dsn as $server) {
-                if (!str_starts_with($server, 'couchbase:')) {
+                if (0 !== strpos($server, 'couchbase:')) {
                     throw new InvalidArgumentException(sprintf('Invalid Couchbase DSN: "%s" does not start with "couchbase:".', $server));
                 }
 

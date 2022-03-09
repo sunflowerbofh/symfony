@@ -33,7 +33,7 @@ class ContainerAwareEventManager extends EventManager
     private array $initialized = [];
     private bool $initializedSubscribers = false;
     private array $methods = [];
-    private ContainerInterface $container;
+    private $container;
 
     /**
      * @param list<string|EventSubscriber|array{string[], string|object}> $subscriberIds List of subscribers, subscriber ids, or [events, listener] tuples
@@ -56,7 +56,7 @@ class ContainerAwareEventManager extends EventManager
             return;
         }
 
-        $eventArgs ??= EventArgs::getEmptyInstance();
+        $eventArgs = $eventArgs ?? EventArgs::getEmptyInstance();
 
         if (!isset($this->initialized[$eventName])) {
             $this->initializeListeners($eventName);

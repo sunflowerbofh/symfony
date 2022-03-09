@@ -47,14 +47,14 @@ class ExceptionListener
 {
     use TargetPathTrait;
 
-    private TokenStorageInterface $tokenStorage;
+    private $tokenStorage;
     private string $firewallName;
-    private ?AccessDeniedHandlerInterface $accessDeniedHandler;
-    private ?AuthenticationEntryPointInterface $authenticationEntryPoint;
-    private AuthenticationTrustResolverInterface $authenticationTrustResolver;
+    private $accessDeniedHandler;
+    private $authenticationEntryPoint;
+    private $authenticationTrustResolver;
     private ?string $errorPage;
-    private ?LoggerInterface $logger;
-    private HttpUtils $httpUtils;
+    private $logger;
+    private $httpUtils;
     private bool $stateless;
 
     public function __construct(TokenStorageInterface $tokenStorage, AuthenticationTrustResolverInterface $trustResolver, HttpUtils $httpUtils, string $firewallName, AuthenticationEntryPointInterface $authenticationEntryPoint = null, string $errorPage = null, AccessDeniedHandlerInterface $accessDeniedHandler = null, LoggerInterface $logger = null, bool $stateless = false)
@@ -121,7 +121,9 @@ class ExceptionListener
 
     private function handleAuthenticationException(ExceptionEvent $event, AuthenticationException $exception): void
     {
-        $this->logger?->info('An AuthenticationException was thrown; redirecting to authentication entry point.', ['exception' => $exception]);
+        if (null !== $this->logger) {
+            $this->logger->info('An AuthenticationException was thrown; redirecting to authentication entry point.', ['exception' => $exception]);
+        }
 
         try {
             $event->setResponse($this->startAuthentication($event->getRequest(), $exception));
@@ -137,7 +139,9 @@ class ExceptionListener
 
         $token = $this->tokenStorage->getToken();
         if (!$this->authenticationTrustResolver->isFullFledged($token)) {
-            $this->logger?->debug('Access denied, the user is not fully authenticated; redirecting to authentication entry point.', ['exception' => $exception]);
+            if (null !== $this->logger) {
+                $this->logger->debug('Access denied, the user is not fully authenticated; redirecting to authentication entry point.', ['exception' => $exception]);
+            }
 
             try {
                 $insufficientAuthenticationException = new InsufficientAuthenticationException('Full authentication is required to access this resource.', 0, $exception);
@@ -153,7 +157,9 @@ class ExceptionListener
             return;
         }
 
-        $this->logger?->debug('Access denied, the user is neither anonymous, nor remember-me.', ['exception' => $exception]);
+        if (null !== $this->logger) {
+            $this->logger->debug('Access denied, the user is neither anonymous, nor remember-me.', ['exception' => $exception]);
+        }
 
         try {
             if (null !== $this->accessDeniedHandler) {
@@ -170,7 +176,9 @@ class ExceptionListener
                 $event->allowCustomResponseCode();
             }
         } catch (\Exception $e) {
-            $this->logger?->error('An exception was thrown when handling an AccessDeniedException.', ['exception' => $e]);
+            if (null !== $this->logger) {
+                $this->logger->error('An exception was thrown when handling an AccessDeniedException.', ['exception' => $e]);
+            }
 
             $event->setThrowable(new \RuntimeException('Exception thrown when handling an exception.', 0, $e));
         }
@@ -180,7 +188,9 @@ class ExceptionListener
     {
         $event->setThrowable(new AccessDeniedHttpException($exception->getMessage(), $exception));
 
-        $this->logger?->info('A LogoutException was thrown; wrapping with AccessDeniedHttpException', ['exception' => $exception]);
+        if (null !== $this->logger) {
+            $this->logger->info('A LogoutException was thrown; wrapping with AccessDeniedHttpException', ['exception' => $exception]);
+        }
     }
 
     private function startAuthentication(Request $request, AuthenticationException $authException): Response
@@ -189,7 +199,9 @@ class ExceptionListener
             $this->throwUnauthorizedException($authException);
         }
 
-        $this->logger?->debug('Calling Authentication entry point.', ['entry_point' => $this->authenticationEntryPoint]);
+        if (null !== $this->logger) {
+            $this->logger->debug('Calling Authentication entry point.');
+        }
 
         if (!$this->stateless) {
             $this->setTargetPath($request);
@@ -199,7 +211,9 @@ class ExceptionListener
             // remove the security token to prevent infinite redirect loops
             $this->tokenStorage->setToken(null);
 
-            $this->logger?->info('The security token was removed due to an AccountStatusException.', ['exception' => $authException]);
+            if (null !== $this->logger) {
+                $this->logger->info('The security token was removed due to an AccountStatusException.', ['exception' => $authException]);
+            }
         }
 
         try {
@@ -227,7 +241,9 @@ class ExceptionListener
 
     private function throwUnauthorizedException(AuthenticationException $authException)
     {
-        $this->logger?->notice(sprintf('No Authentication entry point configured, returning a %s HTTP response. Configure "entry_point" on the firewall "%s" if you want to modify the response.', Response::HTTP_UNAUTHORIZED, $this->firewallName));
+        if (null !== $this->logger) {
+            $this->logger->notice(sprintf('No Authentication entry point configured, returning a %s HTTP response. Configure "entry_point" on the firewall "%s" if you want to modify the response.', Response::HTTP_UNAUTHORIZED, $this->firewallName));
+        }
 
         throw new HttpException(Response::HTTP_UNAUTHORIZED, $authException->getMessage(), $authException, [], $authException->getCode());
     }

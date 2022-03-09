@@ -98,14 +98,6 @@ trait HttpClientTrait
 
         if (isset($options['body'])) {
             $options['body'] = self::normalizeBody($options['body']);
-
-            if (\is_string($options['body'])
-                && (string) \strlen($options['body']) !== substr($h = $options['normalized_headers']['content-length'][0] ?? '', 16)
-                && ('' !== $h || ('' !== $options['body'] && !isset($options['normalized_headers']['transfer-encoding'])))
-            ) {
-                $options['normalized_headers']['content-length'] = [substr_replace($h ?: 'Content-Length: ', \strlen($options['body']), 16)];
-                $options['headers'] = array_merge(...array_values($options['normalized_headers']));
-            }
         }
 
         if (isset($options['peer_fingerprint'])) {
@@ -197,7 +189,7 @@ trait HttpClientTrait
         }
 
         // Option "query" is never inherited from defaults
-        $options['query'] ??= [];
+        $options['query'] = $options['query'] ?? [];
 
         foreach ($defaultOptions as $k => $v) {
             if ('normalized_headers' !== $k && !isset($options[$k])) {
@@ -369,13 +361,13 @@ trait HttpClientTrait
     private static function normalizePeerFingerprint(mixed $fingerprint): array
     {
         if (\is_string($fingerprint)) {
-            $fingerprint = match (\strlen($fingerprint = str_replace(':', '', $fingerprint))) {
-                32 => ['md5' => $fingerprint],
-                40 => ['sha1' => $fingerprint],
-                44 => ['pin-sha256' => [$fingerprint]],
-                64 => ['sha256' => $fingerprint],
-                default => throw new InvalidArgumentException(sprintf('Cannot auto-detect fingerprint algorithm for "%s".', $fingerprint)),
-            };
+            switch (\strlen($fingerprint = str_replace(':', '', $fingerprint))) {
+                case 32: $fingerprint = ['md5' => $fingerprint]; break;
+                case 40: $fingerprint = ['sha1' => $fingerprint]; break;
+                case 44: $fingerprint = ['pin-sha256' => [$fingerprint]]; break;
+                case 64: $fingerprint = ['sha256' => $fingerprint]; break;
+                default: throw new InvalidArgumentException(sprintf('Cannot auto-detect fingerprint algorithm for "%s".', $fingerprint));
+            }
         } elseif (\is_array($fingerprint)) {
             foreach ($fingerprint as $algo => $hash) {
                 $fingerprint[$algo] = 'pin-sha256' === $algo ? (array) $hash : str_replace(':', '', $hash);
@@ -392,7 +384,7 @@ trait HttpClientTrait
      */
     private static function jsonEncode(mixed $value, int $flags = null, int $maxDepth = 512): string
     {
-        $flags ??= \JSON_HEX_TAG | \JSON_HEX_APOS | \JSON_HEX_AMP | \JSON_HEX_QUOT | \JSON_PRESERVE_ZERO_FRACTION;
+        $flags = $flags ?? (\JSON_HEX_TAG | \JSON_HEX_APOS | \JSON_HEX_AMP | \JSON_HEX_QUOT | \JSON_PRESERVE_ZERO_FRACTION);
 
         try {
             $value = json_encode($value, $flags | \JSON_THROW_ON_ERROR, $maxDepth);
@@ -432,7 +424,7 @@ trait HttpClientTrait
             } else {
                 if (null === $url['path']) {
                     $url['path'] = $base['path'];
-                    $url['query'] ??= $base['query'];
+                    $url['query'] = $url['query'] ?? $base['query'];
                 } else {
                     if ('/' !== $url['path'][0]) {
                         if (null === $base['path']) {
@@ -628,7 +620,7 @@ trait HttpClientTrait
             throw new TransportException(sprintf('Unsupported proxy scheme "%s": "http" or "https" expected.', $proxy['scheme']));
         }
 
-        $noProxy ??= $_SERVER['no_proxy'] ?? $_SERVER['NO_PROXY'] ?? '';
+        $noProxy = $noProxy ?? $_SERVER['no_proxy'] ?? $_SERVER['NO_PROXY'] ?? '';
         $noProxy = $noProxy ? preg_split('/[\s,]+/', $noProxy) : [];
 
         return [

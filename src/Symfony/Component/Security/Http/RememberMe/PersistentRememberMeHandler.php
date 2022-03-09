@@ -32,8 +32,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 final class PersistentRememberMeHandler extends AbstractRememberMeHandler
 {
-    private TokenProviderInterface $tokenProvider;
-    private ?TokenVerifierInterface $tokenVerifier;
+    private $tokenProvider;
+    private $tokenVerifier;
     private string $secret;
 
     public function __construct(TokenProviderInterface $tokenProvider, string $secret, UserProviderInterface $userProvider, RequestStack $requestStack, array $options, LoggerInterface $logger = null, TokenVerifierInterface $tokenVerifier = null)
@@ -91,7 +91,9 @@ final class PersistentRememberMeHandler extends AbstractRememberMeHandler
         if ($persistentToken->getLastUsed()->getTimestamp() + 60 < time()) {
             $tokenValue = $this->generateHash(base64_encode(random_bytes(64)));
             $tokenLastUsed = new \DateTime();
-            $this->tokenVerifier?->updateExistingToken($persistentToken, $tokenValue, $tokenLastUsed);
+            if ($this->tokenVerifier) {
+                $this->tokenVerifier->updateExistingToken($persistentToken, $tokenValue, $tokenLastUsed);
+            }
             $this->tokenProvider->updateToken($series, $tokenValue, $tokenLastUsed);
         }
 

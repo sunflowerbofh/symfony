@@ -130,7 +130,7 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
         if (str_starts_with($dsn, 'memcached:')) {
             return MemcachedAdapter::createConnection($dsn, $options);
         }
-        if (str_starts_with($dsn, 'couchbase:')) {
+        if (0 === strpos($dsn, 'couchbase:')) {
             if (CouchbaseBucketAdapter::isSupported()) {
                 return CouchbaseBucketAdapter::createConnection($dsn, $options);
             }
@@ -151,12 +151,7 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
         $retry = $this->deferred = [];
 
         if ($expiredIds) {
-            try {
-                $this->doDelete($expiredIds);
-            } catch (\Exception $e) {
-                $ok = false;
-                CacheItem::log($this->logger, 'Failed to delete expired items: '.$e->getMessage(), ['exception' => $e, 'cache-adapter' => get_debug_type($this)]);
-            }
+            $this->doDelete($expiredIds);
         }
         foreach ($byLifetime as $lifetime => $values) {
             try {

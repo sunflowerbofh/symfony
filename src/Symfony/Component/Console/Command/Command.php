@@ -39,32 +39,28 @@ class Command
 
     /**
      * @var string|null The default command name
-     *
-     * @deprecated since Symfony 6.1, use the AsCommand attribute instead
      */
     protected static $defaultName;
 
     /**
      * @var string|null The default command description
-     *
-     * @deprecated since Symfony 6.1, use the AsCommand attribute instead
      */
     protected static $defaultDescription;
 
-    private ?Application $application = null;
+    private $application = null;
     private ?string $name = null;
     private ?string $processTitle = null;
     private array $aliases = [];
-    private InputDefinition $definition;
+    private $definition;
     private bool $hidden = false;
     private string $help = '';
     private string $description = '';
-    private ?InputDefinition $fullDefinition = null;
+    private $fullDefinition = null;
     private bool $ignoreValidationErrors = false;
     private ?\Closure $code = null;
     private array $synopsis = [];
     private array $usages = [];
-    private ?HelperSet $helperSet = null;
+    private $helperSet = null;
 
     public static function getDefaultName(): ?string
     {
@@ -76,13 +72,7 @@ class Command
 
         $r = new \ReflectionProperty($class, 'defaultName');
 
-        if ($class !== $r->class || null === static::$defaultName) {
-            return null;
-        }
-
-        trigger_deprecation('symfony/console', '6.1', 'Relying on the static property "$defaultName" for setting a command name is deprecated. Add the "%s" attribute to the "%s" class instead.', AsCommand::class, static::class);
-
-        return static::$defaultName;
+        return $class === $r->class ? static::$defaultName : null;
     }
 
     public static function getDefaultDescription(): ?string
@@ -95,13 +85,7 @@ class Command
 
         $r = new \ReflectionProperty($class, 'defaultDescription');
 
-        if ($class !== $r->class || null === static::$defaultDescription) {
-            return null;
-        }
-
-        trigger_deprecation('symfony/console', '6.1', 'Relying on the static property "$defaultDescription" for setting a command description is deprecated. Add the "%s" attribute to the "%s" class instead.', AsCommand::class, static::class);
-
-        return static::$defaultDescription;
+        return $class === $r->class ? static::$defaultDescription : null;
     }
 
     /**
@@ -437,7 +421,9 @@ class Command
     public function addArgument(string $name, int $mode = null, string $description = '', mixed $default = null): static
     {
         $this->definition->addArgument(new InputArgument($name, $mode, $description, $default));
-        $this->fullDefinition?->addArgument(new InputArgument($name, $mode, $description, $default));
+        if (null !== $this->fullDefinition) {
+            $this->fullDefinition->addArgument(new InputArgument($name, $mode, $description, $default));
+        }
 
         return $this;
     }
@@ -456,7 +442,9 @@ class Command
     public function addOption(string $name, string|array $shortcut = null, int $mode = null, string $description = '', mixed $default = null): static
     {
         $this->definition->addOption(new InputOption($name, $shortcut, $mode, $description, $default));
-        $this->fullDefinition?->addOption(new InputOption($name, $shortcut, $mode, $description, $default));
+        if (null !== $this->fullDefinition) {
+            $this->fullDefinition->addOption(new InputOption($name, $shortcut, $mode, $description, $default));
+        }
 
         return $this;
     }
@@ -572,7 +560,7 @@ class Command
     public function getProcessedHelp(): string
     {
         $name = $this->name;
-        $isSingleCommand = $this->application?->isSingleCommand();
+        $isSingleCommand = $this->application && $this->application->isSingleCommand();
 
         $placeholders = [
             '%command.name%',

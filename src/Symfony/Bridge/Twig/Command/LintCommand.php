@@ -39,7 +39,7 @@ use Twig\Source;
 #[AsCommand(name: 'lint:twig', description: 'Lint a Twig template and outputs encountered errors')]
 class LintCommand extends Command
 {
-    private Environment $twig;
+    private $twig;
     private string $format;
 
     public function __construct(Environment $twig)
@@ -172,12 +172,16 @@ EOF
 
     private function display(InputInterface $input, OutputInterface $output, SymfonyStyle $io, array $files)
     {
-        return match ($this->format) {
-            'txt' => $this->displayTxt($output, $io, $files),
-            'json' => $this->displayJson($output, $files),
-            'github' => $this->displayTxt($output, $io, $files, true),
-            default => throw new InvalidArgumentException(sprintf('The format "%s" is not supported.', $input->getOption('format'))),
-        };
+        switch ($this->format) {
+            case 'txt':
+                return $this->displayTxt($output, $io, $files);
+            case 'json':
+                return $this->displayJson($output, $files);
+            case 'github':
+                return $this->displayTxt($output, $io, $files, true);
+            default:
+                throw new InvalidArgumentException(sprintf('The format "%s" is not supported.', $input->getOption('format')));
+        }
     }
 
     private function displayTxt(OutputInterface $output, SymfonyStyle $io, array $filesInfo, bool $errorAsGithubAnnotations = false)
@@ -226,7 +230,9 @@ EOF
     {
         $line = $exception->getTemplateLine();
 
-        $githubReporter?->error($exception->getRawMessage(), $file, $line <= 0 ? null : $line);
+        if ($githubReporter) {
+            $githubReporter->error($exception->getRawMessage(), $file, $line <= 0 ? null : $line);
+        }
 
         if ($file) {
             $output->text(sprintf('<error> ERROR </error> in %s (line %s)', $file, $line));

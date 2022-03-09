@@ -200,7 +200,7 @@ class PlantUmlDumper implements DumperInterface
 
         $output = "state $placeEscaped".
             (\in_array($place, $definition->getInitialPlaces(), true) ? ' '.self::INITIAL : '').
-            ($marking?->has($place) ? ' '.self::MARKED : '');
+            ($marking && $marking->has($place) ? ' '.self::MARKED : '');
 
         $backgroundColor = $workflowMetadata->getMetadata('bg_color', $place);
         if (null !== $backgroundColor) {
@@ -237,7 +237,7 @@ class PlantUmlDumper implements DumperInterface
     private function getTransitionColor(string $color): string
     {
         // PUML format requires that color in transition have to be prefixed with “#”.
-        if (!str_starts_with($color, '#')) {
+        if ('#' !== substr($color, 0, 1)) {
             $color = '#'.$color;
         }
 

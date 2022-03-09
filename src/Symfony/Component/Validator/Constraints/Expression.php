@@ -28,14 +28,9 @@ class Expression extends Constraint
 {
     public const EXPRESSION_FAILED_ERROR = '6b3befbc-2f01-4ddf-be21-b57898905284';
 
-    protected const ERROR_NAMES = [
+    protected static $errorNames = [
         self::EXPRESSION_FAILED_ERROR => 'EXPRESSION_FAILED_ERROR',
     ];
-
-    /**
-     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
-     */
-    protected static $errorNames = self::ERROR_NAMES;
 
     public $message = 'This value is not valid.';
     public $expression;

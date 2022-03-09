@@ -65,7 +65,7 @@ class PdoSessionHandler extends AbstractSessionHandler
      */
     public const LOCK_TRANSACTIONAL = 2;
 
-    private \PDO $pdo;
+    private $pdo;
 
     /**
      * DSN string or null for session.save_path or false when lazy connection disabled.
@@ -184,19 +184,30 @@ class PdoSessionHandler extends AbstractSessionHandler
         // connect if we are not yet
         $this->getConnection();
 
-        $sql = match ($this->driver) {
-            // We use varbinary for the ID column because it prevents unwanted conversions:
-            // - character set conversions between server and client
-            // - trailing space removal
-            // - case-insensitivity
-            // - language processing like é == e
-            'mysql' => "CREATE TABLE $this->table ($this->idCol VARBINARY(128) NOT NULL PRIMARY KEY, $this->dataCol BLOB NOT NULL, $this->lifetimeCol INTEGER UNSIGNED NOT NULL, $this->timeCol INTEGER UNSIGNED NOT NULL) COLLATE utf8mb4_bin, ENGINE = InnoDB",
-            'sqlite' => "CREATE TABLE $this->table ($this->idCol TEXT NOT NULL PRIMARY KEY, $this->dataCol BLOB NOT NULL, $this->lifetimeCol INTEGER NOT NULL, $this->timeCol INTEGER NOT NULL)",
-            'pgsql' => "CREATE TABLE $this->table ($this->idCol VARCHAR(128) NOT NULL PRIMARY KEY, $this->dataCol BYTEA NOT NULL, $this->lifetimeCol INTEGER NOT NULL, $this->timeCol INTEGER NOT NULL)",
-            'oci' => "CREATE TABLE $this->table ($this->idCol VARCHAR2(128) NOT NULL PRIMARY KEY, $this->dataCol BLOB NOT NULL, $this->lifetimeCol INTEGER NOT NULL, $this->timeCol INTEGER NOT NULL)",
-            'sqlsrv' => "CREATE TABLE $this->table ($this->idCol VARCHAR(128) NOT NULL PRIMARY KEY, $this->dataCol VARBINARY(MAX) NOT NULL, $this->lifetimeCol INTEGER NOT NULL, $this->timeCol INTEGER NOT NULL)",
-            default => throw new \DomainException(sprintf('Creating the session table is currently not implemented for PDO driver "%s".', $this->driver)),
-        };
+        switch ($this->driver) {
+            case 'mysql':
+                // We use varbinary for the ID column because it prevents unwanted conversions:
+                // - character set conversions between server and client
+                // - trailing space removal
+                // - case-insensitivity
+                // - language processing like é == e
+                $sql = "CREATE TABLE $this->table ($this->idCol VARBINARY(128) NOT NULL PRIMARY KEY, $this->dataCol BLOB NOT NULL, $this->lifetimeCol INTEGER UNSIGNED NOT NULL, $this->timeCol INTEGER UNSIGNED NOT NULL) COLLATE utf8mb4_bin, ENGINE = InnoDB";
+                break;
+            case 'sqlite':
+                $sql = "CREATE TABLE $this->table ($this->idCol TEXT NOT NULL PRIMARY KEY, $this->dataCol BLOB NOT NULL, $this->lifetimeCol INTEGER NOT NULL, $this->timeCol INTEGER NOT NULL)";
+                break;
+            case 'pgsql':
+                $sql = "CREATE TABLE $this->table ($this->idCol VARCHAR(128) NOT NULL PRIMARY KEY, $this->dataCol BYTEA NOT NULL, $this->lifetimeCol INTEGER NOT NULL, $this->timeCol INTEGER NOT NULL)";
+                break;
+            case 'oci':
+                $sql = "CREATE TABLE $this->table ($this->idCol VARCHAR2(128) NOT NULL PRIMARY KEY, $this->dataCol BLOB NOT NULL, $this->lifetimeCol INTEGER NOT NULL, $this->timeCol INTEGER NOT NULL)";
+                break;
+            case 'sqlsrv':
+                $sql = "CREATE TABLE $this->table ($this->idCol VARCHAR(128) NOT NULL PRIMARY KEY, $this->dataCol VARBINARY(MAX) NOT NULL, $this->lifetimeCol INTEGER NOT NULL, $this->timeCol INTEGER NOT NULL)";
+                break;
+            default:
+                throw new \DomainException(sprintf('Creating the session table is currently not implemented for PDO driver "%s".', $this->driver));
+        }
 
         try {
             $this->pdo->exec($sql);
@@ -443,7 +454,7 @@ class PdoSessionHandler extends AbstractSessionHandler
             // If "unix_socket" is not in the query, we continue with the same process as pgsql
             // no break
             case 'pgsql':
-                $dsn ??= 'pgsql:';
+                $dsn ?? $dsn = 'pgsql:';
 
                 if (isset($params['host']) && '' !== $params['host']) {
                     $dsn .= 'host='.$params['host'].';';

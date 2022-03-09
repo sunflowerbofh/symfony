@@ -1,5 +1,0 @@
-framework:
-    exceptions:
-        Symfony\Component\HttpKernel\Exception\BadRequestHttpException:
-            log_level: info
-            status_code: 422

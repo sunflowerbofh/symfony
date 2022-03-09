@@ -106,7 +106,7 @@ class YamlFileLoader extends FileLoader
         'bind' => 'bind',
     ];
 
-    private YamlParser $yamlParser;
+    private $yamlParser;
 
     private int $anonymousServicesCount;
     private string $anonymousServicesSuffix;
@@ -776,7 +776,7 @@ class YamlFileLoader extends FileLoader
         }
 
         foreach ($content as $namespace => $data) {
-            if (\in_array($namespace, ['imports', 'parameters', 'services']) || str_starts_with($namespace, 'when@')) {
+            if (\in_array($namespace, ['imports', 'parameters', 'services']) || 0 === strpos($namespace, 'when@')) {
                 continue;
             }
 
@@ -914,7 +914,7 @@ class YamlFileLoader extends FileLoader
     private function loadFromExtensions(array $content)
     {
         foreach ($content as $namespace => $values) {
-            if (\in_array($namespace, ['imports', 'parameters', 'services']) || str_starts_with($namespace, 'when@')) {
+            if (\in_array($namespace, ['imports', 'parameters', 'services']) || 0 === strpos($namespace, 'when@')) {
                 continue;
             }
 

@@ -43,11 +43,11 @@ use Symfony\Component\Security\Http\RememberMe\ResponseListener;
  */
 class RememberMeAuthenticator implements InteractiveAuthenticatorInterface
 {
-    private RememberMeHandlerInterface $rememberMeHandler;
+    private $rememberMeHandler;
     private string $secret;
-    private TokenStorageInterface $tokenStorage;
+    private $tokenStorage;
     private string $cookieName;
-    private ?LoggerInterface $logger;
+    private $logger;
 
     public function __construct(RememberMeHandlerInterface $rememberMeHandler, string $secret, TokenStorageInterface $tokenStorage, string $cookieName, LoggerInterface $logger = null)
     {
@@ -73,7 +73,9 @@ class RememberMeAuthenticator implements InteractiveAuthenticatorInterface
             return false;
         }
 
-        $this->logger?->debug('Remember-me cookie detected.');
+        if (null !== $this->logger) {
+            $this->logger->debug('Remember-me cookie detected.');
+        }
 
         // the `null` return value indicates that this authenticator supports lazy firewalls
         return null;

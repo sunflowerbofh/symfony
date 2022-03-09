@@ -27,16 +27,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ValidatorExtension extends AbstractExtension
 {
-    private ValidatorInterface $validator;
-    private ?FormRendererInterface $formRenderer;
-    private ?TranslatorInterface $translator;
+    private $validator;
+    private $formRenderer;
+    private $translator;
     private bool $legacyErrorMessages;
 
     public function __construct(ValidatorInterface $validator, bool $legacyErrorMessages = true, FormRendererInterface $formRenderer = null, TranslatorInterface $translator = null)
     {
         $this->legacyErrorMessages = $legacyErrorMessages;
 
-        $metadata = $validator->getMetadataFor(\Symfony\Component\Form\Form::class);
+        $metadata = $validator->getMetadataFor('Symfony\Component\Form\Form');
 
         // Register the form constraints in the validator programmatically.
         // This functionality is required when using the Form component without

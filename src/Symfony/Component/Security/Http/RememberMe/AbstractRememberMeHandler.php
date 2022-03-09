@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 abstract class AbstractRememberMeHandler implements RememberMeHandlerInterface
 {
-    private UserProviderInterface $userProvider;
+    private $userProvider;
     protected $requestStack;
     protected $options;
     protected $logger;
@@ -74,7 +74,9 @@ abstract class AbstractRememberMeHandler implements RememberMeHandlerInterface
 
         $this->processRememberMe($rememberMeDetails, $user);
 
-        $this->logger?->info('Remember-me cookie accepted.');
+        if (null !== $this->logger) {
+            $this->logger->info('Remember-me cookie accepted.');
+        }
 
         return $user;
     }
@@ -84,7 +86,9 @@ abstract class AbstractRememberMeHandler implements RememberMeHandlerInterface
      */
     public function clearRememberMeCookie(): void
     {
-        $this->logger?->debug('Clearing remember-me cookie.', ['name' => $this->options['name']]);
+        if (null !== $this->logger) {
+            $this->logger->debug('Clearing remember-me cookie.', ['name' => $this->options['name']]);
+        }
 
         $this->createCookie(null);
     }
@@ -104,8 +108,8 @@ abstract class AbstractRememberMeHandler implements RememberMeHandlerInterface
         // the ResponseListener configures the cookie saved in this attribute on the final response object
         $request->attributes->set(ResponseListener::COOKIE_ATTR_NAME, new Cookie(
             $this->options['name'],
-            $rememberMeDetails?->toString(),
-            $rememberMeDetails?->getExpires() ?? 1,
+            $rememberMeDetails ? $rememberMeDetails->toString() : null,
+            $rememberMeDetails ? $rememberMeDetails->getExpires() : 1,
             $this->options['path'],
             $this->options['domain'],
             $this->options['secure'] ?? $request->isSecure(),

@@ -61,7 +61,7 @@ class Caster
 
         if ($a) {
             static $publicProperties = [];
-            $debugClass ??= get_debug_type($obj);
+            $debugClass = $debugClass ?? get_debug_type($obj);
 
             $i = 0;
             $prefixedKeys = [];

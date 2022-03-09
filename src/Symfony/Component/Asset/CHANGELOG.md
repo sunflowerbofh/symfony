@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-6.1
----
-
-* `UrlPackage` accepts empty strings as `base_url`, in order to simplify local dev configuration.
-
 6.0
 ---
 

@@ -26,14 +26,9 @@ class NotBlank extends Constraint
 {
     public const IS_BLANK_ERROR = 'c1051bb4-d103-4f74-8988-acbcafc7fdc3';
 
-    protected const ERROR_NAMES = [
+    protected static $errorNames = [
         self::IS_BLANK_ERROR => 'IS_BLANK_ERROR',
     ];
-
-    /**
-     * @deprecated since Symfony 6.1, use const ERROR_NAMES instead
-     */
-    protected static $errorNames = self::ERROR_NAMES;
 
     public $message = 'This value should not be blank.';
     public $allowNull = false;

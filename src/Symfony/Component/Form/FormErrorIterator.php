@@ -30,8 +30,8 @@ use Symfony\Component\Validator\ConstraintViolation;
  * @author Bernhard Schussek <bschussek@gmail.com>
  *
  * @implements \ArrayAccess<int, FormError|FormErrorIterator>
- * @implements \RecursiveIterator<int, FormError|FormErrorIterator>
- * @implements \SeekableIterator<int, FormError|FormErrorIterator>
+ * @implements \RecursiveIterator<int, FormError>
+ * @implements \SeekableIterator<int, FormError>
  */
 class FormErrorIterator implements \RecursiveIterator, \SeekableIterator, \ArrayAccess, \Countable
 {
@@ -40,7 +40,7 @@ class FormErrorIterator implements \RecursiveIterator, \SeekableIterator, \Array
      */
     public const INDENTATION = '    ';
 
-    private FormInterface $form;
+    private $form;
     private array $errors;
 
     /**

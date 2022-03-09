@@ -11,13 +11,10 @@
 
 namespace Symfony\Bridge\Twig\Extension;
 
-use Symfony\Bridge\Twig\Node\RenderBlockNode;
-use Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode;
 use Symfony\Bridge\Twig\TokenParser\FormThemeTokenParser;
 use Symfony\Component\Form\ChoiceList\View\ChoiceGroupView;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\Form\FormView;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
@@ -33,7 +30,7 @@ use Twig\TwigTest;
  */
 final class FormExtension extends AbstractExtension
 {
-    private ?TranslatorInterface $translator;
+    private $translator;
 
     public function __construct(TranslatorInterface $translator = null)
     {
@@ -57,16 +54,16 @@ final class FormExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('form_widget', null, ['node_class' => SearchAndRenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('form_errors', null, ['node_class' => SearchAndRenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('form_label', null, ['node_class' => SearchAndRenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('form_help', null, ['node_class' => SearchAndRenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('form_row', null, ['node_class' => SearchAndRenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('form_rest', null, ['node_class' => SearchAndRenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('form', null, ['node_class' => RenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('form_start', null, ['node_class' => RenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('form_end', null, ['node_class' => RenderBlockNode::class, 'is_safe' => ['html']]),
-            new TwigFunction('csrf_token', [FormRenderer::class, 'renderCsrfToken']),
+            new TwigFunction('form_widget', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('form_errors', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('form_label', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('form_help', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('form_row', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('form_rest', null, ['node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('form', null, ['node_class' => 'Symfony\Bridge\Twig\Node\RenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('form_start', null, ['node_class' => 'Symfony\Bridge\Twig\Node\RenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('form_end', null, ['node_class' => 'Symfony\Bridge\Twig\Node\RenderBlockNode', 'is_safe' => ['html']]),
+            new TwigFunction('csrf_token', ['Symfony\Component\Form\FormRenderer', 'renderCsrfToken']),
             new TwigFunction('form_parent', 'Symfony\Bridge\Twig\Extension\twig_get_form_parent'),
             new TwigFunction('field_name', [$this, 'getFieldName']),
             new TwigFunction('field_value', [$this, 'getFieldValue']),
@@ -83,8 +80,8 @@ final class FormExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('humanize', [FormRenderer::class, 'humanize']),
-            new TwigFilter('form_encode_currency', [FormRenderer::class, 'encodeCurrency'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFilter('humanize', ['Symfony\Component\Form\FormRenderer', 'humanize']),
+            new TwigFilter('form_encode_currency', ['Symfony\Component\Form\FormRenderer', 'encodeCurrency'], ['is_safe' => ['html'], 'needs_environment' => true]),
         ];
     }
 

@@ -175,12 +175,7 @@ abstract class AbstractTagAwareAdapter implements TagAwareAdapterInterface, TagA
 
         if ($expiredIds) {
             // Tags are not cleaned up in this case, however that is done on invalidateTags().
-            try {
-                $this->doDelete($expiredIds);
-            } catch (\Exception $e) {
-                $ok = false;
-                CacheItem::log($this->logger, 'Failed to delete expired items: '.$e->getMessage(), ['exception' => $e, 'cache-adapter' => get_debug_type($this)]);
-            }
+            $this->doDelete($expiredIds);
         }
         foreach ($byLifetime as $lifetime => $values) {
             try {
@@ -294,12 +289,8 @@ abstract class AbstractTagAwareAdapter implements TagAwareAdapterInterface, TagA
             $tagIds[] = $this->getId(self::TAGS_PREFIX.$tag);
         }
 
-        try {
-            if ($this->doInvalidate($tagIds)) {
-                return true;
-            }
-        } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to invalidate tags: '.$e->getMessage(), ['exception' => $e, 'cache-adapter' => get_debug_type($this)]);
+        if ($this->doInvalidate($tagIds)) {
+            return true;
         }
 
         return false;

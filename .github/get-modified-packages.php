@@ -50,9 +50,9 @@ $newPackage = [];
 $modifiedPackages = [];
 foreach ($modifiedFiles as $file) {
     foreach ($allPackages as $package) {
-        if (str_starts_with($file, $package)) {
+        if (0 === strpos($file, $package)) {
             $modifiedPackages[$package] = true;
-            if (str_ends_with($file, 'LICENSE')) {
+            if ('LICENSE' === substr($file, -7)) {
                 /*
                  * There is never a reason to modify the LICENSE file, this diff
                  * must be adding a new package

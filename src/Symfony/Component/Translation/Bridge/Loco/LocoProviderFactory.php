@@ -16,7 +16,6 @@ use Symfony\Component\Translation\Exception\UnsupportedSchemeException;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\Provider\AbstractProviderFactory;
 use Symfony\Component\Translation\Provider\Dsn;
-use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -26,19 +25,17 @@ final class LocoProviderFactory extends AbstractProviderFactory
 {
     private const HOST = 'localise.biz';
 
-    private HttpClientInterface $client;
-    private LoggerInterface $logger;
+    private $client;
+    private $logger;
     private string $defaultLocale;
-    private LoaderInterface $loader;
-    private ?TranslatorBagInterface $translatorBag = null;
+    private $loader;
 
-    public function __construct(HttpClientInterface $client, LoggerInterface $logger, string $defaultLocale, LoaderInterface $loader, TranslatorBagInterface $translatorBag = null)
+    public function __construct(HttpClientInterface $client, LoggerInterface $logger, string $defaultLocale, LoaderInterface $loader)
     {
         $this->client = $client;
         $this->logger = $logger;
         $this->defaultLocale = $defaultLocale;
         $this->loader = $loader;
-        $this->translatorBag = $translatorBag;
     }
 
     public function create(Dsn $dsn): LocoProvider
@@ -57,7 +54,7 @@ final class LocoProviderFactory extends AbstractProviderFactory
             ],
         ]);
 
-        return new LocoProvider($client, $this->loader, $this->logger, $this->defaultLocale, $endpoint, $this->translatorBag);
+        return new LocoProvider($client, $this->loader, $this->logger, $this->defaultLocale, $endpoint);
     }
 
     protected function getSupportedSchemes(): array

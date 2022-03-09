@@ -25,8 +25,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class AppVariable
 {
-    private TokenStorageInterface $tokenStorage;
-    private RequestStack $requestStack;
+    private $tokenStorage;
+    private $requestStack;
     private string $environment;
     private bool $debug;
 
@@ -100,7 +100,7 @@ class AppVariable
         }
         $request = $this->getRequest();
 
-        return $request?->hasSession() ? $request->getSession() : null;
+        return $request && $request->hasSession() ? $request->getSession() : null;
     }
 
     /**

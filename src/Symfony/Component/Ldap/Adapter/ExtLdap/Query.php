@@ -26,6 +26,9 @@ class Query extends AbstractQuery
 {
     public const PAGINATION_OID = \LDAP_CONTROL_PAGEDRESULTS;
 
+    /** @var Connection */
+    protected $connection;
+
     /** @var resource[]|Result[] */
     private array $results;
 
@@ -75,12 +78,19 @@ class Query extends AbstractQuery
             $this->results = [];
             $con = $this->connection->getResource();
 
-            $func = match ($this->options['scope']) {
-                static::SCOPE_BASE => 'ldap_read',
-                static::SCOPE_ONE => 'ldap_list',
-                static::SCOPE_SUB => 'ldap_search',
-                default => throw new LdapException(sprintf('Could not search in scope "%s".', $this->options['scope'])),
-            };
+            switch ($this->options['scope']) {
+                case static::SCOPE_BASE:
+                    $func = 'ldap_read';
+                    break;
+                case static::SCOPE_ONE:
+                    $func = 'ldap_list';
+                    break;
+                case static::SCOPE_SUB:
+                    $func = 'ldap_search';
+                    break;
+                default:
+                    throw new LdapException(sprintf('Could not search in scope "%s".', $this->options['scope']));
+            }
 
             $itemsLeft = $maxItems = $this->options['maxItems'];
             $pageSize = $this->options['pageSize'];

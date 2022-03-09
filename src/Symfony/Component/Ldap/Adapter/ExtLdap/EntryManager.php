@@ -23,7 +23,7 @@ use Symfony\Component\Ldap\Exception\UpdateOperationException;
  */
 class EntryManager implements EntryManagerInterface
 {
-    private Connection $connection;
+    private $connection;
 
     public function __construct(Connection $connection)
     {
@@ -105,7 +105,7 @@ class EntryManager implements EntryManagerInterface
     {
         $con = $this->getConnectionResource();
 
-        if (!@ldap_rename($con, $entry->getDn(), $newRdn, '', $removeOldRdn)) {
+        if (!@ldap_rename($con, $entry->getDn(), $newRdn, null, $removeOldRdn)) {
             throw new LdapException(sprintf('Could not rename entry "%s" to "%s": ', $entry->getDn(), $newRdn).ldap_error($con), ldap_errno($con));
         }
     }

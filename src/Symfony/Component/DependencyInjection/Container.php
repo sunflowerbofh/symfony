@@ -103,7 +103,7 @@ class Container implements ContainerInterface, ResetInterface
     /**
      * Gets a parameter.
      *
-     * @return array|bool|string|int|float|\UnitEnum|null
+     * @return array|bool|string|int|float|null
      *
      * @throws InvalidArgumentException if the parameter is not defined
      */
@@ -117,7 +117,7 @@ class Container implements ContainerInterface, ResetInterface
         return $this->parameterBag->has($name);
     }
 
-    public function setParameter(string $name, array|bool|string|int|float|\UnitEnum|null $value)
+    public function setParameter(string $name, array|bool|string|int|float|null $value)
     {
         $this->parameterBag->set($name, $value);
     }
@@ -380,7 +380,7 @@ class Container implements ContainerInterface, ResetInterface
             return false !== $registry ? $this->{$registry}[$id] ?? null : null;
         }
         if (false !== $registry) {
-            return $this->{$registry}[$id] ??= $load ? $this->load($method) : $this->{$method}();
+            return $this->{$registry}[$id] ?? $this->{$registry}[$id] = $load ? $this->load($method) : $this->{$method}();
         }
         if (!$load) {
             return $this->{$method}();

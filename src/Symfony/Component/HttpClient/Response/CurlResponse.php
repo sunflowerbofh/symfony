@@ -33,7 +33,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
     use TransportResponseTrait;
 
     private static bool $performing = false;
-    private CurlClientState $multi;
+    private $multi;
 
     /**
      * @var resource
@@ -257,9 +257,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
 
             $this->doDestruct();
         } finally {
-            if (\is_resource($this->handle) || $this->handle instanceof \CurlHandle) {
-                curl_setopt($this->handle, \CURLOPT_VERBOSE, false);
-            }
+            curl_setopt($this->handle, \CURLOPT_VERBOSE, false);
         }
     }
 

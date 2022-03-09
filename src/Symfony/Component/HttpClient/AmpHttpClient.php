@@ -43,7 +43,7 @@ final class AmpHttpClient implements HttpClientInterface, LoggerAwareInterface, 
     use LoggerAwareTrait;
 
     private array $defaultOptions = self::OPTIONS_DEFAULTS;
-    private AmpClientState $multi;
+    private $multi;
 
     /**
      * @param array    $defaultOptions     Default requests' options
@@ -81,10 +81,10 @@ final class AmpHttpClient implements HttpClientInterface, LoggerAwareInterface, 
         }
 
         if ($options['bindto']) {
-            if (str_starts_with($options['bindto'], 'if!')) {
+            if (0 === strpos($options['bindto'], 'if!')) {
                 throw new TransportException(__CLASS__.' cannot bind to network interfaces, use e.g. CurlHttpClient instead.');
             }
-            if (str_starts_with($options['bindto'], 'host!')) {
+            if (0 === strpos($options['bindto'], 'host!')) {
                 $options['bindto'] = substr($options['bindto'], 5);
             }
         }
@@ -160,7 +160,9 @@ final class AmpHttpClient implements HttpClientInterface, LoggerAwareInterface, 
             foreach ($pushedResponses as [$pushedUrl, $pushDeferred]) {
                 $pushDeferred->fail(new CancelledException());
 
-                $this->logger?->debug(sprintf('Unused pushed response: "%s"', $pushedUrl));
+                if ($this->logger) {
+                    $this->logger->debug(sprintf('Unused pushed response: "%s"', $pushedUrl));
+                }
             }
         }
 

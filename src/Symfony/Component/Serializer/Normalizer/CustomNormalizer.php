@@ -44,11 +44,10 @@ class CustomNormalizer implements NormalizerInterface, DenormalizerInterface, Se
     /**
      * Checks if the given class implements the NormalizableInterface.
      *
-     * @param mixed  $data    Data to normalize
-     * @param string $format  The format being (de-)serialized from or into
-     * @param array  $context
+     * @param mixed  $data   Data to normalize
+     * @param string $format The format being (de-)serialized from or into
      */
-    public function supportsNormalization(mixed $data, string $format = null /*, array $context = [] */): bool
+    public function supportsNormalization(mixed $data, string $format = null): bool
     {
         return $data instanceof NormalizableInterface;
     }
@@ -56,12 +55,11 @@ class CustomNormalizer implements NormalizerInterface, DenormalizerInterface, Se
     /**
      * Checks if the given class implements the DenormalizableInterface.
      *
-     * @param mixed  $data    Data to denormalize from
-     * @param string $type    The class to which the data should be denormalized
-     * @param string $format  The format being deserialized from
-     * @param array  $context
+     * @param mixed  $data   Data to denormalize from
+     * @param string $type   The class to which the data should be denormalized
+     * @param string $format The format being deserialized from
      */
-    public function supportsDenormalization(mixed $data, string $type, string $format = null /*, array $context = [] */): bool
+    public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
     {
         return is_subclass_of($type, DenormalizableInterface::class);
     }

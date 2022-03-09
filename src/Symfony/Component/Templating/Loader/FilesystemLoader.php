@@ -51,7 +51,9 @@ class FilesystemLoader extends Loader
         $fileFailures = [];
         foreach ($this->templatePathPatterns as $templatePathPattern) {
             if (is_file($file = strtr($templatePathPattern, $replacements)) && is_readable($file)) {
-                $this->logger?->debug('Loaded template file.', ['file' => $file]);
+                if (null !== $this->logger) {
+                    $this->logger->debug('Loaded template file.', ['file' => $file]);
+                }
 
                 return new FileStorage($file);
             }
@@ -63,7 +65,9 @@ class FilesystemLoader extends Loader
 
         // only log failures if no template could be loaded at all
         foreach ($fileFailures as $file) {
-            $this->logger?->debug('Failed loading template file.', ['file' => $file]);
+            if (null !== $this->logger) {
+                $this->logger->debug('Failed loading template file.', ['file' => $file]);
+            }
         }
 
         return false;

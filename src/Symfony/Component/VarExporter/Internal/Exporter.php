@@ -220,7 +220,7 @@ class Exporter
                     return substr($m[1], 0, -2);
                 }
 
-                if (str_ends_with($m[1], 'n".\'')) {
+                if ('n".\'' === substr($m[1], -4)) {
                     return substr_replace($m[1], "\n".$subIndent.".'".$m[2], -2);
                 }
 

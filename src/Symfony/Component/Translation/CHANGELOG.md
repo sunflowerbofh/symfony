@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-6.1
----
-
- * Parameters implementing `TranslatableInterface` are processed
-
 5.4
 ---
 

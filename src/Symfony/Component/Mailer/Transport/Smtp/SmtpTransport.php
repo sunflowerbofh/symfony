@@ -37,7 +37,7 @@ class SmtpTransport extends AbstractTransport
     private int $restartCounter = 0;
     private int $pingThreshold = 100;
     private float $lastMessageTime = 0;
-    private AbstractStream $stream;
+    private $stream;
     private string $domain = '[127.0.0.1]';
 
     public function __construct(AbstractStream $stream = null, EventDispatcherInterface $dispatcher = null, LoggerInterface $logger = null)
@@ -240,7 +240,7 @@ class SmtpTransport extends AbstractTransport
         $this->executeCommand(sprintf("RCPT TO:<%s>\r\n", $address), [250, 251, 252]);
     }
 
-    public function start(): void
+    private function start(): void
     {
         if ($this->started) {
             return;
@@ -257,14 +257,7 @@ class SmtpTransport extends AbstractTransport
         $this->getLogger()->debug(sprintf('Email transport "%s" started', __CLASS__));
     }
 
-    /**
-     * Manually disconnect from the SMTP server.
-     *
-     * In most cases this is not necessary since the disconnect happens automatically on termination.
-     * In cases of long-running scripts, this might however make sense to avoid keeping an open
-     * connection to the SMTP server in between sending emails.
-     */
-    public function stop(): void
+    private function stop(): void
     {
         if (!$this->started) {
             return;

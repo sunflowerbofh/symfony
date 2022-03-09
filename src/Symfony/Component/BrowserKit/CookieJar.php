@@ -169,13 +169,13 @@ class CookieJar
         foreach ($this->cookieJar as $domain => $pathCookies) {
             if ($domain) {
                 $domain = '.'.ltrim($domain, '.');
-                if (!str_ends_with('.'.$parts['host'], $domain)) {
+                if ($domain != substr('.'.$parts['host'], -\strlen($domain))) {
                     continue;
                 }
             }
 
             foreach ($pathCookies as $path => $namedCookies) {
-                if (!str_starts_with($parts['path'], $path)) {
+                if ($path != substr($parts['path'], 0, \strlen($path))) {
                     continue;
                 }
 

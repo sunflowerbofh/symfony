@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-6.1
----
-
- * Add support for phpDocumentor and PHPStan pseudo-types
-
 6.0
 ---
 

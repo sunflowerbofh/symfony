@@ -94,7 +94,7 @@ class XmlDumper extends Dumper
             $service->setAttribute('id', $id);
         }
         if ($class = $definition->getClass()) {
-            if (str_starts_with($class, '\\')) {
+            if ('\\' === substr($class, 0, 1)) {
                 $class = substr($class, 1);
             }
 

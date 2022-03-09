@@ -79,7 +79,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
-use Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -122,14 +121,12 @@ use Symfony\Component\Notifier\Bridge\Expo\ExpoTransportFactory;
 use Symfony\Component\Notifier\Bridge\FakeChat\FakeChatTransportFactory;
 use Symfony\Component\Notifier\Bridge\FakeSms\FakeSmsTransportFactory;
 use Symfony\Component\Notifier\Bridge\Firebase\FirebaseTransportFactory;
-use Symfony\Component\Notifier\Bridge\FortySixElks\FortySixElksTransportFactory;
 use Symfony\Component\Notifier\Bridge\FreeMobile\FreeMobileTransportFactory;
 use Symfony\Component\Notifier\Bridge\GatewayApi\GatewayApiTransportFactory;
 use Symfony\Component\Notifier\Bridge\Gitter\GitterTransportFactory;
 use Symfony\Component\Notifier\Bridge\GoogleChat\GoogleChatTransportFactory;
 use Symfony\Component\Notifier\Bridge\Infobip\InfobipTransportFactory;
 use Symfony\Component\Notifier\Bridge\Iqsms\IqsmsTransportFactory;
-use Symfony\Component\Notifier\Bridge\KazInfoTeh\KazInfoTehTransportFactory;
 use Symfony\Component\Notifier\Bridge\LightSms\LightSmsTransportFactory;
 use Symfony\Component\Notifier\Bridge\LinkedIn\LinkedInTransportFactory;
 use Symfony\Component\Notifier\Bridge\Mailjet\MailjetTransportFactory as MailjetNotifierTransportFactory;
@@ -141,7 +138,6 @@ use Symfony\Component\Notifier\Bridge\MicrosoftTeams\MicrosoftTeamsTransportFact
 use Symfony\Component\Notifier\Bridge\Mobyt\MobytTransportFactory;
 use Symfony\Component\Notifier\Bridge\Octopush\OctopushTransportFactory;
 use Symfony\Component\Notifier\Bridge\OneSignal\OneSignalTransportFactory;
-use Symfony\Component\Notifier\Bridge\OrangeSms\OrangeSmsTransportFactory;
 use Symfony\Component\Notifier\Bridge\OvhCloud\OvhCloudTransportFactory;
 use Symfony\Component\Notifier\Bridge\RocketChat\RocketChatTransportFactory;
 use Symfony\Component\Notifier\Bridge\Sendinblue\SendinblueTransportFactory as SendinblueNotifierTransportFactory;
@@ -163,7 +159,6 @@ use Symfony\Component\Notifier\Notifier;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Notifier\Transport\TransportFactoryInterface as NotifierTransportFactoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
 use Symfony\Component\PropertyInfo\PropertyAccessExtractorInterface;
 use Symfony\Component\PropertyInfo\PropertyDescriptionExtractorInterface;
@@ -183,9 +178,6 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
-use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\UnwrappingDenormalizer;
@@ -246,11 +238,6 @@ class FrameworkExtension extends Extension
         $loader = new PhpFileLoader($container, new FileLocator(\dirname(__DIR__).'/Resources/config'));
 
         $loader->load('web.php');
-
-        if (\PHP_VERSION_ID < 80100 || !class_exists(BackedEnumValueResolver::class)) {
-            $container->removeDefinition('argument_resolver.backed_enum_resolver');
-        }
-
         $loader->load('services.php');
         $loader->load('fragment_renderer.php');
         $loader->load('error_renderer.php');
@@ -514,7 +501,7 @@ class FrameworkExtension extends Extension
             '**\\Entity\\',
 
             // Added explicitly so that we don't rely on the class map being dumped to make it work
-            AbstractController::class,
+            'Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController',
         ]);
 
         if (ContainerBuilder::willBeAvailable('symfony/mime', MimeTypes::class, ['symfony/framework-bundle'])) {
@@ -637,7 +624,6 @@ class FrameworkExtension extends Extension
             'container.service_locator',
             'container.service_subscriber',
             'kernel.event_subscriber',
-            'kernel.event_listener',
             'kernel.locale_aware',
             'kernel.reset',
         ]);
@@ -1735,7 +1721,7 @@ class FrameworkExtension extends Extension
         $serializerLoaders = [];
         if (isset($config['enable_annotations']) && $config['enable_annotations']) {
             $annotationLoader = new Definition(
-                AnnotationLoader::class,
+                'Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader',
                 [new Reference('annotation_reader', ContainerInterface::NULL_ON_INVALID_REFERENCE)]
             );
             $annotationLoader->setPublic(false);
@@ -1744,7 +1730,7 @@ class FrameworkExtension extends Extension
         }
 
         $fileRecorder = function ($extension, $path) use (&$serializerLoaders) {
-            $definition = new Definition(\in_array($extension, ['yaml', 'yml']) ? YamlFileLoader::class : XmlFileLoader::class, [$path]);
+            $definition = new Definition(\in_array($extension, ['yaml', 'yml']) ? 'Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader' : 'Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader', [$path]);
             $definition->setPublic(false);
             $serializerLoaders[] = $definition;
         };
@@ -1817,7 +1803,7 @@ class FrameworkExtension extends Extension
         }
 
         if (ContainerBuilder::willBeAvailable('phpdocumentor/reflection-docblock', DocBlockFactoryInterface::class, ['symfony/framework-bundle', 'symfony/property-info'], true)) {
-            $definition = $container->register('property_info.php_doc_extractor', PhpDocExtractor::class);
+            $definition = $container->register('property_info.php_doc_extractor', 'Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor');
             $definition->addTag('property_info.description_extractor', ['priority' => -1000]);
             $definition->addTag('property_info.type_extractor', ['priority' => -1001]);
         }
@@ -2149,11 +2135,9 @@ class FrameworkExtension extends Extension
 
             if ($isRedisTagAware && 'cache.app' === $name) {
                 $container->setAlias('cache.app.taggable', $name);
-                $definition->addTag('cache.taggable', ['pool' => $name]);
             } elseif ($isRedisTagAware) {
                 $tagAwareId = $name;
                 $container->setAlias('.'.$name.'.inner', $name);
-                $definition->addTag('cache.taggable', ['pool' => $name]);
             } elseif ($pool['tags']) {
                 if (true !== $pool['tags'] && ($config['pools'][$pool['tags']]['tags'] ?? false)) {
                     $pool['tags'] = '.'.$pool['tags'].'.inner';
@@ -2162,14 +2146,12 @@ class FrameworkExtension extends Extension
                     ->addArgument(new Reference('.'.$name.'.inner'))
                     ->addArgument(true !== $pool['tags'] ? new Reference($pool['tags']) : null)
                     ->setPublic($pool['public'])
-                    ->addTag('cache.taggable', ['pool' => $name])
                 ;
 
                 if (method_exists(TagAwareAdapter::class, 'setLogger')) {
                     $container
                         ->getDefinition($name)
-                        ->addMethodCall('setLogger', [new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE)])
-                        ->addTag('monolog.logger', ['channel' => 'cache']);
+                        ->addMethodCall('setLogger', [new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE)]);
                 }
 
                 $pool['name'] = $tagAwareId = $name;
@@ -2179,7 +2161,6 @@ class FrameworkExtension extends Extension
                 $tagAwareId = '.'.$name.'.taggable';
                 $container->register($tagAwareId, TagAwareAdapter::class)
                     ->addArgument(new Reference($name))
-                    ->addTag('cache.taggable', ['pool' => $name])
                 ;
             }
 
@@ -2440,14 +2421,12 @@ class FrameworkExtension extends Extension
             FakeChatTransportFactory::class => 'notifier.transport_factory.fake-chat',
             FakeSmsTransportFactory::class => 'notifier.transport_factory.fake-sms',
             FirebaseTransportFactory::class => 'notifier.transport_factory.firebase',
-            FortySixElksTransportFactory::class => 'notifier.transport_factory.forty-six-elks',
             FreeMobileTransportFactory::class => 'notifier.transport_factory.free-mobile',
             GatewayApiTransportFactory::class => 'notifier.transport_factory.gateway-api',
             GitterTransportFactory::class => 'notifier.transport_factory.gitter',
             GoogleChatTransportFactory::class => 'notifier.transport_factory.google-chat',
             InfobipTransportFactory::class => 'notifier.transport_factory.infobip',
             IqsmsTransportFactory::class => 'notifier.transport_factory.iqsms',
-            KazInfoTehTransportFactory::class => 'notifier.transport_factory.kaz-info-teh',
             LightSmsTransportFactory::class => 'notifier.transport_factory.light-sms',
             LinkedInTransportFactory::class => 'notifier.transport_factory.linked-in',
             MailjetNotifierTransportFactory::class => 'notifier.transport_factory.mailjet',
@@ -2459,7 +2438,6 @@ class FrameworkExtension extends Extension
             MobytTransportFactory::class => 'notifier.transport_factory.mobyt',
             OctopushTransportFactory::class => 'notifier.transport_factory.octopush',
             OneSignalTransportFactory::class => 'notifier.transport_factory.one-signal',
-            OrangeSmsTransportFactory::class => 'notifier.transport_factory.orange-sms',
             OvhCloudTransportFactory::class => 'notifier.transport_factory.ovh-cloud',
             RocketChatTransportFactory::class => 'notifier.transport_factory.rocket-chat',
             SendinblueNotifierTransportFactory::class => 'notifier.transport_factory.sendinblue',

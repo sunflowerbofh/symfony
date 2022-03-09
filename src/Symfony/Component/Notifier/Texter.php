@@ -23,9 +23,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 final class Texter implements TexterInterface
 {
-    private TransportInterface $transport;
-    private ?MessageBusInterface $bus;
-    private ?EventDispatcherInterface $dispatcher;
+    private $transport;
+    private $bus;
+    private $dispatcher;
 
     public function __construct(TransportInterface $transport, MessageBusInterface $bus = null, EventDispatcherInterface $dispatcher = null)
     {
@@ -50,7 +50,9 @@ final class Texter implements TexterInterface
             return $this->transport->send($message);
         }
 
-        $this->dispatcher?->dispatch(new MessageEvent($message, true));
+        if (null !== $this->dispatcher) {
+            $this->dispatcher->dispatch(new MessageEvent($message, true));
+        }
 
         $this->bus->dispatch($message);
 

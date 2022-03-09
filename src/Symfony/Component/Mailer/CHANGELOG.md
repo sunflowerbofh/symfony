@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-6.1
----
-
-* Make `start()` and `stop()` methods public on `SmtpTransport`
-
 6.0
 ---
 

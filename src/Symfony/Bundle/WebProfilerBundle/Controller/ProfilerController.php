@@ -71,7 +71,9 @@ class ProfilerController
     {
         $this->denyAccessIfProfilerDisabled();
 
-        $this->cspHandler?->disableCsp();
+        if (null !== $this->cspHandler) {
+            $this->cspHandler->disableCsp();
+        }
 
         $panel = $request->query->get('panel');
         $page = $request->query->get('page', 'home');
@@ -170,7 +172,9 @@ class ProfilerController
     {
         $this->denyAccessIfProfilerDisabled();
 
-        $this->cspHandler?->disableCsp();
+        if (null !== $this->cspHandler) {
+            $this->cspHandler->disableCsp();
+        }
 
         if (!$request->hasSession()) {
             $ip =
@@ -220,7 +224,9 @@ class ProfilerController
     {
         $this->denyAccessIfProfilerDisabled();
 
-        $this->cspHandler?->disableCsp();
+        if (null !== $this->cspHandler) {
+            $this->cspHandler->disableCsp();
+        }
 
         $profile = $this->profiler->loadProfile($token);
 
@@ -306,35 +312,15 @@ class ProfilerController
     {
         $this->denyAccessIfProfilerDisabled();
 
-        $this->cspHandler?->disableCsp();
+        if (null !== $this->cspHandler) {
+            $this->cspHandler->disableCsp();
+        }
 
         ob_start();
         phpinfo();
         $phpinfo = ob_get_clean();
 
         return new Response($phpinfo, 200, ['Content-Type' => 'text/html']);
-    }
-
-    /**
-     * Displays the Xdebug info.
-     *
-     * @throws NotFoundHttpException
-     */
-    public function xdebugAction(): Response
-    {
-        $this->denyAccessIfProfilerDisabled();
-
-        if (!\function_exists('xdebug_info')) {
-            throw new NotFoundHttpException('Xdebug must be installed in version 3.');
-        }
-
-        $this->cspHandler?->disableCsp();
-
-        ob_start();
-        xdebug_info();
-        $xdebugInfo = ob_get_clean();
-
-        return new Response($xdebugInfo, 200, ['Content-Type' => 'text/html']);
     }
 
     /**
@@ -348,7 +334,9 @@ class ProfilerController
             throw new NotFoundHttpException('The base dir should be set.');
         }
 
-        $this->profiler?->disable();
+        if ($this->profiler) {
+            $this->profiler->disable();
+        }
 
         $file = $request->query->get('file');
         $line = $request->query->get('line');

@@ -65,7 +65,7 @@ abstract class AbstractFailedMessagesCommand extends Command
         /** @var TransportMessageIdStamp $stamp */
         $stamp = $envelope->last(TransportMessageIdStamp::class);
 
-        return $stamp?->getId();
+        return null !== $stamp ? $stamp->getId() : null;
     }
 
     protected function displaySingleMessage(Envelope $envelope, SymfonyStyle $io)
@@ -129,7 +129,10 @@ abstract class AbstractFailedMessagesCommand extends Command
             $dump = new Dumper($io, null, $this->createCloner());
             $io->writeln($dump($envelope->getMessage()));
             $io->title('Exception:');
-            $flattenException = $lastErrorDetailsStamp?->getFlattenException();
+            $flattenException = null;
+            if (null !== $lastErrorDetailsStamp) {
+                $flattenException = $lastErrorDetailsStamp->getFlattenException();
+            }
             $io->writeln(null === $flattenException ? '(no data)' : $dump($flattenException));
         } else {
             $io->writeln(' Re-run command with <info>-vv</info> to see more message & error details.');
@@ -149,7 +152,7 @@ abstract class AbstractFailedMessagesCommand extends Command
 
     protected function getReceiver(string $name = null): ReceiverInterface
     {
-        if (null === $name ??= $this->globalFailureReceiverName) {
+        if (null === $name = $name ?? $this->globalFailureReceiverName) {
             throw new InvalidArgumentException(sprintf('No default failure transport is defined. Available transports are: "%s".', implode('", "', array_keys($this->failureTransports->getProvidedServices()))));
         }
 

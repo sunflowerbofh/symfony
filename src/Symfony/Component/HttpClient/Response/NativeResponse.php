@@ -43,7 +43,7 @@ final class NativeResponse implements ResponseInterface, StreamableInterface
      */
     private $buffer;
 
-    private NativeClientState $multi;
+    private $multi;
     private float $pauseExpiry = 0.0;
 
     /**
@@ -126,7 +126,7 @@ final class NativeResponse implements ResponseInterface, StreamableInterface
                 throw new TransportException($msg);
             }
 
-            $this->logger?->info(sprintf('%s for "%s".', $msg, $url ?? $this->url));
+            $this->logger && $this->logger->info(sprintf('%s for "%s".', $msg, $url ?? $this->url));
         });
 
         try {
@@ -162,7 +162,7 @@ final class NativeResponse implements ResponseInterface, StreamableInterface
                     break;
                 }
 
-                $this->logger?->info(sprintf('Redirecting: "%s %s"', $this->info['http_code'], $url ?? $this->url));
+                $this->logger && $this->logger->info(sprintf('Redirecting: "%s %s"', $this->info['http_code'], $url ?? $this->url));
             }
         } catch (\Throwable $e) {
             $this->close();
@@ -364,7 +364,7 @@ final class NativeResponse implements ResponseInterface, StreamableInterface
                 continue;
             }
 
-            if ($pauseExpiry && ($now ??= microtime(true)) < $pauseExpiry) {
+            if ($pauseExpiry && ($now ?? $now = microtime(true)) < $pauseExpiry) {
                 $timeout = min($timeout, $pauseExpiry - $now);
                 continue;
             }

@@ -48,13 +48,15 @@ class UnaryNode extends Node
     public function evaluate(array $functions, array $values)
     {
         $value = $this->nodes['node']->evaluate($functions, $values);
+        switch ($this->attributes['operator']) {
+            case 'not':
+            case '!':
+                return !$value;
+            case '-':
+                return -$value;
+        }
 
-        return match ($this->attributes['operator']) {
-            'not',
-            '!' => !$value,
-            '-' => -$value,
-            default => $value,
-        };
+        return $value;
     }
 
     public function toArray(): array

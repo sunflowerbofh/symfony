@@ -31,15 +31,10 @@ class YamlFileLoader extends FileLoader
      */
     protected $classes = null;
 
-    public function __construct(string $file)
-    {
-        $this->file = $file;
-    }
-
     /**
      * Caches the used YAML parser.
      */
-    private YamlParser $yamlParser;
+    private $yamlParser;
 
     /**
      * {@inheritdoc}
@@ -136,8 +131,6 @@ class YamlFileLoader extends FileLoader
 
     private function loadClassesFromYaml()
     {
-        parent::__construct($this->file);
-
         $this->yamlParser ??= new YamlParser();
         $this->classes = $this->parseFile($this->file);
 

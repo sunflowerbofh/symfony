@@ -51,7 +51,6 @@ return static function (ContainerConfigurator $container) {
                 service('logger'),
                 param('kernel.default_locale'),
                 service('translation.loader.xliff'),
-                service('translator'),
             ])
             ->tag('translation.provider_factory')
 

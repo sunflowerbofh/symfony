@@ -16,12 +16,12 @@ use Symfony\Component\Notifier\Notification\Notification;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ChatMessage implements MessageInterface
+final class ChatMessage implements MessageInterface
 {
     private ?string $transport = null;
     private string $subject;
-    private ?MessageOptionsInterface $options;
-    private ?Notification $notification = null;
+    private $options;
+    private $notification = null;
 
     public function __construct(string $subject, MessageOptionsInterface $options = null)
     {
@@ -54,7 +54,7 @@ class ChatMessage implements MessageInterface
 
     public function getRecipientId(): ?string
     {
-        return $this->options?->getRecipientId();
+        return $this->options ? $this->options->getRecipientId() : null;
     }
 
     /**
