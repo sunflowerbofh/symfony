@@ -29,7 +29,7 @@
         "symfony/serializer": "^5.4|^6.0"
     },
     "conflict": {
-        "egulias/email-validator": ">3",
+        "egulias/email-validator": "~3.0.0",
         "phpdocumentor/reflection-docblock": "<3.2.2",
         "phpdocumentor/type-resolver": "<1.4.0",
         "symfony/mailer": "<5.4"
