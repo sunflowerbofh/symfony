@@ -147,6 +147,7 @@ EOF
         return $foundRoutesNames;
     }
 
+<<<<<<< HEAD
     public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
         if ($input->mustSuggestArgumentValuesFor('name')) {
@@ -159,6 +160,18 @@ EOF
             $helper = new DescriptorHelper();
             $suggestions->suggestValues($helper->getFormats());
         }
+=======
+    private function findRouteContaining(string $name, RouteCollection $routes): RouteCollection
+    {
+        $foundRoutes = new RouteCollection();
+        foreach ($routes as $routeName => $route) {
+            if (false !== stripos($routeName, $name)) {
+                $foundRoutes->add($routeName, $route);
+            }
+        }
+
+        return $foundRoutes;
+>>>>>>> e92e26183d ([FrameworkBundle] [Command] Fix `debug:router --no-interaction` error …)
     }
 
     private function findRouteContaining(string $name, RouteCollection $routes): RouteCollection
