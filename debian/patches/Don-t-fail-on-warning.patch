@@ -1,0 +1,22 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Mon, 7 Oct 2019 17:14:18 -1000
+Subject: =?utf-8?q?Don=E2=80=99t_fail_on_warning?=
+
+The move to PHPUnit 8 is not yet achieved upstream.
+---
+ phpunit.xml.dist | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/phpunit.xml.dist b/phpunit.xml.dist
+index 20df2e8..6c8f714 100644
+--- a/phpunit.xml.dist
++++ b/phpunit.xml.dist
+@@ -6,7 +6,7 @@
+          colors="true"
+          bootstrap="vendor/autoload.php"
+          failOnRisky="true"
+-         failOnWarning="true"
++         failOnWarning="false"
+ >
+     <php>
+         <ini name="error_reporting" value="-1" />

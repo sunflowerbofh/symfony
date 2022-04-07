@@ -1,0 +1,36 @@
+From: David Prévot <david@tilapin.org>
+Date: Thu, 8 Apr 2021 16:55:56 -0400
+Subject: Adapt conflict to Debian expectations
+
+---
+ composer.json                            | 2 +-
+ src/Symfony/Component/Mime/composer.json | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/composer.json b/composer.json
+index 64b68d5..acded49 100644
+--- a/composer.json
++++ b/composer.json
+@@ -155,7 +155,7 @@
+         "async-aws/core": "<1.5",
+         "doctrine/annotations": "<1.13.1",
+         "doctrine/dbal": "<2.13.1",
+-        "egulias/email-validator": "~3.0.0",
++        "egulias/email-validator": ">3",
+         "masterminds/html5": "<2.6",
+         "phpdocumentor/reflection-docblock": "<5.2",
+         "phpdocumentor/type-resolver": "<1.4.0",
+diff --git a/src/Symfony/Component/Mime/composer.json b/src/Symfony/Component/Mime/composer.json
+index cd04969..049cba6 100644
+--- a/src/Symfony/Component/Mime/composer.json
++++ b/src/Symfony/Component/Mime/composer.json
+@@ -31,7 +31,7 @@
+         "symfony/serializer": "^5.4|^6.0"
+     },
+     "conflict": {
+-        "egulias/email-validator": "~3.0.0",
++        "egulias/email-validator": ">3",
+         "phpdocumentor/reflection-docblock": "<3.2.2",
+         "phpdocumentor/type-resolver": "<1.4.0",
+         "symfony/mailer": "<5.4"
+    },

@@ -1,0 +1,26 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Wed, 6 Jan 2021 18:14:15 -0400
+Subject: [HttpClient] Skip tests relying on amphp/http-client
+
+---
+ src/Symfony/Component/HttpClient/Tests/HttpClientTestCase.php | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/Symfony/Component/HttpClient/Tests/HttpClientTestCase.php b/src/Symfony/Component/HttpClient/Tests/HttpClientTestCase.php
+index 3647d73..fe30926 100644
+--- a/src/Symfony/Component/HttpClient/Tests/HttpClientTestCase.php
++++ b/src/Symfony/Component/HttpClient/Tests/HttpClientTestCase.php
+@@ -30,6 +30,13 @@ The vulcain binary can be found at https://github.com/symfony/binary-utils/relea
+ 
+ abstract class HttpClientTestCase extends BaseHttpClientTestCase
+ {
++    protected function setUp(): void
++    {
++        parent::setUp();
++
++        $this->markTestSkipped('amphp/http-client is not (yet) packaged in Debian');
++    }
++
+     private static $vulcainStarted = false;
+ 
+     public function testTimeoutOnDestruct()

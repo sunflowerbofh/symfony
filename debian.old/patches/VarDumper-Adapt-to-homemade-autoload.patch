@@ -1,0 +1,33 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Fri, 22 Feb 2019 11:33:27 -1000
+Subject: [VarDumper] Adapt to homemade autoload
+
+Forwarded: no
+---
+ src/Symfony/Component/VarDumper/Resources/bin/var-dump-server | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/Symfony/Component/VarDumper/Resources/bin/var-dump-server b/src/Symfony/Component/VarDumper/Resources/bin/var-dump-server
+index 98c813a..5905c4a 100755
+--- a/src/Symfony/Component/VarDumper/Resources/bin/var-dump-server
++++ b/src/Symfony/Component/VarDumper/Resources/bin/var-dump-server
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env php
++#!/usr/bin/php
+ <?php
+ 
+ /*
+@@ -31,10 +31,10 @@ function includeIfExists(string $file): bool
+ }
+ 
+ if (
+-    !includeIfExists(__DIR__ . '/../../../../autoload.php') &&
+-    !includeIfExists(__DIR__ . '/../../vendor/autoload.php') &&
+-    !includeIfExists(__DIR__ . '/../../../../../../vendor/autoload.php')
++    stream_resolve_include_path('Symfony/Component/VarDumper/autoload.php')
+ ) {
++    include_once 'Symfony/Component/VarDumper/autoload.php';
++} else {
+     fwrite(STDERR, 'Install dependencies using Composer.'.PHP_EOL);
+     exit(1);
+ }

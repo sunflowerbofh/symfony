@@ -1,0 +1,476 @@
+Checksum-Sha256: 00da1c0f3901f05be5a7f4d7293a7f8653ad386e03ed72c29d9d66788b3c6a9c
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/translation.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/597637eceaff6f1605fc952e2053b2e833c373dc#diff-27fa5c0407d576bc9fc4e2ba796b0837
+Comment: Icon showing text bubbles. Added by SensioLabs.
+
+Checksum-Sha256: 0331045d86e39dd7cbbfc0534aed37c20bf4c7e6e159c0e0459d33eccc2815f6
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/event.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-af707dec0277d689733ac0b451c666e3
+Comment: Icon showing a radio mast. Added by SensioLabs.
+
+Checksum-Sha256: 070b27d803ddfaf3df192bc0214686aef495f1c8d30b6d4c5166fe3bc46bdc12
+Files: src/Symfony/Component/Validator/Tests/Constraints/Fixtures/test.gif
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/2de243cf07efba0e271755319163f9ae40b66202#diff-0
+Comment: A 2x2 px image file in GIF format used in tests.
+
+Checksum-Sha256: 09f887077d56c7e38ec9fb216ca5d31f5a897b145bddffde9c96aad64f24ac4d
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/menu.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/184d4f2df0e1033fc262f4d6e779f1a3c0910679#diff-5ed0534bd8bcf371dea2ab1505c8326e
+Comment: Icon for menu. Added under terms of Expat.
+
+Checksum-Sha256: 0dd8f84d24840a21a56495526e5b227911d13389109c62194a64b6ccbf3b1400
+Files: src/Symfony/Component/Yaml/Tests/Fixtures/arrow.gif
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/79a63d50a17594e40473b9835f23d7217f090083#diff-6aca698593f3e23b1ba12cadc10bbd78
+Comment: Icon showing an arrow.
+
+Checksum-Sha256: 111b22e49ed86cdde60eb0f073342ff1951b9335c3e06a5a66d98efeae2ae0bf
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/icon-plus-square-o.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-d1909e4b34dcbc7d0d3a765ace1b826f
+Comment: Icon showing a black plus on a white background. Added under the terms of Expat.
+
+Checksum-Sha256: 16e510c102c1c20b93e5cdcdffcb721d9b1ea18657fd5d86f54a18a7349b4aaa
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/messenger.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/d329a7a75511a714624c91d9ace5465b883f6669#diff-015db144f73047f35ee3bf21439b124b
+Comment: Message Bus Icon. Added under the terms of Expat.
+
+Checksum-Sha256: 19cad0a55863e1adbde60d59c66100858a8b07d2a854453aad748b28be05cae0
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/symfony.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/597637eceaff6f1605fc952e2053b2e833c373dc#diff-acfc77872fa057c23f11314ca0c2057c
+Comment: Icon showing the symfony logo. Added by SensioLabs.
+ Similar to the one with sha256 checksum
+ 66809ca12b9979536d8ec090e65d8552621ffe44e095e128f5b559daa3a71b31 but in a
+ different file format and size.
+
+Checksum-Sha256: 19f62d99e03642585a0f10e36c8c457b47f2c4f9776dd7ee2dcddb10b2714bae
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/validator.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/ac5e884f36636620a176e97b2053e42a8d6e16cc#diff-9ff3255532ae0ab596866d5b15852751
+Comment: Icon showing a tick. Provided by Sensiolabs.
+
+Checksum-Sha256: 1d0a59a2c36c7c2aa21ff04ace78aa56adf9d16891af7f2ac1e6ef6aac13608b
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/time.html.twig
+License: Expat
+FirstAppearance: irrelevant
+Comment: False positive: just a template.
+
+Checksum-Sha256: 1e39f92b06e3e981a1c0cb2b926fa6c0fa36fe550e18bafc41e41919b556a774
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/time.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/597637eceaff6f1605fc952e2053b2e833c373dc#diff-a9da1aa824a14cb59bc46ee353244ed9
+Comment: Icon showing a clock. Added by SensioLabs.
+
+Checksum-Sha256: 22171a6214bf26999cb54a89043dff6c905393aaae1df6a3f868a2ecd51a6d60
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/twig.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/7b853bb4cb05ba637e3bbb5365c2b1c1b8db57e6#diff-124211013f6fac7ea014650a607dc007
+Comment: Twig Icon. Added under terms of Expat.
+
+Checksum-Sha256: 227ee796fa2b95900793da68ac374696ea8bff7c22f21929c6b19e7918b1b310
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/ajax.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/597637eceaff6f1605fc952e2053b2e833c373dc#diff-2f0bf87ed78850fd06f67ddac72d02f4
+Comment: Icon showing two arrows. Added by SensioLabs.
+
+Checksum-Sha256: 24fde082658c2ceace638353000edfc84b0a4b0581235dc4bb0063e50de81674
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/symfony-logo.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-13662337e5d91c4364aa4107e303be43
+Comment: Icon showing the symfony logo. Added by SensioLabs.
+ Similar to
+ src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/symfony.svg
+ but in a different file format and size.
+
+Checksum-Sha256: 2711587c076247d3255b214c6e8ffd5ff9550f5ff7c8b48183ce9d64729738ad
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/forward.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/227ac77f11ae8c420d486891f7e5138ca470997a#diff-ba13123811e7706e2fc2da84a8bf8969
+Comment: Icon showing an arrow.
+
+Checksum-Sha256: 2a024449bd7f1d6d19dcc1f6824861ce082d752f7d06e3e68aedc27bc1c4024b
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/8a9c2c86ef4033bc7bc38ab2f508942476a7f92b#diff-b8bea341d4788bb077d10126aaf69223R190
+Comment: A circle. Added under terms of Expat.
+
+Checksum-Sha256: 3992b901546ef4e2685680badcd372d0834724caf9b1c95ea0f1e7c4ce6e5bc8
+Files: src/Symfony/Component/Serializer/Tests/Normalizer/DataUriNormalizerTest.php
+       src/Symfony/Component/HttpFoundation/Tests/File/Fixtures/test.gif
+       src/Symfony/Component/Mime/Tests/Fixtures/mimetypes/test.gif
+       src/Symfony/Component/Serializer/Tests/Fixtures/test.gif
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/ee83847cec9d415ee81f904827dfbf5815a14fe6#diff-1
+Comment: A 1x1 px image file in GIF format used in tests.
+
+Checksum-Sha256: 3a4e055635dde8df7c63d42eff471f10a7749d1a06cfbeb7252b89e03979bcde
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Profiler/base_js.html.twig
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/ed3e403b4bf8b183a1fe76559b9b7849c43a8a3e#diff-082690c3d9e670ab0578ad78d094df2cR64
+Comment: Icon showing the symfony logo. Added by SensioLabs.
+ Similar to the one with sha256 checksum
+ 0a143b4a17f49fc9fdb79e353e75e0da646a57b5c96a908db446ee0296304d12 but in a
+ different file format and size.
+
+Checksum-Sha256: 3d0e89db62f6de90627a6ab583dcb4c2f64e2feed19979de4cb9ee09174cd4b2
+Files: src/Symfony/Component/VarDumper/Dumper/HtmlDumper.php
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/1fe82fa49b73fec4257c26c3c5f414ad5d44d84c#diff-7874dd6345a156ac553cc4ea25038855R479
+Comment: Icon showing a chevron going up. Added under the terms of Expat.
+
+Checksum-Sha256: 3ee3da9c77cd0d6ec4a79db47bb56ff13c5fc937cec1302ee988b8738571efd9
+Files: src/Symfony/Component/String/UnicodeString.php
+License: Expat
+FirstAppearance: irrelevant
+Comment: False positive, copy of the file that doesn’t contain any image.
+
+Checksum-Sha256: 41933373756ce86bab2f3982cf917e57f7003919816a8237f496a1b975ce6777
+Files: src/Symfony/Component/HttpKernel/Resources/welcome.html.php
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/328b97ec7171750d347f5e7c7c0af22141eb88d9#diff-e54dbcc12edb0a8972606dbcdda8ca42R55
+ https://github.com/symfony/symfony/commit/328b97ec7171750d347f5e7c7c0af22141eb88d9#diff-e54dbcc12edb0a8972606dbcdda8ca42R63
+ https://github.com/symfony/symfony/commit/328b97ec7171750d347f5e7c7c0af22141eb88d9#diff-e54dbcc12edb0a8972606dbcdda8ca42R70
+ https://github.com/symfony/symfony/commit/328b97ec7171750d347f5e7c7c0af22141eb88d9#diff-e54dbcc12edb0a8972606dbcdda8ca42R76
+ https://github.com/symfony/symfony/commit/328b97ec7171750d347f5e7c7c0af22141eb88d9#diff-e54dbcc12edb0a8972606dbcdda8ca42R83
+ https://github.com/symfony/symfony/commit/328b97ec7171750d347f5e7c7c0af22141eb88d9#diff-e54dbcc12edb0a8972606dbcdda8ca42R90
+Comment: Actually six SVG images (broken script needs love) showing a page with
+ three exclamation marks, a tick, another page with three exclamation marks, a
+ book, two chevrons, and two people. Added under the terms of Expat.
+
+Checksum-Sha256: 423e65c163b220486bfa6d040fffd73f131c28dfe756a56502305965987f8d9f
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/icon-plus-square.svg
+       src/Symfony/Bundle/WebProfilerBundle/Resources/views/images/icon-plus-square.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-2a2ceaff9921080ba800be9639a29f8b
+Comment: Icon showing a white plus on a black background. Added under the terms of Expat.
+
+Checksum-Sha256: 45c3d4b9c6bf83fa0a81b7dfa84357924e99b700db072142d68876eda6f589c7
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/093669435ba24dac594a293b80c7bed572d2388f#diff-2
+Comment: Hover icon showing a plus and a minus. Added under terms of Expat.
+
+Checksum-Sha256: 4642c2f024431836812d927eff3cd73e39720f22d522a55cdf306be946076f87
+Files: src/Symfony/Bundle/DebugBundle/Resources/views/Profiler/icon.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-eaa23567aabe05eb6aa4b41bb15a55d3
+Comment: Icon showing crosshairs. Added by SensioLabs.
+
+Checksum-Sha256: 4e6b9fc821cd268da6dd496924b93d5c0a9509214b1480862a7789609b12b453
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/time.html.twig
+License: Expat
+FirstAppearance: irrelevant
+Comment: False positive: just a template.
+
+Checksum-Sha256: 4e8b689d3d3f6fe158be63f38de8f23640f61e28af63b4881e429f1ae94c95e1
+Files: src/Symfony/Component/String/Tests/UnicodeStringTest.php
+License: Expat
+FirstAppearance: irrelevant
+Comment: False positive, copy of the file that doesn’t contain any image.
+
+Checksum-Sha256: 509006f3f62eb30ddb6f0bf21a5bfc2b0f8889357c33613a5eccb88b4148886a
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/mailer.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/f152314e282409c8ea7f9c30801be8053566e310#diff-907b125062642c2150303e9cd9330709
+Comment: Icon showing a mail. Added under terms of Expat.
+
+Checksum-Sha256: 50cf51de9fcd69ebff213eec2e8575d498e12529019e9d3731fd4f53e65aa489
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/config.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-e7cb17ed639ec1a678c3e419d4be1546
+Comment: Icon showing sliders. Added by SensioLabs.
+
+Checksum-Sha256: 540f0596b1eb9ff2073aff3990516c1ebb286a14657acc233c8df364bcf22c50
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/8a9c2c86ef4033bc7bc38ab2f508942476a7f92b#diff-b8bea341d4788bb077d10126aaf69223R190
+Comment: A square with rounded corners. Added under terms of Expat.
+
+Checksum-Sha256: 5adeb93a329b57b85f6c93c03af5757d73f564c19aae562a0e01c72c5f09ea04
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/search.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-410481374afb163bee6cbe239f4d612e
+Comment: Icon showing a loupe. Added by SensioLabs.
+
+Checksum-Sha256: 5c9a6e76b7b28f02b722af15f6d9c539e1ec5c131c803b6e68bc34bcb4d952bb
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/8a9c2c86ef4033bc7bc38ab2f508942476a7f92b#diff-b8bea341d4788bb077d10126aaf69223R190
+Comment: Two circles. Added under terms of Expat.
+
+Checksum-Sha256: 5d42007dc90d43d20acdaab1bd1616118e1cd0f38af5c23699b38f0fa400d9b5
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/cache.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/7497f1c6b695f50707ccd15b6a04e2bcdcd33294#diff-66583da33b8d48d15cb1fde63ec38799
+Comment: Icon showing a grey stack. Added under the terms of Expat.
+
+Checksum-Sha256: 6653a37967b69d4da9716dd9642d0a2407b5b7fdcf19ad1e9ad77c847de77a33
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/icon-minus-square.svg
+       src/Symfony/Bundle/WebProfilerBundle/Resources/views/images/icon-minus-square.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-229be20e4a6068d8c95480b1b2a286a4
+Comment: Icon showing a white minus on a black background. Added under the terms of Expat.
+
+Checksum-Sha256: 66809ca12b9979536d8ec090e65d8552621ffe44e095e128f5b559daa3a71b31
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Profiler/base.html.twig
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-a8135aad7fa0d6ec6dcc91bba393e543
+Comment: Icon showing the symfony logo. Added by SensioLabs.
+ Similar to the one with sha256 checksum
+ 76d5a6c84332b17a19d0c2c4bd3be2959be081096ea9feb1686c67c48be6ee9b but in a
+ different file format and size.
+
+Checksum-Sha256: 67715a40d52ddad519462280654dbfc0923dc31a5d6dc3682fbde96662a21e9e
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/memory.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/597637eceaff6f1605fc952e2053b2e833c373dc#diff-6b61dfa005a9a672cd95e655ab13d1a1
+Comment: Icon for memory. Added by SensioLabs.
+
+Checksum-Sha256: 6d6089b57e86daa302d7cddbb83e2014ab876801057b481cce916e72c814a550
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/favicon.png.base64
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-2a82dcd97ab35db0b6beb41beba4ab43
+Comment: False positive: non decoded copy of
+ 7ed2fc24bc252a5e37bfb57627246fec9b80d2c30503d6162ba0ed1cefdc1a44
+
+Checksum-Sha256: 6f01d2cb0ab40ae064beef4c528cbcd666c944d357aaea7054c6c9307db3cd18
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/notifier.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/303096e5a15c7092f0eae238212dfeeb60c26445#diff-e898a8f1ad03904a77fa4323768a876e323a21d9563c4c0cf74b8cbbb7ee5ab9
+Comment: Icon showing a bell. Added under the terms of Expat.
+
+Checksum-Sha256: 6f4e2a8e1798b5afecacee7463941012139190fa6548a691ba0323288ad38500
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/chevron-right.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-d8cd81e3541c9c13d887739c02619daa
+Comment: Icon showing a white right chevron. Added under the terms of Expat.
+
+Checksum-Sha256: 6f6b2c7038f181364540792ce558bbf09980b0204b2faee0f3964ec100b4739e
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/icon-copy.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/4cdb9216074451dde7305d32fb1cc405c04da37b
+Comment: A rectangle over a partial rectangle
+
+Checksum-Sha256: 705422993511c01a2fd04a2f08823624ce1b07d4f8d3dfe1d4e3ff97508f9c9f
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/093669435ba24dac594a293b80c7bed572d2388f#diff-0
+Comment: Icon showing a plus and a minus. Added under terms of Expat.
+
+Checksum-Sha256: 74d891465a26ee786d6f9867341aa01f807490d422183fbb7988dac33e886c39
+Files: src/Symfony/Component/Validator/Tests/Constraints/Fixtures/test_portrait.gif
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/b0306242cc9bb9f28b2eaa69b1529e9f41daee53#diff-4
+Comment: A 1x2 px image file in GIF format used in tests.
+
+Checksum-Sha256: 76133af6519d7b69c4b7a2e05dba23cfc64a30c40a1402f05b6b09491ac71aba
+Files: src/Symfony/Bundle/WebProfilerBundle/Tests/Resources/IconTest.php
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/50c1d478cee0a0544b68133d3999169dd7d0bbd1#diff-226800d7a762f027e0a2cdbd071c2c50R23
+Comment: False positive: just a test pattern.
+
+Checksum-Sha256: 7640f11b90ba83318492ce7f2e7adf1f6bb03e34b7fd4e82bcf2ef4cf5656452
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/request.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-92c45ed3b014d035c2a0c31100325805
+Comment: Icon showing gearwheels. Added by SensioLabs.
+
+Checksum-Sha256: 79b2608035cdae8c20660d08b2bc9a20f392e5b7b069f42a7ccf817c3c898f9e
+Files: src/Symfony/Component/Validator/Tests/Constraints/Fixtures/test_4by3.gif
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/709db6fd75507bbab0daa3a67f72de5a777f8eb0#diff-1
+Comment: A 4x3 px image file in GIF format used in tests.
+
+Checksum-Sha256: 7f2eb18f3a6b39fe6b711d72070654b373d80eac9f50f67b6b62a21eb8eb40d9
+Files:  src/Symfony/Component/Validator/Tests/Constraints/Fixtures/test_16by9.gif
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/0f85ba030b8725642ed0fdef804e969d88fcd7e5#diff-5dd4839cda3dec6eb13c926393862c2ad109e5dfbe7acc2aa8f052fc09ef9838
+Comment: A 16x9 white image, for tests.
+
+Checksum-Sha256: e0acf4ba88650843740deeb43734999cd054b63860671a0750485359ff5084fc
+Files: src/Symfony/Component/String/AbstractUnicodeString.php
+License: Expat
+FirstAppearance: irrelevant
+Comment: False positive, copy of the file that doesn’t contain any image.
+
+Checksum-Sha256: 7bcf64b3f778cd371491476fda2ad7304abb750881259135ee1c707c291275d7
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/http-client.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/51640012f14a3533d9d1887be68470a2edeededa#diff-50493beb86ce7a7c6fb2e8c73a1784b2
+Comment: Icon showing a graph. Added under the terms of Expat.
+
+Checksum-Sha256: 7ed2fc24bc252a5e37bfb57627246fec9b80d2c30503d6162ba0ed1cefdc1a44
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/favicon.png.base64
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-2a82dcd97ab35db0b6beb41beba4ab43
+Comment: Icon showing a red ghost. Added under the terms of Expat.
+
+Checksum-Sha256: 8255707b639b721c4c5a4329de6574331aadb575cedc7f032aa4858a0db73ae6
+Files: src/Symfony/Component/Serializer/Tests/Normalizer/DataUriNormalizerTest.php
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/cc7b5af17019ca941ce1553376aaf6455a1fc919
+Comment: Blank square for tests.
+
+Checksum-Sha256: 8270b787efa507721636e378057192c646750182a2ab8085148ea09b24ce4fa2
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/symfony-ghost.svg.php
+       src/Symfony/Component/ErrorHandler/Resources/assets/images/symfony-ghost.svg.php
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-3ed0bc6f52fd8899492347f34dc88d06
+Comment: Icon showing a Ghost with a text bubble. Added under the terms of
+ Expat. Identical to 82da18a495b2765c5ae0962414ebff985babb094d2ac14b97bca49cec13f0ee5
+ with <?= $this->addElementToGhost(); ?> inside the code.
+
+Checksum-Sha256: 8a833c0f43f9ea9229e86b8e9061bdb7d675752bed0d34c9949c5b7bdf2675bf
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/icon-book.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-55eb24afab23e1643af1ddb7e65de044
+Comment: Icon showing a white book. Added under the terms of Expat.
+
+Checksum-Sha256: 8b8f480b3b7be8a8a7c0cc9314241cdde1941cd08d4a0498bcae174e5e41ca46
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/093669435ba24dac594a293b80c7bed572d2388f#diff-1
+Comment: A circle. Added under terms of Expat.
+
+Checksum-Sha256: 9384e6b16c1b0d11729a32c4e49333583726a2be947b2d9f123c69bf918f6651
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/8a9c2c86ef4033bc7bc38ab2f508942476a7f92b#diff-b8bea341d4788bb077d10126aaf69223R190
+Comment: Hover icon showing a plus and a minus. Added under terms of Expat.
+
+Checksum-Sha256: 9611bf8f1b8e6a0acb179c46f45f0c1da5502ccca854ded57b41d35c883a46c4
+Files: src/Symfony/Bundle/SecurityBundle/Resources/views/Collector/icon.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-c81ffc35882a5cfd1e5f0ae725a4a86d
+Comment: Icon showing an avatar placeholder. Added by SensioLabs.
+
+Checksum-Sha256: 991fcdf4f203496952c42324977df8595ba221522613aa508f6285e5c718af0e
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/093669435ba24dac594a293b80c7bed572d2388f#diff-3
+Comment: A hover circle. Added under terms of Expat.
+
+Checksum-Sha256: 9c50b02195dd5a8b34346bd2550c2fb6cbef700a22d120c10bc37c4197247faf
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/filter.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/bcb3329279a0774861e0c37155867ff45f7b7b6f
+Comment: Three horizontal lines, from longest to shorter, descending
+
+Checksum-Sha256: 9dbbb7a87e4b2a3488d709273dcbdaac0e2e57edf9e790f5339e238779762f75
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/yes.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-0711ab7f5bda58a470c50e70149bd074
+Comment: Icon showing a check mark. Added by SensioLabs.
+
+Checksum-Sha256: a55aa745c263529b2d9d0ed08971383313faf13da7be5c3287ca67c9f0a044b6
+Files: src/Symfony/Component/Validator/Tests/Constraints/Fixtures/test_landscape.gif
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/b0306242cc9bb9f28b2eaa69b1529e9f41daee53#diff-3
+Comment: A 2x1 px image file in GIF format used in tests.
+
+Checksum-Sha256: af1671f0ee4dd9044c2a6092d6fd9394871fe9e256899e2d466362c4b294528f
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/icon-minus-square-o.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-3a40f1b1d05c691c4fb190617abeb1ac
+Comment: Icon showing a black minus on a white background. Added under the terms of Expat.
+
+Checksum-Sha256: f4b388594325b0e7b05291ce615200c0d29994f34c38a5b77e4e0bd12683e00c
+Files: src/Symfony/Component/String/Tests/AbstractUnicodeTestCase.php
+License: Expat
+FirstAppearance: irrelevant
+Comment: False positive, copy of the file that doesn’t contain any image.
+
+Checksum-Sha256: bd164c322dd37b1b2e466499b3290b0cc3aec1796fb4c36e9a7739a00866a98f
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/router.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-f4c2200a628172cc41c5fe14041e6023
+Comment: Icon showing a fingerpost. Added by SensioLabs.
+
+Checksum-Sha256: ca2cbbaad07e9ffc1dec5389fc92fb6557977de68378582fc01beeb4f3d40162
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/no-gray.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/4399dabfd48ca0c7b9ea500cd69c7402346ee123#diff-d3c56c68b1a79e4527b0e6acc66085dc
+Comment: Icon showing a grey saltire. Added under the terms of Expat.
+
+Checksum-Sha256: cd4ccdfba154bc61a65cd043ba991bccd78174eb54203928b9eade59ab4c8785
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/exception.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-f83838acc346fe7f191028ad6a5825f4
+Comment: Icon showing a ghost. Added by SensioLabs.
+
+Checksum-Sha256: d3f2cb743eda372c5e41da63ea9c2d13c1ee50f1a5244cc221d7a33c7315531f
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/form.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/597637eceaff6f1605fc952e2053b2e833c373dc#diff-5e1ebbc912d7adcc0cd80500804ff6a9
+Comment: Icon showing a clipboard. Added by SensioLabs.
+
+Checksum-Sha256: dba033a374a623b46d4f969610f7e4701922a8255c9510cbf59954231d92431a
+Files: src/Symfony/Component/VarDumper/Dumper/HtmlDumper.php
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/c8d420ddffb7a3b2ff9f0e059a720e4efafa49cf#diff-7874dd6345a156ac553cc4ea25038855R690
+Comment: Icon showing two squares. Added under the terms of Expat.
+
+Checksum-Sha256: dc18aace119f62ae4c0e90356483aff5831bc841aaa128305b1c83aaed843aec
+Files: src/Symfony/Component/ErrorHandler/Resources/assets/images/icon-support.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/9d0c26377ff0517f30d15bfb9c438aec6da0203e#diff-d1909e4b34dcbc7d0d3a765ace1b826f
+Comment: Icon showing a white tape. Added under the terms of Expat.
+
+Checksum-Sha256: e16f1596201850fd4a63680b27f603cb64e67176159be3d8ed78a4403fdb1700
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Profiler/base_js.html.twig
+       src/Symfony/Bundle/WebProfilerBundle/Tests/Resources/IconTest.php
+       src/Symfony/Component/ErrorHandler/Resources/assets/images/symfony-ghost.svg.php
+License: Expat
+FirstAppearance: Irrelevant
+Comment: False positive: empty file introduced by last check_image_licenses change
+
+Checksum-Sha256: e5d276ff9edc1a59cb93056ed7140df71f07ce80a5959ac8d5d436af9348858c
+Files: src/Symfony/Component/HttpKernel/Resources/welcome.html.php
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/4517319e53688239b0544f8dd4206977ae4d05da#diff-e54dbcc12edb0a8972606dbcdda8ca42R70
+Comment: Icon showing an exclamation mark in a triangle (warning). Added under the
+ terms of Expat.
+
+Checksum-Sha256: e7aec9487f25bbb41010752744a7f468a2fda7c6fabc656df4090297b41fe2d8
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/no.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/05773c263b1704adb833a8e59d7884c2049b36f1#diff-866d4c8d64fcbce28d524863ae7afdb3
+Comment: Icon showing a red saltire. Added by SensioLabs.
+
+Checksum-Sha256: eff5f180c92c09e85f5c8cbbedced077fde3f1b7036499c79d060ee508f23925
+Files: src/Symfony/Component/Serializer/Tests/Normalizer/DataUriNormalizerTest.php
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/cc7b5af17019ca941ce1553376aaf6455a1fc919
+Comment: Tick for tests.
+
+Checksum-Sha256: f5bdb2c5df81c9e36afdc68c753547fde094f387244d0d7008f28433c7412d7e
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/close.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/597637eceaff6f1605fc952e2053b2e833c373dc#diff-4b685cf2fa9e8dde0887e0d924c0d9c1
+Comment: Icon showing a saltire. Added by SensioLabs.
+
+Checksum-Sha256: fab4485f7eb56a931be5897d0b1f0b2f2ac7e01f6f06a8d9e56838c5409b7316
+Files: src/Symfony/Component/Validator/Tests/Constraints/Fixtures/test_corrupted.gif
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/7b6a96e4f5110dbb581ea65cb3f4e4720a6d5369#diff-342a6070c4585d35332731a70052a431
+Comment: Broken image
+
+Checksum-Sha256: fd434fe9ec91624601cd47518ffebee731f2c053db5e9cc324f6c24d2c1c65f1
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/logger.svg
+License: CC-BY-SA-3.0
+FirstAppearance: https://github.com/symfony/symfony/commit/597637eceaff6f1605fc952e2053b2e833c373dc#diff-ce7e46d2bfc13f63a75f2947d4d2cb99
+Comment: Icon showing a book with an exclamation mark on its cover. Added by
+ SensioLabs.
+
+Checksum-Sha256: fe3fe02f688ba46bf727c7b3c0e9b65ba62374e344e5b9eef11427b5c10b0b28
+Files: src/Symfony/Bundle/WebProfilerBundle/Resources/views/Icon/redirect.svg
+License: Expat
+FirstAppearance: https://github.com/symfony/symfony/commit/0a1b2841f7ca964551c8339ef031ae2fb84c50b5#diff-10afdcf299fedab1151afa657797081a
+Comment: Icon showing an arrow.
+

@@ -151,9 +151,37 @@ abstract class AbstractSessionListener implements EventSubscriberInterface, Rese
                 $request = $event->getRequest();
                 $requestSessionCookieId = $request->cookies->get($sessionName);
 
+<<<<<<< HEAD
                 $isSessionEmpty = ($session instanceof Session ? $session->isEmpty() : empty($session->all())) && empty($_SESSION); // checking $_SESSION to keep compatibility with native sessions
                 if ($requestSessionCookieId && $isSessionEmpty) {
                     $response->headers->clearCookie(
+=======
+<<<<<<< HEAD
+            $isSessionEmpty = ($session instanceof Session ? $session->isEmpty() : empty($session->all())) && empty($_SESSION); // checking $_SESSION to keep compatibility with native sessions
+            if ($requestSessionCookieId && $isSessionEmpty) {
+                $response->headers->clearCookie(
+                    $sessionName,
+                    $sessionCookiePath,
+                    $sessionCookieDomain,
+                    $sessionCookieSecure,
+                    $sessionCookieHttpOnly,
+                    $sessionCookieSameSite
+                );
+            } elseif ($sessionId !== $requestSessionCookieId && !$isSessionEmpty) {
+                $expire = 0;
+                $lifetime = $sessionOptions['cookie_lifetime'] ?? null;
+                if ($lifetime) {
+                    $expire = time() + $lifetime;
+                }
+
+                $response->headers->setCookie(
+                    Cookie::create(
+=======
+                $isSessionEmpty = $session->isEmpty() && empty($_SESSION); // checking $_SESSION to keep compatibility with native sessions
+                if ($requestSessionCookieId && $isSessionEmpty) {
+                    $response->headers->clearCookie(
+>>>>>>> 2f59c5a79c (Fix use_cookies framework session configuration)
+>>>>>>> 1c77757860 (Fix use_cookies framework session configuration)
                         $sessionName,
                         $sessionCookiePath,
                         $sessionCookieDomain,

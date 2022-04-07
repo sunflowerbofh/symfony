@@ -1,0 +1,34 @@
+From: David_Prévot <david@tilapin.org>
+Date: Wed, 24 Nov 2021 08:45:45 -0400
+Subject: [Config] Partially revert 4c2c5c9ba76ba8db9e88748ae519605c01b4b736
+
+To be investigated
+---
+ .../Component/Config/Tests/Builder/GeneratedConfigTest.php     | 11 +---------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
+
+diff --git a/src/Symfony/Component/Config/Tests/Builder/GeneratedConfigTest.php b/src/Symfony/Component/Config/Tests/Builder/GeneratedConfigTest.php
+--- a/src/Symfony/Component/Config/Tests/Builder/GeneratedConfigTest.php
++++ b/src/Symfony/Component/Config/Tests/Builder/GeneratedConfigTest.php
+@@ -73,20 +73,11 @@ class GeneratedConfigTest extends TestCa
+     public function testConfig(string $name, string $alias)
+     {
+         $basePath = __DIR__.'/Fixtures/';
++        $configBuilder = $this->generateConfigBuilder('Symfony\\Component\\Config\\Tests\\Builder\\Fixtures\\'.$name);
+         $callback = include $basePath.$name.'.config.php';
+         $expectedOutput = include $basePath.$name.'.output.php';
+-        $expectedCode = $basePath.$name;
+-
+-        // to regenerate snapshot files, uncomment these lines
+-        // (new Filesystem())->remove($expectedCode);
+-        // $configBuilder = $this->generateConfigBuilder('Symfony\\Component\\Config\\Tests\\Builder\\Fixtures\\'.$name, $expectedCode);
+-
+-        $outputDir = sys_get_temp_dir().\DIRECTORY_SEPARATOR.uniqid('sf_config_builder', true);
+-        $configBuilder = $this->generateConfigBuilder('Symfony\\Component\\Config\\Tests\\Builder\\Fixtures\\'.$name, $outputDir);
+         $callback($configBuilder);
+ 
+-        $this->assertDirectorySame($expectedCode, $outputDir);
+-
+         $this->assertInstanceOf(ConfigBuilderInterface::class, $configBuilder);
+         $this->assertSame($alias, $configBuilder->getExtensionAlias());
+         $output = $configBuilder->toArray();

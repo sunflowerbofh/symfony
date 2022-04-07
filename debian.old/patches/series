@@ -1,0 +1,5 @@
+VarDumper-Adapt-to-homemade-autoload.patch
+Yaml-Adapt-to-homemade-autoload.patch
+Don-t-fail-on-warning.patch
+Adapt-conflict-to-Debian-expectations.patch
+Revert-ErrorHandler-Skip-same-vendor-method-deprecations-.patch

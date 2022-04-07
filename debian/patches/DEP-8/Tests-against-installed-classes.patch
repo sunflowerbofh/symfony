@@ -1,0 +1,21 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Tue, 30 Jul 2019 01:13:53 -0400
+Subject: Tests against installed classes
+
+---
+ src/Symfony/Component/Cache/Tests/LockRegistryTest.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Symfony/Component/Cache/Tests/LockRegistryTest.php b/src/Symfony/Component/Cache/Tests/LockRegistryTest.php
+index 30ff677..a1503f0 100644
+--- a/src/Symfony/Component/Cache/Tests/LockRegistryTest.php
++++ b/src/Symfony/Component/Cache/Tests/LockRegistryTest.php
+@@ -23,7 +23,7 @@ class LockRegistryTest extends TestCase
+         }
+         $lockFiles = LockRegistry::setFiles([]);
+         LockRegistry::setFiles($lockFiles);
+-        $expected = array_map('realpath', glob(__DIR__.'/../Adapter/*'));
++        $expected = array_map('realpath', glob('/usr/share/php/Symfony/Component/Cache/Adapter/*'));
+         $this->assertSame($expected, $lockFiles);
+     }
+ }
