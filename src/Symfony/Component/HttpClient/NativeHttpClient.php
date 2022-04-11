@@ -358,7 +358,15 @@ final class NativeHttpClient implements HttpClientInterface, LoggerAwareInterfac
             }
         }
 
+<<<<<<< HEAD
         return static function (NativeClientState $multi, ?string $location, $context) use (&$redirectHeaders, $proxy, &$info, $maxRedirects, $onProgress): ?string {
+=======
+<<<<<<< HEAD
+        return static function (NativeClientState $multi, ?string $location, $context) use ($redirectHeaders, $proxy, &$info, $maxRedirects, $onProgress): ?string {
+=======
+        return static function (NativeClientState $multi, ?string $location, $context) use (&$redirectHeaders, $proxy, $noProxy, &$info, $maxRedirects, $onProgress): ?string {
+>>>>>>> ee5769670c ([HttpClient] Fix sending content-length when streaming the body)
+>>>>>>> cd1aa2e277 ([HttpClient] Fix sending content-length when streaming the body)
             if (null === $location || $info['http_code'] < 300 || 400 <= $info['http_code']) {
                 $info['redirect_url'] = null;
 
