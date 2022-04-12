@@ -31,8 +31,15 @@ return (new PhpCsFixer\Config())
         'protected_to_private' => false,
         'native_constant_invocation' => ['strict' => false],
         'nullable_type_declaration_for_default_null_value' => ['use_nullable_type_declaration' => false],
+<<<<<<< HEAD
         'header_comment' => ['header' => $fileHeaderComment],
+=======
+<<<<<<< HEAD
+>>>>>>> 6b96a918b9 (Add missing license header)
         'modernize_strpos' => true,
+=======
+        'header_comment' => ['header' => $fileHeaderComment],
+>>>>>>> a0224de937 (Add missing license header)
     ])
     ->setRiskyAllowed(true)
     ->setFinder(
