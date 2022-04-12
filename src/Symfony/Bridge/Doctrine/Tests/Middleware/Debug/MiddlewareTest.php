@@ -70,10 +70,21 @@ EOT);
     {
         return [
             'executeStatement' => [
+<<<<<<< HEAD
                 static fn (Statement|Connection $target, mixed ...$args) => $target->executeStatement(...$args),
             ],
             'executeQuery' => [
                 static fn (Statement|Connection $target, mixed ...$args) => $target->executeQuery(...$args),
+=======
+                static function (object $target, ...$args) {
+                    return $target->executeStatement(...$args);
+                },
+            ],
+            'executeQuery' => [
+                static function (object $target, ...$args): Result {
+                    return $target->executeQuery(...$args);
+                },
+>>>>>>> 28ebdf6084 (Add missing license header)
             ],
         ];
     }
@@ -151,8 +162,23 @@ EOT);
     public function provideEndTransactionMethod(): array
     {
         return [
+<<<<<<< HEAD
             'commit' => [static fn (Connection $conn) => $conn->commit(), '"COMMIT"'],
             'rollback' => [static fn (Connection $conn) => $conn->rollBack(), '"ROLLBACK"'],
+=======
+            'commit' => [
+                static function (Connection $conn): bool {
+                    return $conn->commit();
+                },
+                '"COMMIT"',
+            ],
+            'rollback' => [
+                static function (Connection $conn): bool {
+                    return $conn->rollBack();
+                },
+                '"ROLLBACK"',
+            ],
+>>>>>>> 28ebdf6084 (Add missing license header)
         ];
     }
 
@@ -192,12 +218,29 @@ EOT);
     {
         return [
             'commit and exec' => [
+<<<<<<< HEAD
                 static fn (Connection $conn, string $sql) => $conn->executeStatement($sql),
                 static fn (Connection $conn) => $conn->commit(),
             ],
             'rollback and query' => [
                 static fn (Connection $conn, string $sql) => $conn->executeQuery($sql),
                 static fn (Connection $conn) => $conn->rollBack(),
+=======
+                static function (Connection $conn, string $sql) {
+                    return $conn->executeStatement($sql);
+                },
+                static function (Connection $conn): bool {
+                    return $conn->commit();
+                },
+            ],
+            'rollback and query' => [
+                static function (Connection $conn, string $sql): Result {
+                    return $conn->executeQuery($sql);
+                },
+                static function (Connection $conn): bool {
+                    return $conn->rollBack();
+                },
+>>>>>>> 28ebdf6084 (Add missing license header)
             ],
         ];
     }
