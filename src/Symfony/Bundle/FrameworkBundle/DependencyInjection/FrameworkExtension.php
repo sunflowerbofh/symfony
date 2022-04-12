@@ -1890,9 +1890,20 @@ class FrameworkExtension extends Extension
 
             // Generate stores
             $storeDefinitions = [];
+<<<<<<< HEAD
             foreach ($resourceStores as $resourceStore) {
                 $storeDsn = $container->resolveEnvPlaceholders($resourceStore, null, $usedEnvs);
+=======
+<<<<<<< HEAD
+            foreach ($resourceStores as $storeDsn) {
+                $storeDsn = $container->resolveEnvPlaceholders($storeDsn, null, $usedEnvs);
+>>>>>>> e48bf0e018 (Fix env resolution in lock configuration)
                 $storeDefinition = new Definition(PersistingStoreInterface::class);
+=======
+            foreach ($resourceStores as $resourceStore) {
+                $storeDsn = $container->resolveEnvPlaceholders($resourceStore, null, $usedEnvs);
+                $storeDefinition = new Definition(interface_exists(StoreInterface::class) ? StoreInterface::class : PersistingStoreInterface::class);
+>>>>>>> c1a9af7a0b (Fix env resolution in lock configuration)
                 $storeDefinition->setFactory([StoreFactory::class, 'createStore']);
                 $storeDefinition->setArguments([$resourceStore]);
 
