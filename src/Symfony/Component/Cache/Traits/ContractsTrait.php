@@ -42,7 +42,11 @@ trait ContractsTrait
     public function setCallbackWrapper(?callable $callbackWrapper): callable
     {
         if (!isset($this->callbackWrapper)) {
+<<<<<<< HEAD
             $this->callbackWrapper = LockRegistry::compute(...);
+=======
+            $this->callbackWrapper = \Closure::fromCallable([LockRegistry::class, 'compute']);;
+>>>>>>> 3b6a56d6fa ([Cache] make LockRegistry use static properties instead of static variables)
 
             if (\in_array(\PHP_SAPI, ['cli', 'phpdbg'], true)) {
                 $this->setCallbackWrapper(null);

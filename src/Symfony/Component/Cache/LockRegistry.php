@@ -96,8 +96,13 @@ final class LockRegistry
             return $callback($item, $save);
         }
 
+<<<<<<< HEAD
         self::$signalingException ??= unserialize("O:9:\"Exception\":1:{s:16:\"\0Exception\0trace\";a:0:{}}");
         self::$signalingCallback ??= function () { throw self::$signalingException; };
+=======
+        self::$signalingException ?? self::$signalingException = unserialize("O:9:\"Exception\":1:{s:16:\"\0Exception\0trace\";a:0:{}}");
+        self::$signalingCallback ?? self::$signalingCallback = function () { throw self::$signalingException; };
+>>>>>>> 3355d7c70f ([Cache] make LockRegistry use static properties instead of static variables)
 
         while (true) {
             try {
@@ -131,8 +136,17 @@ final class LockRegistry
             }
 
             try {
+<<<<<<< HEAD
                 $value = $pool->get($item->getKey(), self::$signalingCallback, 0);
+=======
+<<<<<<< HEAD
+                $value = $pool->get($item->getKey(), $signalingCallback, 0);
+>>>>>>> 3355d7c70f ([Cache] make LockRegistry use static properties instead of static variables)
                 $logger?->info('Item "{key}" retrieved after lock was released', ['key' => $item->getKey()]);
+=======
+                $value = $pool->get($item->getKey(), self::$signalingCallback, 0);
+                $logger && $logger->info('Item "{key}" retrieved after lock was released', ['key' => $item->getKey()]);
+>>>>>>> 3b6a56d6fa ([Cache] make LockRegistry use static properties instead of static variables)
                 $save = false;
 
                 return $value;
