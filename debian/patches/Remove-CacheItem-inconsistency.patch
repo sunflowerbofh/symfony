@@ -1,0 +1,15 @@
+From: Katharina Drexel <katharina.drexel@bfh.ch>
+Date:  Tue, 12 Apr 2022 14:27:40 +0200
+Subject: Avoiding "FileLoader must be compatible with Psr\Cache\CacheItemInterface::expiresAt" error
+
+diff -Naurp a/src/Symfony/Component/Cache/CacheItem.php b/symfony/src/Symfony/Component/Cache/CacheItem.php
+--- a/src/Symfony/Component/Cache/CacheItem.php
++++ b/src/Symfony/Component/Cache/CacheItem.php
+@@ -74,7 +74,7 @@ final class CacheItem implements ItemInt
+      *
+      * @return $this
+      */
+-    public function expiresAt(?\DateTimeInterface $expiration): static
++    public function expiresAt($expiration): static
+     {
+         $this->expiry = null !== $expiration ? (float) $expiration->format('U.u') : null;

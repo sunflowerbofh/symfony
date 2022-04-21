@@ -1,0 +1,23 @@
+From: David_Prévot <david@tilapin.org>
+Date: Tue, 27 Apr 2021 10:22:14 -0400
+Subject: Drop composer-plugin-api that confuses pkg-php-tools
+
+Forwarded: not-needed
+---
+ src/Symfony/Component/Runtime/composer.json | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/Symfony/Component/Runtime/composer.json b/src/Symfony/Component/Runtime/composer.json
+index f8112d9..dcf7329 100644
+--- a/src/Symfony/Component/Runtime/composer.json
++++ b/src/Symfony/Component/Runtime/composer.json
+@@ -15,8 +15,7 @@
+         }
+     ],
+     "require": {
+-        "php": ">=8.0.2",
+-        "composer-plugin-api": "^1.0|^2.0"
++        "php": ">=8.0.2"
+     },
+     "require-dev": {
+         "composer/composer": "^1.0.2|^2.0",

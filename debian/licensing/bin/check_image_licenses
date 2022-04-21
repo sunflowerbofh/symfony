@@ -1,0 +1,486 @@
+#!/bin/bash
+
+# Copyright (c) 2014-2015 Daniel Beyer <dabe@deb.ymc.ch>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+set -e
+
+
+##########################
+function script_help
+{
+  echo "" 1>&2
+  echo "Deal with image licenses" 1>&2
+  echo "" 1>&2
+  echo "Usage: $0 [OPTIONS]" 1>&2
+  echo "=====" 1>&2
+  echo "" 1>&2
+  echo "OPTIONS:" 1>&2
+  echo "========" 1>&2
+  echo "-h | --help" 1>&2
+  echo "  Do nothing, but display this command help." 1>&2
+  echo "" 1>&2
+  echo "--check" 1>&2
+  echo "  Check the licensing of images." 1>&2
+  echo "  Mutually exclusive with any other option listed below." 1>&2
+  echo "" 1>&2
+  echo "--clean" 1>&2
+  echo "  Run '# debuild clean', first." 1>&2
+  echo "" 1>&2
+  echo "--get-all-images" 1>&2
+  echo "  Walk through ./src, find all images (even they are base64 encoded in" 1>&2
+  echo "  other files) and copy them into '$check_folder_folder'." 1>&2
+  echo "" 1>&2
+  echo "--generate-html-image-index" 1>&2
+  echo "  Generate a html page with information about each image and put it" 1>&2
+  echo "  into '$check_folder_folder'." 1>&2
+  echo "  Implies option '--get-all-images'" 1>&2
+  echo "" 1>&2
+  echo "--override-checksum-file" 1>&2
+  echo "  Override checksum file found in '$checksum_file'." 1>&2
+  echo "  Please use this option with care." 1>&2
+  echo "" 1>&2
+}
+
+do_check=0
+do_clean=0
+do_exctract_and_copy=0
+do_gen_html=0
+do_override_checksum_file=0
+check_folder_folder='debian/tmp/icon_license_check'
+checksum_file='debian/licensing/image-checksums.dcf'
+declare -A FS_CHECKSUM_FILES_MAP
+NEWLINE='
+'
+GLOBAL_EXIT_CODE=0
+
+TEMP=$(getopt -o h --long help,check,clean,get-all-images,generate-html-image-index,override-checksum-file \
+              -n "$(basename $0)" -q -- "$@") && getopt_exit_code=0 || getopt_exit_code=$?
+if [ $getopt_exit_code -ne 0 ]; then
+  script_help
+  exit 1
+fi
+
+eval set -- "$TEMP"
+
+while true
+do
+  case "$1" in
+    -h|--help)
+      script_help
+      exit 1
+    ;;
+
+    --check)
+      do_check=1
+      shift 1
+    ;;
+
+    --clean)
+      do_clean=1
+      shift 1
+    ;;
+
+    --get-all-images)
+      do_exctract_and_copy=1
+      shift 1
+    ;;
+
+    --generate-html-image-index)
+      do_gen_html=1
+      do_exctract_and_copy=1
+      shift 1
+    ;;
+
+    --override-checksum-file)
+      do_override_checksum_file=1
+      shift 1
+    ;;
+
+    --)
+      shift
+      break
+    ;;
+
+    *)
+      script_help
+      exit 1
+    ;;
+  esac
+done
+
+something_to_do=$(( $do_clean \
+                    + $do_check \
+                    + $do_exctract_and_copy \
+                    + $do_gen_html \
+                    + $do_override_checksum_file \
+                 ))
+if [ $something_to_do -le 0 ] || \
+   [ $# -ne 0 ]; then
+  script_help
+  exit 1
+fi
+
+if [ $do_check -ne 0 ] && \
+   [ $something_to_do -ne 1 ]; then
+  echo "E: Option '--check' is mutually exclusive with some other option." 1>&2
+  echo "   Use option '--help' for details." 1>&2
+  exit 1
+fi
+
+if [ ! -d "src" ]; then
+  echo "E: Please make sure you run this from the root folder of the package" 1>&2
+  exit 1
+fi
+
+if [ $do_clean -eq 1 ]; then
+  echo "I: Cleaning up..." 1>&2
+  debuild clean 1>/dev/null
+  echo "I: Cleaned up." 1>&2
+fi
+
+if [ $do_exctract_and_copy -eq 1 ]; then
+  if [ ! -d "$check_folder_folder" ]; then
+    mkdir -p $check_folder_folder
+  else
+    echo "E: Folder '$check_folder_folder', please run this script with parameter --clean, first." 1>&2
+    exit 1
+  fi
+fi
+
+for file_containing_images in $( grep -r -E -e '((png|gif);base64|<svg )' src/ | cut -d : -f 1 | grep -v -E -e '\.svg$'| sort -u )
+do
+  extracted_image_src_name=$(echo $file_containing_images | sed -r 's|/|_|g')
+  for data in $(grep -E '(png|gif);base64' $file_containing_images \
+                | sed -r "s|.*[\"'(](data:image/[^;]*;base64[^\"')]*)[\"')].*|\1\n|g" \
+                | sed -r 's|.*;base64,||' \
+                | sort -u)
+  do
+    if [ \( $data != 'ZHVtbXk="' \) -a \( $data != "/>']," \) ]; then # encoded 'dummy'
+      extracted_image_checksum=$(echo $data | base64 -d - | sha256sum - | cut -d ' ' -f 1)
+      if [ -n "${FS_CHECKSUM_FILES_MAP[$extracted_image_checksum]}" ]; then
+        for proceeded_files_for_checksum in ${FS_CHECKSUM_FILES_MAP[$extracted_image_checksum]}
+        do
+          if [ "$proceeded_files_for_checksum" = "$file_containing_images" ]; then
+            continue 2
+          fi
+        done
+      fi
+      FS_CHECKSUM_FILES_MAP[$extracted_image_checksum]+=" $file_containing_images"
+
+      if [ $do_exctract_and_copy -eq 1 ]; then
+        target_image_filename="$extracted_image_checksum"
+        if [ ! -f "$check_folder_folder/$target_image_filename" ]; then
+          echo $data | base64 -d - > $check_folder_folder/$target_image_filename
+        fi
+        ln -s $target_image_filename $check_folder_folder/$extracted_image_src_name+$target_image_filename
+      fi
+    fi
+  done
+
+  ORG_IFS=$IFS
+  IFS=$NEWLINE
+  for svg_data in $(awk '/<svg /,/svg>/' $file_containing_images \
+                   | sed 's|\\/|/|' \
+                   | sed -r 's|.*(<svg .*</svg>).*|\1|' \
+                   | tr '\n' \ | sed 's|</svg>|</svg>\n|')
+  do
+    extracted_image_checksum=$(echo $svg_data | sha256sum - | cut -d ' ' -f 1)
+    if [ -n "${FS_CHECKSUM_FILES_MAP[$extracted_image_checksum]}" ]; then
+      IFS=" "
+      for proceeded_files_for_checksum in ${FS_CHECKSUM_FILES_MAP[$extracted_image_checksum]}
+      do
+        if [ "$proceeded_files_for_checksum" = "$file_containing_images" ]; then
+          continue 2
+        fi
+      done
+      IFS=$NEWLINE
+    fi
+    FS_CHECKSUM_FILES_MAP[$extracted_image_checksum]+=" $file_containing_images"
+
+    if [ $do_exctract_and_copy -eq 1 ]; then
+      target_image_filename="$extracted_image_checksum"
+      if [ ! -f "$check_folder_folder/$target_image_filename" ]; then
+        echo $svg_data > $check_folder_folder/$target_image_filename.svg
+      fi
+      ln -s $target_image_filename.svg $check_folder_folder/$extracted_image_src_name+$target_image_filename
+    fi
+  done
+  IFS=$ORG_IFS
+done
+
+for image_file in $(find src | grep -E -e "(png|gif|ico|svg)")
+do
+  image_src_name=$(echo $image_file | sed -r 's|/|_|g')
+  image_checksum=$(sha256sum $image_file | cut -d ' ' -f 1)
+  FS_CHECKSUM_FILES_MAP[$image_checksum]+=" $image_file"
+  if [ $(echo $image_file | grep -c -E -e '\.svg$') -eq 1 ]; then
+    file_ending=".svg"
+  else
+    file_ending=""
+  fi
+
+  if [ $do_exctract_and_copy -eq 1 ]; then
+    target_image_filename=$(sha256sum $image_file | cut -d ' ' -f 1)
+    if [ ! -f "$check_folder_folder/$image_checksum" ]; then
+      cp $image_file $check_folder_folder/$image_checksum$file_ending
+    fi
+
+    ln -s $image_checksum$file_ending $check_folder_folder/$image_src_name
+  fi
+done
+
+if [ $do_override_checksum_file -eq 1 ]; then
+  echo "I: Generating a new checksum file..." 1>&2
+  echo "W: This will override the existing one!" 1>&2
+  rm -f $checksum_file
+  touch $checksum_file
+  for checksum in $(echo "${!FS_CHECKSUM_FILES_MAP[@]}" | tr ' ' '\n' | sort)
+  do
+    echo "Checksum-Sha256: $checksum" >> $checksum_file
+    first_element=1
+    licenses=""
+    for file in ${FS_CHECKSUM_FILES_MAP[$checksum]}
+    do
+      if [ $first_element -eq 1 ]; then
+        echo "Files: $file" >> $checksum_file
+      else
+        echo "       $file" >> $checksum_file
+      fi
+      first_element=0
+
+      licenses+="$(./debian/licensing/bin/get-license-of-file-from-debian-copyright $file | sed -r 's/ and /\n/g')$NEWLINE"
+      if [ ${PIPESTATUS[0]} -ne 0 ]; then
+        echo "W: Failed to get a license for: $file" 1>&2
+      fi
+    done
+    licenses=$(echo "$licenses" | sort -u | tr '\n' '|' | sed -r 's/^\|(.*)\|$/\1/' | sed -r 's/\|/ vs. /g')
+    echo "License: !WILD_GUESS! $licenses" >> $checksum_file
+    echo "FirstAppearance: Please add a reference to the first appearance in upstream's VCS!" >> $checksum_file
+    echo "Comment: This is just a wild guess of the license. You need to manually figure this out!" >> $checksum_file
+    echo "" >> $checksum_file
+  done
+  echo "I: Checksum file '$checksum_file' overridden. Please go and check it." 1>&2
+fi
+
+checksum_from_filesystem="${!FS_CHECKSUM_FILES_MAP[@]}"
+checksum_from_checksum_file="$(grep-dctrl -n -s Checksum-Sha256 -F Checksum-Sha256 '' $checksum_file)"
+
+if [ $do_exctract_and_copy -eq 1 ]; then
+  echo "I: You can find the images in: $check_folder_folder" 1>&2
+fi
+
+if [ $do_gen_html -eq 1 ]; then
+  echo "I: Generating html image info page..." 1>&2
+  html_info_page="$check_folder_folder/index.html"
+
+  echo '<!DOCTYPE html>' > $html_info_page
+  echo '<html lang="en"><head><meta charset="utf-8"/>' >> $html_info_page
+  echo "<title>Image info generated by $0 on $(LC_ALL=C date)</title>" >> $html_info_page
+  echo '<script type="text/javascript" src="/usr/share/javascript/jquery/jquery.min.js"></script>' >> $html_info_page
+  echo '<script type="text/javascript" src="/usr/share/javascript/jquery-tablesorter/jquery.tablesorter.min.js"></script>' >> $html_info_page
+  echo '</head><body>' >> $html_info_page
+  echo '<table border="1" id="info" class="tablesorter"><thead><tr>' >> $html_info_page
+  echo '<th>Sha256-Checksum&nbsp;&#8597;<br/>' >> $html_info_page
+  echo '  Image (linked to its first appearance)</th>' >> $html_info_page
+  echo '<th>License&nbsp;&#8597;</th>' >> $html_info_page
+  echo '<th>Files (or embeded in files)&nbsp;&#8597;</th>' >> $html_info_page
+  echo '<th>Comment&nbsp;&#8597;</th>' >> $html_info_page
+  echo '</tr></thead><tbody>' >> $html_info_page
+  for checksum in $(echo $checksum_from_filesystem $checksum_from_checksum_file | tr ' ' '\n' | sort -u)
+  do
+    license="$(grep-dctrl -n -s License -F Checksum-Sha256 --exact-match "$checksum" $checksum_file | sort -u)"
+    files="$(grep-dctrl -n -s Files -F Checksum-Sha256 --exact-match "$checksum" $checksum_file | tr '\n' ' ' | sed -r 's/[[:space:]]+/<br\/>\n/g')"
+    if [ -z "$files" ]; then
+      files=${FS_CHECKSUM_FILES_MAP[$checksum]}
+    fi
+    upstream_vcs="$(grep-dctrl -n -s FirstAppearance -F Checksum-Sha256 --exact-match "$checksum" $checksum_file || true)"
+    comment="$(grep-dctrl -n -s Comment -F Checksum-Sha256 --exact-match "$checksum" $checksum_file || true)"
+
+    echo '<tr>' >> $html_info_page
+    echo '<td align="center">'$checksum'<br/>' >> $html_info_page
+    if [ -n "$upstream_vcs" ]; then
+      echo '  <a href="'$upstream_vcs'">' >> $html_info_page
+      closing_A='</a>'
+    else
+      closing_A=''
+    fi
+    if [ -f "$check_folder_folder/$checksum" ]; then
+      echo '    <img border="5" src="'$checksum'"/>' >> $html_info_page
+    elif [ -f "$check_folder_folder/$checksum.svg" ]; then
+      echo '    <img border="5" src="'$checksum.svg'"/>' >> $html_info_page
+    else
+      echo '    <i>Image not present on local system</i>'  >> $html_info_page
+    fi
+    echo "  $closing_A</td>" >> $html_info_page
+    echo "<td>$license</td>" >> $html_info_page
+    echo "<td>$files</td>" >> $html_info_page
+    echo "<td><pre>$comment</pre></td>" >> $html_info_page
+
+    echo '</tr>' >> $html_info_page
+  done
+  echo '</tbody></table>' >> $html_info_page
+  echo '<script type="text/javascript" id="js">try{$(document).ready(function() {$("#info").tablesorter(); })} catch(e){alert("Debian package libjs-jquery-tablesorter is needed in order to have a sortable table.")}</script>' >> $html_info_page
+  echo '</body></html>' >> $html_info_page
+
+  echo "I: You can find the html image info page at: file:///$(pwd)/$html_info_page" 1>&2
+fi
+
+if [ $do_check -eq 1 ]; then
+  echo "I: Checking licensing of images..." 1>&2
+  declare -A CSF_CHECKSUM_FILES_MAP
+  for checksum in $(echo $checksum_from_filesystem $checksum_from_checksum_file | tr ' ' '\n' | sort -u)
+  do
+    license_of_image="$(grep-dctrl -n -s License -F Checksum-Sha256 --exact-match "$checksum" $checksum_file | sort -u)"
+    CSF_CHECKSUM_FILES_MAP[$checksum]="$(grep-dctrl -n -s Files -F Checksum-Sha256 --exact-match "$checksum" $checksum_file | tr '\n' ' ' | sed -r 's/[[:space:]]+/ /g')"
+
+    if [ $(echo "$license_of_image" | wc -l) -gt 1 ]; then
+      echo "E: Multiple licenses defined for same checksum in $checksum_file" 2>&1
+      echo "   * Checksum-Sha256: $checksum" 1>&2
+      echo "   * License: $(echo $license_of_image | sed -r 's/ / vs. /g')" 1>&2
+      echo "   * Files: ${CSF_CHECKSUM_FILES_MAP[$checksum]}" 1>&2
+      GLOBAL_EXIT_CODE=1
+      continue
+    fi
+
+    if [ -z "${FS_CHECKSUM_FILES_MAP[$checksum]}" ]; then
+      echo "E: Obsolete checksum in $checksum_file" 1>&2
+      echo "   * Checksum-Sha256: $checksum" 1>&2
+      echo "   * License: $license_of_image" 1>&2
+      echo "   * Files: ${CSF_CHECKSUM_FILES_MAP[$checksum]}" 1>&2
+      GLOBAL_EXIT_CODE=1
+      continue
+    fi
+
+    if [ -z "$license_of_image" ]; then
+      echo "E: Missing license in $checksum_file" 1>&2
+      echo "   * Checksum-Sha256: $checksum" 1>&2
+      echo "   * Files: ${FS_CHECKSUM_FILES_MAP[$checksum]}" 1>&2
+      GLOBAL_EXIT_CODE=1
+      continue
+    elif [ $(echo $license_of_image | wc -w) -ne 1 ]; then
+      echo "E: Not exactly one license defined in $checksum_file" 1>&2
+      echo "   * Checksum-Sha256: $checksum" 1>&2
+      echo "   * License: $license_of_image" 1>&2
+      echo "   * Files: ${FS_CHECKSUM_FILES_MAP[$checksum]}" 1>&2
+      GLOBAL_EXIT_CODE=1
+      continue
+    fi
+
+    for csf_file in ${CSF_CHECKSUM_FILES_MAP[$checksum]}
+    do
+      if [ ! -f "$csf_file" ]; then
+        echo "E: Non-existing file defined in $checksum_file" 1>&2
+        echo "   * Checksum-Sha256: $checksum" 1>&2
+        echo "   * License: $license_of_image" 1>&2
+        echo "   * Files: $file" 1>&2
+        GLOBAL_EXIT_CODE=1
+        continue
+      fi
+    done
+
+    if [ "$(echo ${FS_CHECKSUM_FILES_MAP[$checksum]} | tr '[:space:]' '\n' | sort | tr -d '\n')" \
+         != \
+         "$(echo ${CSF_CHECKSUM_FILES_MAP[$checksum]} | tr '[:space:]' '\n' | sort | tr -d '\n')" ]; then
+      echo "E: Different files on filesystem for checksum than define defined in debian/copyright" 1>&2
+      echo "   * Checksum-Sha256: $checksum" 1>&2
+      echo "   * Filesystem: ${FS_CHECKSUM_FILES_MAP[$checksum]}" 1>&2
+      echo "   * $checksum_file: ${CSF_CHECKSUM_FILES_MAP[$checksum]}" 1>&2
+      GLOBAL_EXIT_CODE=1
+      continue
+    fi
+
+    for fs_file in ${FS_CHECKSUM_FILES_MAP[$checksum]}
+    do
+      licensing_of_src_file="$(./debian/licensing/bin/get-license-of-file-from-debian-copyright $fs_file || true)"
+
+      if [ -z "$licensing_of_src_file" ]; then
+        echo "E: Failed to get a license based on debian/copyright" 1>&2
+        echo "   * Checksum-Sha256: $checksum" 1>&2
+        echo "   * Files: $fs_file" 1>&2
+        GLOBAL_EXIT_CODE=1
+        continue
+      fi
+
+      file_on_filesystem_defined_in_checksum_file=0
+      for csf_file in ${CSF_CHECKSUM_FILES_MAP[$checksum]}
+      do
+        if [ "$fs_file" == "$csf_file" ]; then
+          file_on_filesystem_defined_in_checksum_file=1
+          break
+        fi
+      done
+      if [ $file_on_filesystem_defined_in_checksum_file -ne 1 ]; then
+        echo "E: File not registered for checksum in $checksum_file" 1>&2
+        echo "   * Checksum-Sha256: $checksum" 1>&2
+        echo "   * License: $license_of_image" 1>&2
+        echo "   * Files: $fs_file" 1>&2
+        GLOBAL_EXIT_CODE=1
+        continue
+      fi
+
+      if [ -n "$(echo $licensing_of_src_file | sed -r 's/[a-zA-Z0-9. -]//g')" ]; then
+        echo "E: Complex licensing (e.g. usage of ',') not supported for debian/copyright" 1>&2
+        echo "   Occurred while processing file '$fs_file'" 1>&2
+        echo "   that is licensed as '$licensing_of_src_file'." 1>&2
+        GLOBAL_EXIT_CODE=1
+        continue
+      fi
+
+      if [ $(echo $licensing_of_src_file | grep -c -E -e '[,[:space:]]or[,[:space:]]') -gt 0 ]; then
+        echo "E: Complex licensing (e.g. usage of 'or') not supported for debian/copyright." 1>&2
+        echo "   Occurred while processing file '$fs_file'," 1>&2
+        echo "   licensed as '$licensing_of_src_file'." 1>&2
+        GLOBAL_EXIT_CODE=1
+        continue
+      fi
+
+      license_missmatch=1
+      mime_type="$(file -b --mime-type $fs_file)"
+      if [ "$(echo $mime_type | cut -d '/' -f 1)" == "image" ]; then
+        if [ "$licensing_of_src_file" == "$license_of_image" ]; then
+          license_missmatch=0
+        fi
+      else
+        for src_license in $(echo $licensing_of_src_file |sed -r 's/and//g')
+        do
+          if [ "$src_license" == "$license_of_image" ]; then
+            license_missmatch=0
+            break
+          fi
+        done
+      fi
+
+      if [ $license_missmatch -ne 0 ]; then
+        echo "E: Licensing problem detected:" 1>&2
+        echo "   Checksum-Sha256: $checksum  " 1>&2
+        echo "    * File: $fs_file" 1>&2
+        echo "    * $license_of_image ($checksum_file)" 1>&2
+        echo "    * $licensing_of_src_file (debian/copyright)" 1>&2
+        GLOBAL_EXIT_CODE=1
+        continue
+      fi
+    done
+  done
+  echo "I: All images proceeded." 1>&2
+fi
+
+exit $GLOBAL_EXIT_CODE
+

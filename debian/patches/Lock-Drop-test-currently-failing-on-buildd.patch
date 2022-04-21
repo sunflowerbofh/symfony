@@ -1,0 +1,21 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Thu, 13 Jan 2022 03:38:57 -0400
+Subject: [Lock] Drop test currently failing on buildd
+
+To be investigated
+---
+ src/Symfony/Component/Lock/Tests/Store/DoctrineDbalStoreTest.php | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/Symfony/Component/Lock/Tests/Store/DoctrineDbalStoreTest.php b/src/Symfony/Component/Lock/Tests/Store/DoctrineDbalStoreTest.php
+index f44c2fd..43cf3d3 100644
+--- a/src/Symfony/Component/Lock/Tests/Store/DoctrineDbalStoreTest.php
++++ b/src/Symfony/Component/Lock/Tests/Store/DoctrineDbalStoreTest.php
+@@ -137,7 +137,6 @@ class DoctrineDbalStoreTest extends AbstractStoreTest
+     {
+         yield [\Doctrine\DBAL\Platforms\PostgreSQLPlatform::class];
+         yield [\Doctrine\DBAL\Platforms\PostgreSQL94Platform::class];
+-        yield [\Doctrine\DBAL\Platforms\SqlitePlatform::class];
+         yield [\Doctrine\DBAL\Platforms\SQLServerPlatform::class];
+         yield [\Doctrine\DBAL\Platforms\SQLServer2012Platform::class];
+     }

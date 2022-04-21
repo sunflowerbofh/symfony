@@ -1,0 +1,48 @@
+From: Daniel Beyer <dabe@deb.ymc.ch>
+Date: Thu, 22 Jan 2015 08:46:10 +0100
+Subject: Add more tests to '@group tty'
+
+Not all tests using a tty are in @group tty. This should be reported (and
+fixed) upstream but needs further investigation:
+ - There might be more tests needing a tty.
+ - It could be that some tests in group tty may not need a tty.
+
+Forwarded: no
+---
+ src/Symfony/Component/Process/Tests/ProcessTest.php | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/src/Symfony/Component/Process/Tests/ProcessTest.php b/src/Symfony/Component/Process/Tests/ProcessTest.php
+index b1a8cc7..afbb4fb 100644
+--- a/src/Symfony/Component/Process/Tests/ProcessTest.php
++++ b/src/Symfony/Component/Process/Tests/ProcessTest.php
+@@ -473,6 +473,9 @@ class ProcessTest extends TestCase
+         $this->assertGreaterThan(0, $process->getExitCode());
+     }
+ 
++    /**
++     * @group tty
++     */
+     public function testTTYCommand()
+     {
+         if ('\\' === \DIRECTORY_SEPARATOR) {
+@@ -492,6 +495,9 @@ class ProcessTest extends TestCase
+         $this->assertSame(Process::STATUS_TERMINATED, $process->getStatus());
+     }
+ 
++    /**
++     * @group tty
++     */
+     public function testTTYCommandExitCode()
+     {
+         if ('\\' === \DIRECTORY_SEPARATOR) {
+@@ -509,6 +515,9 @@ class ProcessTest extends TestCase
+         $this->assertTrue($process->isSuccessful());
+     }
+ 
++    /**
++     * @group tty
++     */
+     public function testTTYInWindowsEnvironment()
+     {
+         $this->expectException(RuntimeException::class);

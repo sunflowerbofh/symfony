@@ -1,0 +1,114 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Sun, 5 May 2019 16:42:40 -1000
+Subject: [HttpKernel] Drop tests using unexpected path as cache
+
+To be investigated
+---
+ .../Component/HttpKernel/Tests/KernelTest.php      | 87 ----------------------
+ 1 file changed, 87 deletions(-)
+
+diff --git a/src/Symfony/Component/HttpKernel/Tests/KernelTest.php b/src/Symfony/Component/HttpKernel/Tests/KernelTest.php
+index 6c90943..5429217 100644
+--- a/src/Symfony/Component/HttpKernel/Tests/KernelTest.php
++++ b/src/Symfony/Component/HttpKernel/Tests/KernelTest.php
+@@ -165,59 +165,6 @@ class KernelTest extends TestCase
+         $kernel->boot();
+     }
+ 
+-    public function testShutdownCallsShutdownOnAllBundles()
+-    {
+-        $bundle = $this->createMock(Bundle::class);
+-        $bundle->expects($this->once())
+-            ->method('shutdown');
+-
+-        $kernel = $this->getKernel([], [$bundle]);
+-
+-        $kernel->boot();
+-        $kernel->shutdown();
+-    }
+-
+-    public function testShutdownGivesNullContainerToAllBundles()
+-    {
+-        $bundle = $this->createMock(Bundle::class);
+-        $bundle->expects($this->exactly(2))
+-            ->method('setContainer')
+-            ->withConsecutive(
+-                [$this->isInstanceOf(ContainerInterface::class)],
+-                [null]
+-            );
+-
+-        $kernel = $this->getKernel(['getBundles']);
+-        $kernel->expects($this->any())
+-            ->method('getBundles')
+-            ->willReturn([$bundle]);
+-
+-        $kernel->boot();
+-        $kernel->shutdown();
+-    }
+-
+-    public function testHandleCallsHandleOnHttpKernel()
+-    {
+-        $type = HttpKernelInterface::MAIN_REQUEST;
+-        $catch = true;
+-        $request = new Request();
+-
+-        $httpKernelMock = $this->getMockBuilder(HttpKernel::class)
+-            ->disableOriginalConstructor()
+-            ->getMock();
+-        $httpKernelMock
+-            ->expects($this->once())
+-            ->method('handle')
+-            ->with($request, $type, $catch);
+-
+-        $kernel = $this->getKernel(['getHttpKernel']);
+-        $kernel->expects($this->once())
+-            ->method('getHttpKernel')
+-            ->willReturn($httpKernelMock);
+-
+-        $kernel->handle($request, $type, $catch);
+-    }
+-
+     public function testHandleBootsTheKernel()
+     {
+         $type = HttpKernelInterface::MAIN_REQUEST;
+@@ -431,40 +378,6 @@ EOF
+         $kernel->terminate(Request::create('/'), new Response());
+     }
+ 
+-    public function testTerminateDelegatesTerminationOnlyForTerminableInterface()
+-    {
+-        // does not implement TerminableInterface
+-        $httpKernel = new TestKernel();
+-
+-        $kernel = $this->getKernel(['getHttpKernel']);
+-        $kernel->expects($this->once())
+-            ->method('getHttpKernel')
+-            ->willReturn($httpKernel);
+-
+-        $kernel->boot();
+-        $kernel->terminate(Request::create('/'), new Response());
+-
+-        $this->assertFalse($httpKernel->terminateCalled, 'terminate() is never called if the kernel class does not implement TerminableInterface');
+-
+-        // implements TerminableInterface
+-        $httpKernelMock = $this->getMockBuilder(HttpKernel::class)
+-            ->disableOriginalConstructor()
+-            ->setMethods(['terminate'])
+-            ->getMock();
+-
+-        $httpKernelMock
+-            ->expects($this->once())
+-            ->method('terminate');
+-
+-        $kernel = $this->getKernel(['getHttpKernel']);
+-        $kernel->expects($this->exactly(2))
+-            ->method('getHttpKernel')
+-            ->willReturn($httpKernelMock);
+-
+-        $kernel->boot();
+-        $kernel->terminate(Request::create('/'), new Response());
+-    }
+-
+     public function testKernelWithoutBundles()
+     {
+         $kernel = new KernelWithoutBundles('test', true);

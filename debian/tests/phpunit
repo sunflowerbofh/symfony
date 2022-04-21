@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+
+# we only access local servers, so just unset any proxy setting
+unset http_proxy
+unset no_proxy
+
+BASH_XTRACEFD=1
+set -x
+
+patch -p1 < debian/patches/DEP-8/Tests-against-installed-classes.patch
+patch -p1 < debian/patches/Remove-CacheItem-inconsistency.patch
+patch -p1 < debian/patches/Must-be-compatible-error.patch
+
+mkdir --parents vendor
+cp debian/autoload_runtime.php vendor
+phpab   --output vendor/autoload.php \
+	--whitelist '*\\tests\\*' \
+	--tolerant \
+	--template debian/autoload.php.tests.tpl \
+	--blacklist 'symfony\\component\\dependencyinjection\\tests\\fixtures\\container\\projectservicecontainer' \
+	--exclude 'src/Symfony/Bridge/ProxyManager/Tests/LazyProxy/PhpDumper/Fixtures/proxy-implem.php' \
+	--exclude 'src/Symfony/Component/Routing/Tests/Fixtures/AttributesFixtures/*' \
+	src/Symfony
+
+set +x
+components=$(find src/Symfony -mindepth 3 -maxdepth 4 -type f -name phpunit.xml.dist -printf '%h\n')
+echo "$components" | parallel --gnu --keep-order 'echo -e "\\nRunning {} tests"; SYMFONY_DEPRECATIONS_HELPER=weak phpunit --colors=always --exclude-group network,tty,benchmark,intl-data,functional,composer {} || (echo -e "\\e[41mKO\\e[0m {}" && $(exit 1));' && exit_code=0 || exit_code=$?
+set -x
+
+patch -Rp1 < debian/patches/DEP-8/Tests-against-installed-classes.patch
+patch -Rp1 < debian/patches/Remove-CacheItem-inconsistency.patch
+patch -Rp1 < debian/patches/Must-be-compatible-error.patch
+
+exit $exit_code

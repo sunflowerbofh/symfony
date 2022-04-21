@@ -1,0 +1,5 @@
+Repository: https://github.com/symfony/symfony.git
+Repository-Browse: https://github.com/symfony/symfony
+Bug-Database: https://github.com/symfony/symfony/issues
+Bug-Submit: https://github.com/symfony/symfony/issues/new
+Security-Contact: https://github.com/symfony/symfony/tree/HEAD/.github/SECURITY.md

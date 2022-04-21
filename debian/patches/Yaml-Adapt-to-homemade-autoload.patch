@@ -1,0 +1,27 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Thu, 7 Jan 2021 00:35:01 -0400
+Subject: [Yaml] Adapt to homemade autoload
+
+Forwarded: not-needed
+---
+ src/Symfony/Component/Yaml/Resources/bin/yaml-lint | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/Symfony/Component/Yaml/Resources/bin/yaml-lint b/src/Symfony/Component/Yaml/Resources/bin/yaml-lint
+index 0ad73d7..b615262 100755
+--- a/src/Symfony/Component/Yaml/Resources/bin/yaml-lint
++++ b/src/Symfony/Component/Yaml/Resources/bin/yaml-lint
+@@ -25,10 +25,10 @@ function includeIfExists(string $file): bool
+ }
+ 
+ if (
+-    !includeIfExists(__DIR__ . '/../../../../autoload.php') &&
+-    !includeIfExists(__DIR__ . '/../../vendor/autoload.php') &&
+-    !includeIfExists(__DIR__ . '/../../../../../../vendor/autoload.php')
++    stream_resolve_include_path('Symfony/Component/Yaml/autoload.php')
+ ) {
++    include_once 'Symfony/Component/Yaml/autoload.php';
++} else {
+     fwrite(STDERR, 'Install dependencies using Composer.'.PHP_EOL);
+     exit(1);
+ }
