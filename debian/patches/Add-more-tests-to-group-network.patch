@@ -1,0 +1,30 @@
+From: Katharina Drexel <katharina.drexel@bfh.ch>
+Date: Fri, 13 May 2022 15:36:52 +0200
+Subject: Some localhost tests which do not work in chroot or for other reason
+
+To be investigated
+
+diff --git a/src/Symfony/Component/HttpFoundation/Tests/ResponseFunctionalTest.php b/src/Symfony/Component/HttpFoundation/Tests/ResponseFunctionalTest.php
+index 5d1e81dcfc..3387e89ccb 100644
+--- a/src/Symfony/Component/HttpFoundation/Tests/ResponseFunctionalTest.php
++++ b/src/Symfony/Component/HttpFoundation/Tests/ResponseFunctionalTest.php
+@@ -40,6 +40,7 @@ class ResponseFunctionalTest extends TestCase
+ 
+     /**
+      * @dataProvider provideCookie
++     * @group network
+      */
+     public function testCookie($fixture)
+     {
+diff --git a/src/Symfony/Component/HttpFoundation/Tests/Session/Storage/Handler/AbstractSessionHandlerTest.php b/src/Symfony/Component/HttpFoundation/Tests/Session/Storage/Handler/AbstractSessionHandlerTest.php
+index f6417720d2..7ca8c936a1 100644
+--- a/src/Symfony/Component/HttpFoundation/Tests/Session/Storage/Handler/AbstractSessionHandlerTest.php
++++ b/src/Symfony/Component/HttpFoundation/Tests/Session/Storage/Handler/AbstractSessionHandlerTest.php
+@@ -40,6 +40,7 @@ class AbstractSessionHandlerTest extends TestCase
+ 
+     /**
+      * @dataProvider provideSession
++     * @group network
+      */
+     public function testSession($fixture)
+     {

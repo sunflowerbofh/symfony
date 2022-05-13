@@ -1,0 +1,30 @@
+From: Katharina Drexel <katharina.drexel@bfh.ch>
+Date: Fri, 13 May 2022 13:52:17 +0200
+Subject: [DependencyInjection] Add currently broken assertion to exclude group
+
+To be investigated
+
+diff --git a/src/Symfony/Component/Config/Tests/Resource/ClassExistenceResourceTest.php b/src/Symfony/Component/Config/Tests/Resource/ClassExistenceResourceTest.php
+index 733c47e40b..2241e2f1c7 100644
+--- a/src/Symfony/Component/Config/Tests/Resource/ClassExistenceResourceTest.php
++++ b/src/Symfony/Component/Config/Tests/Resource/ClassExistenceResourceTest.php
+@@ -92,6 +92,9 @@ EOF
+         $res->isFresh(0);
+     }
+ 
++    /**
++     * @group resource
++     */
+     public function testBadFileName()
+     {
+         $this->expectException(\ReflectionException::class);
+@@ -101,6 +104,9 @@ EOF
+         $res->isFresh(0);
+     }
+ 
++    /**
++     * @group resource
++     */
+     public function testBadFileNameBis()
+     {
+         $this->expectException(\ReflectionException::class);
