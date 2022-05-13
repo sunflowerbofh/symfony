@@ -1,0 +1,35 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Fri, 31 Jul 2020 19:15:55 +0200
+Subject: [PhpUnit] Use phpunit directly
+
+---
+ src/Symfony/Bridge/PhpUnit/Tests/expectdeprecationfail.phpt | 2 +-
+ src/Symfony/Bridge/PhpUnit/Tests/expectrisky.phpt           | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Symfony/Bridge/PhpUnit/Tests/expectdeprecationfail.phpt b/src/Symfony/Bridge/PhpUnit/Tests/expectdeprecationfail.phpt
+index 9f9bf8c..e490541 100644
+--- a/src/Symfony/Bridge/PhpUnit/Tests/expectdeprecationfail.phpt
++++ b/src/Symfony/Bridge/PhpUnit/Tests/expectdeprecationfail.phpt
+@@ -3,7 +3,7 @@ Test ExpectDeprecationTrait failing tests
+ --FILE--
+ <?php
+ $test =  realpath(__DIR__.'/FailTests/ExpectDeprecationTraitTestFail.php');
+-passthru('php '.getenv('SYMFONY_SIMPLE_PHPUNIT_BIN_DIR').'/simple-phpunit.php --colors=never '.$test);
++passthru('phpunit --colors=never '.$test);
+ ?>
+ --EXPECTF--
+ PHPUnit %s by Sebastian Bergmann and contributors.
+diff --git a/src/Symfony/Bridge/PhpUnit/Tests/expectrisky.phpt b/src/Symfony/Bridge/PhpUnit/Tests/expectrisky.phpt
+index 608c564..991ab13 100644
+--- a/src/Symfony/Bridge/PhpUnit/Tests/expectrisky.phpt
++++ b/src/Symfony/Bridge/PhpUnit/Tests/expectrisky.phpt
+@@ -5,7 +5,7 @@ Test NoAssertionsTestRisky risky test
+ --FILE--
+ <?php
+ $test =  realpath(__DIR__.'/FailTests/NoAssertionsTestRisky.php');
+-passthru('php '.getenv('SYMFONY_SIMPLE_PHPUNIT_BIN_DIR').'/simple-phpunit.php --fail-on-risky --colors=never '.$test);
++passthru('phpunit --fail-on-risky --colors=never '.$test);
+ ?>
+ --EXPECTF--
+ PHPUnit %s by Sebastian Bergmann and contributors.

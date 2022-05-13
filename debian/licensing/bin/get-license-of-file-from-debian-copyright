@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# Copyright (c) 2014 Daniel Beyer <dabe@deb.ymc.ch>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+set -f
+set -e
+
+if [ -z "$(which grep-dctrl)" ]; then
+  echo "E: Command 'grep-dctrl' from package 'dctrl-tools' missing" 1>&2
+  exit 1
+fi
+
+file=$1
+
+if [ -z "$file" ] ||
+   [ $# -ne 1 ]; then
+  echo "Usage: $0 RELATIVE_PATH_TO_FILE" 1>&2
+  exit 1
+fi
+
+file="./$(echo $file | sed -r 's|^[./]+||')"
+
+if [ ! -f "$file" ]; then
+  echo "E: No such file: $file" 1>&2
+  exit 1
+fi
+
+if [ ! -f "debian/copyright" ]; then
+  echo "E: Please run this from the package's root directory" 1>&2
+  exit 1
+fi
+
+license=""
+for path_pattern in $(grep-dctrl -n -F License -s Files '' debian/copyright | sed -r 's/^[[:space:]]+//' | grep -v -E -e '^\*$') '*'
+do
+  if [ "$(find ./ -path "./$path_pattern" -path "$file" -type f)" == "$file" ]; then
+    eregex_cmpat_pattern="$(echo $path_pattern | sed -r 's/([*?\])/\\\1/g')"
+    license=$(grep-dctrl -n -s License -F Files --eregex "(^$eregex_cmpat_pattern\$|[[:space:]]$eregex_cmpat_pattern|$eregex_cmpat_pattern[[:space:]])" debian/copyright)
+    break
+  fi
+done
+
+if [ -z "$license" ]; then
+  echo "E: Failed to get a license for '$file' from 'debian/copyright'" 1>&2
+  exit 1
+fi
+
+echo $license
+
+exit 0

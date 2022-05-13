@@ -1,0 +1,47 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Thu, 21 Sep 2017 06:54:56 -1000
+Subject: Drop tests data throwing a RuntimeException outside a Composer
+ environment
+
+---
+ src/Symfony/Bundle/FrameworkBundle/Tests/Functional/FragmentTest.php | 1 -
+ src/Symfony/Bundle/FrameworkBundle/Tests/Functional/ProfilerTest.php | 1 -
+ src/Symfony/Bundle/FrameworkBundle/Tests/Functional/SessionTest.php  | 1 -
+ 3 files changed, 3 deletions(-)
+
+diff --git a/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/FragmentTest.php b/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/FragmentTest.php
+index b514ed3..d7e0d02 100644
+--- a/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/FragmentTest.php
++++ b/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/FragmentTest.php
+@@ -41,7 +41,6 @@ TXT
+     {
+         return [
+             [false],
+-            [true],
+         ];
+     }
+ 
+diff --git a/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/ProfilerTest.php b/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/ProfilerTest.php
+index 7b65ca5..7f51a4c 100644
+--- a/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/ProfilerTest.php
++++ b/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/ProfilerTest.php
+@@ -61,7 +61,6 @@ class ProfilerTest extends AbstractWebTestCase
+     {
+         return [
+             [false],
+-            [true],
+         ];
+     }
+ }
+diff --git a/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/SessionTest.php b/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/SessionTest.php
+index 7d66ff1..c058b1e 100644
+--- a/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/SessionTest.php
++++ b/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/SessionTest.php
+@@ -198,7 +198,6 @@ class SessionTest extends AbstractWebTestCase
+     {
+         return [
+             // configfile, insulate
+-            ['config.yml', true],
+             ['config.yml', false],
+         ];
+     }

@@ -1,0 +1,1867 @@
+Source: symfony
+Maintainer: Debian PHP PEAR Maintainers <pkg-php-pear@lists.alioth.debian.org>
+Uploaders: Daniel Beyer <dabe@deb.ymc.ch>, David Prévot <taffit@debian.org>
+Section: php
+Priority: optional
+Standards-Version: 4.6.0
+Build-Depends: debhelper-compat (= 13),
+               dh-sequence-phpcomposer,
+               pkg-php-tools (>= 1.41~)
+Build-Depends-Indep: composer,
+                     dctrl-tools,
+                     file,
+                     jq,
+                     locales-all,
+                     parallel,
+                     php-amqp,
+                     php-async-aws-ses,
+                     php-async-aws-sns,
+                     php-async-aws-sqs,
+                     php-cache-integration-tests,
+                     php-curl,
+                     php-doctrine-annotations,
+                     php-doctrine-data-fixtures,
+                     php-doctrine-orm,
+                     php-email-validator,
+                     php-friendsofphp-proxy-manager-lts,
+                     php-gd,
+                     php-guzzlehttp-promises,
+                     php-http-httplug,
+                     php-intl,
+                     php-ldap,
+                     php-masterminds-html5,
+                     php-mbstring,
+                     php-memcached,
+                     php-monolog,
+                     php-nyholm-psr7,
+                     php-pda-pheanstalk,
+                     php-phpdbg,
+                     php-phpdocumentor-reflection-docblock,
+                     php-phpstan-phpdoc-parser,
+                     php-predis,
+                     php-psr-container,
+                     php-psr-http-client,
+                     php-psr-link,
+                     php-psr-log,
+                     php-psr-simple-cache,
+                     php-sqlite3,
+                     php-symfony-contracts (>= 2),
+                     php-symfony-mercure,
+                     php-symfony-polyfill-php80,
+                     php-symfony-polyfill-php81,
+                     php-symfony-security-acl,
+                     php-twig (>= 3),
+                     php-twig-cssinliner-extra (>= 3),
+                     php-twig-inky-extra (>= 3),
+                     php-twig-markdown-extra (>= 3),
+                     php-uuid,
+                     phpab,
+                     phpunit
+Build-Conflicts: php-redis
+Homepage: https://symfony.com/
+Vcs-Browser: https://salsa.debian.org/php-team/pear/symfony
+Vcs-Git: https://salsa.debian.org/php-team/pear/symfony.git -b debian/latest
+Rules-Requires-Root: no
+
+Package: php-symfony
+Architecture: all
+Depends: ${misc:Depends},
+         ${phpcomposer:Debian-replace},
+         ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Breaks: ${phpcomposer:Debian-conflict}
+Provides: ${phpcomposer:Debian-provide}
+Description: set of reusable components and framework for web projects
+ ${phpcomposer:description} allows one to create websites and web
+ applications. It’s a set of tools and a development methodology.
+ .
+ This package depends on every component. Applications depending on
+ Symfony should rather depend on individual components actually needed
+ by them.
+
+Package: php-symfony-asset
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/asset.html
+Description: manage asset URLs
+ The Symfony Asset Component manages URL generation and versioning of
+ web assets such as CSS stylesheets, JavaScript files and image files.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-browser-kit
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/browser_kit.html
+Description: simulate the behavior of a web browser
+ The Symfony BrowserKit Component simulates the behavior of a web browser,
+ allowing you to make requests, click on links and submit forms
+ programmatically.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-cache
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/cache.html
+Description: provides an extended PSR-6, PSR-16 (and tags) implementation
+ The Symfony Cache Component provides an extended PSR-6 implementation for
+ adding cache to applications. It is designed to have a low overhead so
+ that caching is fastest. It ships with a few caching adapters for the
+ most widespread and suited to caching backends. It also provides a
+ `doctrine/cache` proxy adapter to cover more advanced caching needs
+ and a proxy adapter for greater interoperability between PSR-6
+ implementations.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-config
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/config.html
+Description: load configurations from different data sources
+ The Symfony Config Component provides the infrastructure for loading
+ configurations from different data sources and optionally monitoring
+ these for changes. Additional tools for validating, normalizing and
+ handling of defaults are provided.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-console
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/console.html
+Description: run tasks from the command line
+ The Symfony Console Component can be used to implement recurring
+ or long running tasks, such as cronjobs, imports or other batch
+ jobs. Additionally it assists the creation of nice looking command
+ line interfaces.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-css-selector
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/css_selector.html
+Description: convert CSS selectors to XPath expressions
+ The Symfony CssSelector Component can be used to convert CSS selectors
+ to XPath expressions. It basically is a port of the Python lxml library.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-dependency-injection
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/dependency_injection.html
+Description: standardize and centralize construction of objects
+ The Symfony DependencyInjection Component allows one to standardize and
+ centralize the way objects are constructed in an application.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-dom-crawler
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/dom_crawler.html
+Description: ease DOM navigation for HTML and XML documents
+ The Symfony DomCrawler Component provides methods to query and
+ manipulate HTML and XML documents.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-dotenv
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/dotenv.html
+Description: .env files parser to make environment variables accessible
+ The Symfony Dotenv Component parses .env files to make environment variables
+ stored in them accessible via getenv(), $_ENV, or $_SERVER.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-error-handler
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/error_handler.html
+Description: manage errors and ease debugging
+ The Symfony ErrorHandler Component provides tools to manage errors and ease
+ debugging PHP code.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-event-dispatcher
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/event_dispatcher.html
+Description: dispatch events and listen to them
+ The Symfony EventDispatcher Component implements the mediator pattern
+ and thus allows individual parts of an application to communicate
+ with each other by dispatching events and listening to them.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-expression-language
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/expression_language.html
+Description: compile and evaluate expressions
+ The Symfony ExpressionLanguage Component provides an engine that can compile
+ and evaluate expressions. An expression is a one-liner that returns a value
+ (mostly, but not limited to, Booleans).
+ .
+ By default, the engine implements simple math and logic functions, method
+ calls, property accesses, and array accesses.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-filesystem
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/filesystem.html
+Description: basic filesystem utilities
+ The Symfony Filesystem Component provides basic utilities to work
+ with the filesystem, like creating directories, removing files or
+ adding symlinks.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-finder
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/finder.html
+Description: find files and directories
+ The Symfony Finder Component provides an intuitive interface to
+ find files and directories.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-form
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/form.html
+Description: create HTML forms and process request data
+ The Symfony Form Component provide tools for defining HTML
+ forms, rendering their request data and mapping this to related models.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-http-client
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/http_client.html
+Description: methods to fetch HTTP resources synchronously or asynchronously
+ The Symfony HttpClient component is a low-level HTTP client
+ with support for both PHP stream wrappers and cURL. It also provides
+ utilities to consume APIs.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-http-foundation
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/http_foundation.html
+Description: object-oriented layer for the HTTP specification
+ The Symfony HttpFoundation Component provides an object-oriented
+ abstraction for dealing with requests, responses,
+ uploaded files, cookies and sessions.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-http-kernel
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/http_kernel.html
+Description: building blocks for flexible and fast HTTP-based frameworks
+ The Symfony HttpKernel Component provides a structured process for
+ converting requests into responses and is flexible enough to build
+ full-stack frameworks like Symfony as well as micro frameworks
+ like Silex on top of it.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-intl
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/intl.html
+Description: limited replacement layer for the PHP extension intl
+ The Symfony Intl Component provides a replacement layer for the PHP
+ extension intl that is limited to the English locale and thus can
+ not fully substitute the PHP extension it intends to replace.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-ldap
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/ldap.html
+Description: abstraction layer for the PHP LDAP module
+ The Symfony Ldap Component provides an abstraction layer for the
+ functions provided by the LDAP module for PHP (php-ldap).
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-lock
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/lock.html
+Description: create and manage locks
+ The Symfony Lock Component creates and manages locks, a
+ mechanism to provide exclusive access to a shared resource.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: help sending emails
+ The Symfony Mailer Component helps sending emails.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-messenger
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/messenger.html
+Description: send and receive messages
+ The Symfony Messenger Component helps application send and receive
+ messages to/from other applications or via message queues.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mime
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mime.html
+Description: library to manipulate MIME messages
+ The MIME Symfony component allows one to manipulate MIME messages and
+ provides utilities related to MIME types.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The Notifier Symfony component sends notifications via one or more
+ channels (email, SMS, ...).
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-options-resolver
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/options_resolver.html
+Description: configure objects with option arrays
+ The Symfony OptionsResolver Component allows the configuration of objects
+ with option arrays by supporting default values on different levels
+ of class hierarchy, option constraints and lazy options whose default
+ value depends on the value of another option.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-password-hasher
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Description: password hashing utilities - Symfony Component
+ The Symfony PasswordHasher Component provides secure password hashing
+ utilities.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-process
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/process.html
+Description: execute commands in sub-processes
+ The Symfony Process Component helps with executing commands in
+ sub-processes by providing easy access to standard and error output
+ in real-time. It is especially handy for dealing with long running
+ sub-processes due to its feature to run them asynchronously, while
+ still providing access to their full and incremental output. It
+ additionally supports signals, provides the PID of a sub-process
+ and allows the definition of process timeouts.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-property-access
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/property_access.html
+Description: read from and write to an object or array
+ The Symfony PropertyAccess Component provides functions to read from
+ and write to an object or array using a simple string notation.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-property-info
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/property_info.html
+Description: extract information about properties of PHP classes
+ The Symfony Property Info Component extracts information about the
+ properties of PHP classes using metadata of popular sources like
+ Doctrine, PHP Reflection or PHPdoc.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-rate-limiter
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/rate_limiter.html
+Description: rate limit input and output in applications
+ The Symfony Rate Limiter Component provides a Token Bucket implementation
+ to rate limit input and output in your application.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-routing
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/routing.html
+Description: associate a request with code that generates a response
+ The Symfony Routing Component makes it easy to map HTTP requests to
+ the code of an application that is able to process the request and
+ generates a corresponding response. It thus serves as a router for an
+ application, but should not be confused with a network router.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-runtime
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/runtime.html
+Description: decouple PHP applications from global state
+ The Symfony Runtime Component decouples the bootstrapping logic from any
+ global state to make sure the application can run with runtimes like PHP-FPM,
+ ReactPHP, Swoole, etc. without any changes.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-security-core
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/security.html
+Description: infrastructure for authorization systems - common features
+ The ${phpcomposer:description} provides all the common
+ security features, from authentication to authorization and from
+ encoding passwords to loading users.
+ .
+ The Symfony Security Component makes it possible to easily separate
+ authorization logic from user providers that hold the users credentials.
+ It ships with facilities for authenticating using HTTP basic or digest
+ authentication, interactive form login or X.509 certificate login.
+ Furthermore it optionally also allows an application to implement its
+ own authentication strategies.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-security-csrf
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/security.html
+Description: infrastructure for authorization systems - CSRF protection
+ The ${phpcomposer:description} provides a class
+ `CsrfTokenManager` for generating and validating CSRF (cross-site
+ request forgery) tokens.
+ .
+ The Symfony Security Component makes it possible to easily separate
+ authorization logic from user providers that hold the users credentials.
+ It ships with facilities for authenticating using HTTP basic or digest
+ authentication, interactive form login or X.509 certificate login.
+ Furthermore it optionally also allows an application to implement its
+ own authentication strategies.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-security-guard
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/5.3/components/security.html
+Description: infrastructure for authorization systems - Guard features
+ The ${phpcomposer:description} brings many layers
+ of authentication together, making it much easier to create complex
+ authentication systems where you have total control.
+ .
+ The Symfony Security Component makes it possible to easily separate
+ authorization logic from user providers that hold the users credentials.
+ It ships with facilities for authenticating using HTTP basic or digest
+ authentication, interactive form login or X.509 certificate login.
+ Furthermore it optionally also allows an application to implement its
+ own authentication strategies.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-security-http
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/security.html
+Description: infrastructure for authorization systems - HTTP integration
+ The ${phpcomposer:description} allows one
+ to handle HTTP requests and responses.
+ .
+ The Symfony Security Component makes it possible to easily separate
+ authorization logic from user providers that hold the users credentials.
+ It ships with facilities for authenticating using HTTP basic or digest
+ authentication, interactive form login or X.509 certificate login.
+ Furthermore it optionally also allows an application to implement its
+ own authentication strategies.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-semaphore
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Multi-Arch: foreign
+Homepage: https://symfony.com/doc/6.0/components/semaphore.html
+Description: provide exclusive access to a shared resource
+ The ${phpcomposer:description} manages semaphores, a mechanism to
+ provide exclusive access to a shared resource.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-serializer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/serializer.html
+Description: convert PHP objects into specific formats and vice versa
+ The Symfony Serializer Component can be used to serialize PHP objects
+ into array structures or other formats like XML and JSON. It also
+ supports deserializing of XML and JSON back to PHP objects.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-stopwatch
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/stopwatch.html
+Description: profile PHP code
+ The Symfony Stopwatch Component provides an easy and consistent way
+ to measure execution time of certain parts of PHP code.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-string
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/string.html
+Description: object-oriented API to work with strings
+ The Symfony String component provides an object-oriented API to
+ strings and deals with bytes, UTF-8 code points and grapheme clusters in
+ a unified way.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-templating
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Multi-Arch: foreign
+Homepage: https://symfony.com/doc/6.0/components/templating.html
+Description: tools needed to build a template system
+ The Symfony Templating Component provides an infrastructure to load
+ template files and optionally monitor them for changes. It also provides
+ a concrete template engine implementation using PHP with additional tools
+ for escaping and separating templates into blocks and layouts.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-translation
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/translation.html
+Description: tools to internationalize an application
+ The Symfony Translation Component provides tools for loading
+ translation files in order to generate translated strings
+ from them by respecting pluralization.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-uid
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/uid.html
+Description: object-oriented API to generate and represent UIDs
+ The Symfony Uid component provides utilities to work
+ with unique identifiers (UIDs) such as UUIDs and ULIDs.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-validator
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/validator.html
+Description: tools to validate values
+ The Symfony Validator Component validates PHP objects against
+ validation rules defined for their classes, which can be specified
+ using XML, YAML, PHP or annotations. It is inspired by the JSR-303.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-var-dumper
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/var_dumper.html
+Description: mechanisms for walking through any arbitrary PHP variable
+ The Symfony VarDumper Component provides mechanisms to walk through
+ any arbitrary PHP variable. Build on top of those, it features a dump()
+ function as an improved alternative to the php build-in var_dump().
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-var-exporter
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/var_exporter.html
+Description: export serializable PHP data structure to plain PHP code
+ The Symfony VarExporter allows one to export any serializable PHP data
+ structure to plain PHP code.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-web-link
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/web_link.html
+Description: manage links between resources
+ The Symfony WebLink Component manages links between resources. It is
+ particularly useful to advise clients to preload and prefetch documents
+ through HTTP and HTTP/2 pushes.
+ .
+ This component implements the HTML5's Links, Preload and Resource Hints W3C's
+ specifications. It can also be used with extensions defined in the HTML5 link
+ type extensions wiki.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-workflow
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/workflow.html
+Description: manage a workflow or finite state machine
+ The Symfony Workflow Component provides tools for managing a workflow or
+ finite state machine.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-yaml
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/yaml.html
+Description: convert YAML to PHP arrays and the other way around
+ The Symfony Yaml Component converts YAML strings into PHP arrays.
+ It also can be used to convert PHP arrays to YAML strings.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-doctrine-bridge
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Description: integration for Doctrine with Symfony Components
+ The Symfony Doctrine Bridge provides integration for Doctrine with various
+ Symfony components.
+ .
+ The Doctrine Project provides several libraries primarily focused on
+ database storage and object mapping.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-monolog-bridge
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Description: integration for Monolog with Symfony Components
+ The Symfony Monolog Bridge provides integration for Monolog with various
+ Symfony Components.
+ .
+ Monolog can be used to send logs to various destination and web services.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-phpunit-bridge
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/phpunit_bridge.html
+Description: integration for PHPUnit with Symfony Components
+ The Symfony PHPUnit Bridge provides utilities for PHPUnit, especially user
+ deprecation notices management.
+ .
+ PHPUnit is a unit testing suite for the PHP language, modelled on the
+ xUnit testing framework.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-proxy-manager-bridge
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Description: integration for ProxyManager with Symfony Components
+ The Symfony ProxyManager Bridge provides integration for ProxyManager with
+ various Symfony Components.
+ .
+ ProxyManager is a library that provides abstraction for generating various
+ kinds of proxy classes.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-twig-bridge
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Description: integration for Twig with Symfony Components
+ The Symfony Twig Bridge provides integration for Twig with various
+ Symfony Components.
+ .
+ Twig is a flexible, fast, and secure template engine for PHP.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-amazon-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Amazon SES integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-google-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Google Gmail integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mailchimp-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Mandrill integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mailgun-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Mailgun integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mailjet-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Mailjet integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-oh-my-smtp-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides OhMySMTP integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-postmark-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Postmark integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-sendgrid-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Sendgrid integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-sendinblue-mailer
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/mailer.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Sendindblue integration
+ for Symfony Mailer.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-amazon-sqs-messenger
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/messenger.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides
+ Amazon SQS integration for Symfony Messenger.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-amqp-messenger
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/messenger.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides AMQP integration
+ for Symfony Messenger.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-beanstalkd-messenger
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/messenger.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Beanstalkd integration
+ for Symfony Messenger.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-doctrine-messenger
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/messenger.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Doctrine integration
+ for Symfony Messenger.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-redis-messenger
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/messenger.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Redis integration
+ for Symfony Messenger.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-all-my-sms-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides AllMySms integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-amazon-sns-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: Symfony Amazon SNS Notifier Bridge
+ The Symfony Amazon SNS Notifier Bridge provides
+ Amazon SNS integration for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-clickatell-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Clickatell integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-discord-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Discord integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-expo-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Expo integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-esendex-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Esendex integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-fake-chat-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides
+ Fake Chat integration for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-fake-sms-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides
+ Fake SMS integration for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-firebase-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Firebase integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-free-mobile-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Free Mobile integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-gateway-api-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides GatewayApi integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-gitter-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Gitter integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-google-chat-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Google Chat integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-infobip-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Infobip integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-iqsms-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Iqsms integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-light-sms-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides LightSms integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-linked-in-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides LinkedIn integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mailjet-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/components/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Mailjet SMS integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mattermost-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Mattermost integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mercure-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Mercure integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-message-bird-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides MessageBird integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-message-media-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides MessageMedia integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-microsoft-teams-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Microsoft Teams
+ integration for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-mobyt-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Mobyt integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-nexmo-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Nexmo integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-octopush-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Octopush integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-one-signal-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides OneSignal integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-ovh-cloud-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides OvhCloud integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-rocket-chat-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides RocketChat integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-sendinblue-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Sendinblue integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-sinch-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Sinch integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-slack-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Slack integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-sms77-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides sms77 integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-smsapi-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Smsapi integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-smsc-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides SMSC integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-sms-biuras-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides SmsBiuras integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-spot-hit-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Spot-Hit integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-telegram-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Telegram integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-telnyx-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Telnyx integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-turbo-sms-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides TurboSms integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-twilio-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Twilio integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-vonage-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Vonage integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-yunpian-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Yunpian integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-zulip-notifier
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/notifier.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Zulip integration
+ for Symfony Notifier.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-crowdin-translation-provider
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/translation.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Crowdin integration
+ for Symfony Translation.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-loco-translation-provider
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/translation.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Loco integration
+ for Symfony Translation.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-lokalise-translation-provider
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/translation.html
+Description: ${phpcomposer:description}
+ The ${phpcomposer:description} provides Lokalise integration
+ for Symfony Translation.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-debug-bundle
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/bundles
+Description: debugging tools for the Symfony framework
+ DebugBundle provides a tight integration of the Symfony VarDumper component
+ and the ServerLogCommand from MonologBridge into the Symfony full-stack
+ framework.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-framework-bundle
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/bundles
+Description: basic, robust and flexible MVC framework
+ Symfony FrameworkBundle contains most of the base framework
+ functionality and can be configured by an application using it,
+ including settings related to sessions, translation, forms,
+ validation, routing and more.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-security-bundle
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/bundles
+Description: configurable security system for the Symfony framework
+ Symfony SecurityBundle allows an application using it to
+ configure security related matters like authentication and
+ authorization within the Symfony framework.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-twig-bundle
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/bundles
+Description: configurable integration of Twig with the Symfony framework
+ Symfony TwigBundle integrates Twig with the Symfony framework
+ by allowing an application using it to configure the Twig environment.
+ .
+ Twig is a flexible, fast, and secure template engine for PHP.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.
+
+Package: php-symfony-web-profiler-bundle
+Architecture: all
+Depends: ${misc:Depends}, ${phpcomposer:Debian-require}
+Suggests: ${phpcomposer:Debian-suggest}
+Replaces: ${phpcomposer:Debian-replace}
+Breaks: ${phpcomposer:Debian-conflict}, ${phpcomposer:Debian-replace}
+Provides: ${phpcomposer:Debian-provide}
+Homepage: https://symfony.com/doc/6.0/bundles
+Description: collect requests information for analysis and debugging
+ Symfony WebProfilerBundle collects information about each request
+ made to an application using it and stores them for later analysis.
+ It includes a visual interface for analyzing profiling data as well as
+ a toolbar for instant access to a lot of interesting information for
+ debugging purposes.
+ .
+ Symfony is a PHP framework, a set of tools and a development methodology.

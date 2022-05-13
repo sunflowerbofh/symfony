@@ -1,0 +1,38 @@
+From: David_Prévot <david@tilapin.org>
+Date: Thu, 21 Sep 2017 00:35:42 -1000
+Subject: Declare composer group for tests failing outside a Composer
+ environment
+
+---
+ src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php   | 3 +++
+ src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php       | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php b/src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php
+index 10139f5..6deee87 100644
+--- a/src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php
++++ b/src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php
+@@ -17,6 +17,9 @@ use Symfony\Component\Config\Resource\ComposerResource;
+ 
+ class ComposerResourceTest extends TestCase
+ {
++    /**
++     * @group composer
++     */
+     public function testGetVendor()
+     {
+         $res = new ComposerResource();
+diff --git a/src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php b/src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php
+index b6e391625c..bf1ad2398f 100644
+--- a/src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php
++++ b/src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php
+@@ -44,6 +44,9 @@ class HttpKernelBrowserTest extends TestCase
+         $this->assertEquals('http://www.example.com/?parameter='.urlencode('http://example.com'), $client->getRequest()->getUri(), '->doRequest() uses the request handler to make the request');
+     }
+ 
++    /**
++     * @group composer
++     */
+     public function testGetScript()
+     {
+         $client = new TestClient(new TestHttpKernel());

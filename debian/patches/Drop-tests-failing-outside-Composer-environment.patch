@@ -1,0 +1,77 @@
+From: Katharina Drexel <katharina.drexel@bfh.ch>
+Date: Thu, 12 May 2022 16:16:20 +0200
+Subject: Does not work without composer call
+
+diff --git a/src/Symfony/Bridge/PhpUnit/Tests/expectdeprecationfail.phpt b/src/Symfony/Bridge/PhpUnit/Tests/expectdeprecationfail.phpt
+deleted file mode 100644
+index f968cd188a..0000000000
+--- a/src/Symfony/Bridge/PhpUnit/Tests/expectdeprecationfail.phpt
++++ /dev/null
+@@ -1,37 +0,0 @@
+---TEST--
+-Test ExpectDeprecationTrait failing tests
+---FILE--
+-<?php
+-$test =  realpath(__DIR__.'/FailTests/ExpectDeprecationTraitTestFail.php');
+-passthru('php '.getenv('SYMFONY_SIMPLE_PHPUNIT_BIN_DIR').'/simple-phpunit.php --colors=never '.$test);
+-?>
+---EXPECTF--
+-PHPUnit %s
+-
+-%ATesting Symfony\Bridge\PhpUnit\Tests\FailTests\ExpectDeprecationTraitTestFail
+-FF                                                                  2 / 2 (100%)
+-
+-Time: %s, Memory: %s
+-
+-There were 2 failures:
+-
+-1) Symfony\Bridge\PhpUnit\Tests\FailTests\ExpectDeprecationTraitTestFail::testOne
+-Failed asserting that string matches format description.
+---- Expected
+-+++ Actual
+-@@ @@
+- @expectedDeprecation:
+--%A  foo
+-+  bar
+-
+-2) Symfony\Bridge\PhpUnit\Tests\FailTests\ExpectDeprecationTraitTestFail::testOneInIsolation
+-Failed asserting that string matches format description.
+---- Expected
+-+++ Actual
+-@@ @@
+- @expectedDeprecation:
+--%A  foo
+-+  bar
+-
+-FAILURES!
+-Tests: 2, Assertions: 2, Failures: 2.
+diff --git a/src/Symfony/Bridge/PhpUnit/Tests/expectrisky.phpt b/src/Symfony/Bridge/PhpUnit/Tests/expectrisky.phpt
+deleted file mode 100644
+index 91e0830553..0000000000
+--- a/src/Symfony/Bridge/PhpUnit/Tests/expectrisky.phpt
++++ /dev/null
+@@ -1,24 +0,0 @@
+---TEST--
+-Test NoAssertionsTestRisky risky test
+---SKIPIF--
+-<?php if ('\\' === DIRECTORY_SEPARATOR && !extension_loaded('mbstring')) die('Skipping on Windows without mbstring');
+---FILE--
+-<?php
+-$test =  realpath(__DIR__.'/FailTests/NoAssertionsTestRisky.php');
+-passthru('php '.getenv('SYMFONY_SIMPLE_PHPUNIT_BIN_DIR').'/simple-phpunit.php --fail-on-risky --colors=never '.$test);
+-?>
+---EXPECTF--
+-PHPUnit %s
+-
+-%ATesting Symfony\Bridge\PhpUnit\Tests\FailTests\NoAssertionsTestRisky
+-R.                                                                  2 / 2 (100%)
+-
+-Time: %s, Memory: %s
+-
+-There was 1 risky test:
+-
+-1) Symfony\Bridge\PhpUnit\Tests\FailTests\NoAssertionsTestRisky::testOne
+-This test is annotated with "@doesNotPerformAssertions", but performed 1 assertions
+-
+-OK, but incomplete, skipped, or risky tests!
+-Tests: 2, Assertions: 1, Risky: 1.

@@ -1,0 +1,36 @@
+diff --git a/src/Symfony/Bundle/SecurityBundle/composer.json b/src/Symfony/Bundle/SecurityBundle/composer.json
+index 9f928c2c4f..d85d73c62e 100644
+--- a/src/Symfony/Bundle/SecurityBundle/composer.json
++++ b/src/Symfony/Bundle/SecurityBundle/composer.json
+@@ -17,7 +17,6 @@
+     ],
+     "require": {
+         "php": ">=8.0.2",
+-        "composer-runtime-api": ">=2.1",
+         "ext-xml": "*",
+         "symfony/config": "^5.4|^6.0",
+         "symfony/dependency-injection": "^5.4|^6.0",
+diff --git a/src/Symfony/Bundle/FrameworkBundle/composer.json b/src/Symfony/Bundle/FrameworkBundle/composer.json
+index 3d9879a952..c80fa71ce7 100644
+--- a/src/Symfony/Bundle/FrameworkBundle/composer.json
++++ b/src/Symfony/Bundle/FrameworkBundle/composer.json
+@@ -17,7 +17,6 @@
+     ],
+     "require": {
+         "php": ">=8.0.2",
+-        "composer-runtime-api": ">=2.1",
+         "ext-xml": "*",
+         "symfony/cache": "^5.4|^6.0",
+         "symfony/config": "^5.4|^6.0",
+diff --git a/src/Symfony/Bundle/TwigBundle/composer.json b/src/Symfony/Bundle/TwigBundle/composer.json
+index 9812d62afb..c81799c239 100644
+--- a/src/Symfony/Bundle/TwigBundle/composer.json
++++ b/src/Symfony/Bundle/TwigBundle/composer.json
+@@ -17,7 +17,6 @@
+     ],
+     "require": {
+         "php": ">=8.0.2",
+-        "composer-runtime-api": ">=2.1",
+         "symfony/config": "^5.4|^6.0",
+         "symfony/twig-bridge": "^5.4|^6.0",
+         "symfony/http-foundation": "^5.4|^6.0",

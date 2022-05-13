@@ -1,0 +1,29 @@
+From: Daniel Beyer <dabe@deb.ymc.ch>
+Date: Fri, 30 Jan 2015 10:59:37 +0100
+Subject: Increasing timeout in test
+ AbstractProcessTest::testStartAfterATimeout()
+
+This hopefully will allow ci.debian.net to run DEP-8 as installed tests
+and might prevent FTBFS #775625 from hitting us again.
+
+Forwarded: no
+---
+ src/Symfony/Component/Process/Tests/ProcessTest.php | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Symfony/Component/Process/Tests/ProcessTest.php b/src/Symfony/Component/Process/Tests/ProcessTest.php
+index afbb4fb..b999fe6 100644
+--- a/src/Symfony/Component/Process/Tests/ProcessTest.php
++++ b/src/Symfony/Component/Process/Tests/ProcessTest.php
+@@ -871,9 +871,9 @@ class ProcessTest extends TestCase
+     public function testStartAfterATimeout()
+     {
+         $this->expectException(ProcessTimedOutException::class);
+-        $this->expectExceptionMessage('exceeded the timeout of 0.1 seconds.');
++        $this->expectExceptionMessage('exceeded the timeout of 0.5 seconds.');
+         $process = $this->getProcessForCode('sleep(35);');
+-        $process->setTimeout(0.1);
++        $process->setTimeout(0.5);
+ 
+         try {
+             $process->run();

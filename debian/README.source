@@ -1,0 +1,33 @@
+Changes to the upstream tarball provides by the authors of Symfony
+==================================================================
+
+Removed prebuilt windows binary
+-------------------------------
+The binary src/Symfony/Component/Console/Resources/bin/hiddeninput.exe has
+been removed for the following reasons:
+- Licensing of this file is unclear
+- No source code is provided by upstream of Symfony
+Additionally it is not needed under Debian at all.
+
+
+Updating to a new upstream release
+==================================
+This packaging makes use of git-buildpackage.
+
+Starting with 4.4, we are merging the signed upstream tags as
+upstream, instead of using the tarball that doesn’t ship tests.
+
+# 0 Make sure upstream sure upstream's repository is added as a remote
+git remote add upstream git://github.com/symfony/symfony
+
+# 1 Fetch upstream's tags
+git fetch upstream --tags
+
+# 2 Example to import upstream 5.2.3 version
+gbp import-orig --uscan --upstream-vcs-tag=v5.2.3
+
+# 3 Make sure licensing is correct, especially for images.
+#   There is script that might be helpful for the image licensing:
+./debian/licensing/bin/check_image_licenses
+
+# 4 ...and of course don't forget to update debian/changelog

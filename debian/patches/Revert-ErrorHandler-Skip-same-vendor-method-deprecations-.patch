@@ -1,0 +1,39 @@
+From: =?utf-8?q?David_Pr=C3=A9vot?= <david@tilapin.org>
+Date: Sat, 9 Oct 2021 09:48:17 -0400
+Subject: Revert "[ErrorHandler] Skip "same vendor" `@method` deprecations for
+ `Symfony\*` classes unless symfony/symfony is being tested"
+
+This reverts commit 7a1a91017df6a852e9089b0bf095707e30b10f0d.
+
+Origin: upstream, http://github.com/symfony/symfony/commit/7a1a91017df6a852e9089b0bf095707e30b10f0d
+---
+ src/Symfony/Component/ErrorHandler/DebugClassLoader.php | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/src/Symfony/Component/ErrorHandler/DebugClassLoader.php b/src/Symfony/Component/ErrorHandler/DebugClassLoader.php
+index 925df23056..de4b94172a 100644
+--- a/src/Symfony/Component/ErrorHandler/DebugClassLoader.php
++++ b/src/Symfony/Component/ErrorHandler/DebugClassLoader.php
+@@ -11,7 +11,6 @@
+ 
+ namespace Symfony\Component\ErrorHandler;
+ 
+-use Composer\InstalledVersions;
+ use Doctrine\Common\Persistence\Proxy as LegacyProxy;
+ use Doctrine\Persistence\Proxy;
+ use Mockery\MockInterface;
+@@ -429,14 +428,6 @@ class DebugClassLoader
+                         self::$method[$class] = self::$method[$use];
+                     }
+                 } elseif (!$refl->isInterface()) {
+-                    if (!strncmp($vendor, str_replace('_', '\\', $use), $vendorLen)
+-                        && str_starts_with($className, 'Symfony\\')
+-                        && (!class_exists(InstalledVersions::class)
+-                            || 'symfony/symfony' !== InstalledVersions::getRootPackage()['name'])
+-                    ) {
+-                        // skip "same vendor" @method deprecations for Symfony\* classes unless symfony/symfony is being tested
+-                        continue;
+-                    }
+                     $hasCall = $refl->hasMethod('__call');
+                     $hasStaticCall = $refl->hasMethod('__callStatic');
+                     foreach (self::$method[$use] as [$interface, $static, $returnType, $name, $description]) {

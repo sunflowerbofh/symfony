@@ -1,0 +1,37 @@
+From: Katharina Drexel <katharina.drexel@bfh.ch>
+Date: Fri, 13 May 2022 12:00:09 +0200
+Subject: Skip tests which only run in a composer environment
+
+diff --git a/src/Symfony/Bridge/PhpUnit/Tests/DeprecationErrorHandler/DeprecationTest.php b/src/Symfony/Bridge/PhpUnit/Tests/DeprecationErrorHandler/DeprecationTest.php
+index a1d3c06ea6..321b8b2ea0 100644
+--- a/src/Symfony/Bridge/PhpUnit/Tests/DeprecationErrorHandler/DeprecationTest.php
++++ b/src/Symfony/Bridge/PhpUnit/Tests/DeprecationErrorHandler/DeprecationTest.php
+@@ -21,6 +21,9 @@ class DeprecationTest extends TestCase
+     private static $vendorDir;
+     private static $prefixDirsPsr4;
+ 
++    /**
++     * @group composer
++     */
+     private static function getVendorDir()
+     {
+         if (null !== self::$vendorDir) {
+@@ -232,6 +235,7 @@ class DeprecationTest extends TestCase
+ 
+     /**
+      * @dataProvider providerGetTypeUsesRightTrace
++     * @group composer
+      */
+     public function testGetTypeUsesRightTrace(string $expectedType, string $message, array $trace)
+     {
+@@ -251,7 +255,9 @@ class DeprecationTest extends TestCase
+     {
+         return debug_backtrace();
+     }
+-
++    /**
++     * @group composer
++     */
+     private static function removeDir($dir)
+     {
+         $files = glob($dir.'/*');

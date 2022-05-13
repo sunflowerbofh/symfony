@@ -1,0 +1,213 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+	# Check if licenses of all images are properly covered in d/copyright
+	# ./debian/licensing/bin/check_image_licenses --check !!!
+else
+	@echo "** image license check disabled"
+endif
+	phpabtpl \
+		--require symfony/contracts \
+		--require symfony/asset \
+		--require symfony/browser-kit \
+		--require symfony/console \
+		--require symfony/css-selector \
+		--require symfony/debug-bundle \
+		--require symfony/doctrine-bridge \
+		--require symfony/dotenv \
+		--require symfony/expression-language \
+		--require symfony/form \
+		--require symfony/http-client \
+		--require symfony/ldap \
+		--require symfony/lock \
+		--require symfony/mailer \
+		--require symfony/messenger \
+		--require symfony/monolog-bridge \
+		--require symfony/notifier \
+		--require symfony/process \
+		--require symfony/property-info \
+		--require symfony/proxy-manager-bridge \
+		--require symfony/rate-limiter \
+		--require symfony/security-bundle \
+		--require symfony/semaphore \
+		--require symfony/serializer \
+		--require symfony/string \
+		--require symfony/templating \
+		--require symfony/twig-bundle \
+		--require symfony/uid \
+		--require symfony/validator \
+		--require symfony/web-link \
+		--require symfony/web-profiler-bundle \
+		--require symfony/workflow \
+		--require symfony/yaml \
+		> debian/autoload.php.tpl
+	phpab \
+		--template debian/autoload.php.tpl \
+		--output src/Symfony/autoload.php \
+		src/Symfony/Bundle/FullStack.php
+	mkdir --parents debian/packages_to_build debian/autoloaders
+	# Walk through the parts of upstream's code that should be packaged into
+	# separate Debian binary packages and write down a package-to-build info
+	# file containing shell variables for each package.
+	# Those files will be traverse later on in different targets of this
+	# makefile (debian/rules). They solely exists to not repeat the extraction
+	# of those variables in each of those target over and over again.
+	# Then, build a class loader for the package, using the template in
+	# debian/$deb_pkg_name.autoload.php.tpl if it exists (to load dependencies).
+	set -e;\
+	 for src_path in $$(find src/Symfony/ -mindepth 2 -maxdepth 4 -type d); do \
+	  if [ -e $$src_path/composer.json ]; then \
+	   pkg_path=$${src_path#src/Symfony/}; \
+	   deb_pkg_name=php-$$(cat $$src_path/composer.json | jq -r '.name | tostring' | sed -r 's|/|-|'); \
+	   if [ $$(grep -c -E -e "^Package: $$deb_pkg_name\$$" debian/control) -ne 1 ]; then \
+	    echo "W: No Debian package '$$deb_pkg_name' defined in debian/control," 1>&2; \
+	    echo "   therefor not considering Symfony $$pkg_path," 1>&2; \
+	    continue; \
+	   fi; \
+	   echo "# This file contains some variables sourced" > debian/packages_to_build/$$deb_pkg_name; \
+	   echo "# by various targets in debian/rules" >> debian/packages_to_build/$$deb_pkg_name; \
+	   echo "deb_pkg_name='$$deb_pkg_name'" >> debian/packages_to_build/$$deb_pkg_name; \
+	   echo "src_path='$$src_path'" >> debian/packages_to_build/$$deb_pkg_name; \
+	   echo "pkg_path='$$pkg_path'" >> debian/packages_to_build/$$deb_pkg_name; \
+	   echo "symfony $${deb_pkg_name#php-symfony-} Symfony/$$pkg_path/autoload.php" > debian/autoloaders/$$deb_pkg_name; \
+	   if [ $$deb_pkg_name = php-symfony-phpunit-bridge ] ; then \
+	    phpabtpl \
+		--basedir src/Symfony/Bridge/PhpUnit \
+		--require phpunit/phpunit \
+		--require-file src/Symfony/Bridge/PhpUnit/SymfonyTestsListener.php \
+		src/Symfony/Bridge/PhpUnit/composer.json \
+		> debian/php-symfony-phpunit-bridge.autoload.php.tpl; \
+	   else \
+	    phpabtpl --basedir $$src_path $$src_path/composer.json > debian/$$deb_pkg_name.autoload.php.tpl; \
+	   fi ; \
+	   if [ \( $$deb_pkg_name = php-symfony-mailer \) -o \
+		\( $$deb_pkg_name = php-symfony-messenger \) -o \
+		\( $$deb_pkg_name = php-symfony-notifier \) -o \
+		\( $$deb_pkg_name = php-symfony-translation \) ] ; then \
+	    phpab --output $$src_path/autoload.php \
+		--blacklist '*\\tests\\*' \
+		--blacklist '*\\bridge\\*' \
+		--whitelist 'symfony\\*' \
+		--template debian/$$deb_pkg_name.autoload.php.tpl \
+		$$src_path; \
+	   else \
+	    phpab --output $$src_path/autoload.php \
+		--blacklist '*\\tests\\*' \
+		--blacklist 'symfony\\config\\*' \
+		--exclude 'src/Symfony/Bridge/ProxyManager/Tests/LazyProxy/PhpDumper/Fixtures/proxy-implem.php' \
+		--exclude 'src/Symfony/Component/Routing/Tests/Fixtures/AttributesFixtures/*' \
+		--whitelist 'symfony\\*' \
+		--tolerant \
+		--template debian/$$deb_pkg_name.autoload.php.tpl \
+		$$src_path; \
+	   fi; \
+	  fi; \
+	 done
+
+override_dh_auto_test:
+	ln -s ./src/Symfony ./Symfony
+	mkdir --parents vendor
+	cp debian/autoload_runtime.php vendor
+	phpab	--output vendor/autoload.php \
+		--whitelist '*\\tests*' \
+		--tolerant \
+		--template debian/autoload.php.tests.tpl \
+		--blacklist 'symfony\\component\\dependencyinjection\\tests\\fixtures\\container\\projectservicecontainer' \
+		--exclude 'Symfony/Bridge/ProxyManager/Tests/LazyProxy/PhpDumper/Fixtures/proxy-implem.php' \
+		--exclude 'Symfony/Component/Routing/Tests/Fixtures/AttributesFixtures/*' \
+		Symfony
+	# Actual tests suite
+	# components=$$(find src/Symfony -mindepth 3 -maxdepth 4 -type f ! -path "src/Symfony/Component/HttpClient/*" -name phpunit.xml.dist -printf '%h\n') && \
+	 #echo "$$components" | parallel --gnu --keep-order '/bin/echo -e "\\nRunning {} tests"; SYMFONY_DEPRECATIONS_HELPER=weak phpunit -v --colors=always --exclude-group httpclient,network,tty,benchmark,intl-data,functional,composer {} || (/bin/echo -e "\\e[41mKO\\e[0m {}" && $$(exit 1));';
+
+override_dh_phpcomposer:
+	dh_phpcomposer --package=php-symfony --sourcedirectory=./
+	# In debian/packages_to_build/ a file containing shell variables exists
+	# for each package that should be build. Source one file after another
+	# to make the shell variables available and run dh_phpcomposer for each
+	# package.
+	set -e;\
+	 for package_info_file in $$(find debian/packages_to_build/ -mindepth 1 -maxdepth 1 -type f); do \
+	  . $$package_info_file; \
+	  dh_phpcomposer --package=$$deb_pkg_name --sourcedirectory=$$src_path; \
+	 done
+
+override_dh_install:
+	dh_install --package=php-symfony
+	# In debian/packages_to_build/ a file containing shell variables exists
+	# for each package that should be build. Source one file after another
+	# to make the shell variables available and run dh_install in order to
+	# provide the PHP runtime code for each package.
+	set -e; \
+	 for package_info_file in $$(find debian/packages_to_build/ -mindepth 1 -maxdepth 1 -type f); do \
+	  . $$package_info_file; \
+	  dh_install --package=$$deb_pkg_name; \
+	  dh_install --package=$$deb_pkg_name \
+	      debian/autoloaders/$$deb_pkg_name usr/share/pkg-php-tools/autoloaders; \
+	  if [ \( $$deb_pkg_name = php-symfony-mailer \) -o \
+	       \( $$deb_pkg_name = php-symfony-messenger \) -o \
+	       \( $$deb_pkg_name = php-symfony-notifier \) -o \
+	       \( $$deb_pkg_name = php-symfony-translation \) ] ; then \
+	   dh_install \
+		-X.md \
+		-Xcomposer.json \
+		-XBridge \
+		-XLICENSE \
+		-Xphpunit.xml.dist \
+		-XTests \
+		--package=$$deb_pkg_name \
+		$$src_path/* \
+		usr/share/php/Symfony/$$pkg_path/; \
+	  else \
+	   dh_install \
+		-X.git \
+		-X.md \
+		-Xcomposer.json \
+		-XConsole/Resources \
+		-XLICENSE \
+		-XResources/meta \
+		-XResources/bin \
+		-Xphpunit.xml.dist \
+		--package=$$deb_pkg_name \
+		$$src_path/* \
+		usr/share/php/Symfony/$$pkg_path/; \
+	   find debian/$$deb_pkg_name -name bin -type d -print | xargs /bin/rm -rf; \
+	   find debian/$$deb_pkg_name -name Tests -type d -print | xargs /bin/rm -rf; \
+	  fi; \
+	 done
+
+execute_after_dh_installdocs:
+	# In debian/packages_to_build/ a file containing shell variables exists
+	# for each package that should be build. Source one file after another
+	# to make the shell variables available and run dh_installdocs in order
+	# to provide some basic documentation for each package.
+	set -e; \
+	 for package_info_file in $$(find debian/packages_to_build/ -mindepth 1 -maxdepth 1 -type f); do \
+	  . $$package_info_file; \
+	 done
+
+execute_before_dh_installchangelogs:
+	for i in $$(ls CHANGELOG-* -r); do cat $$i >> CHANGELOG && echo '' >> CHANGELOG; done
+
+execute_after_dh_installchangelogs:
+	# In debian/packages_to_build/ a file containing shell variables exists
+	# for each package that should be build. Source one file after another
+	# to make the shell variables available and run dh_installchangelogs in
+	# order to provide upstream changelogs for each package.
+	set -e; \
+	 for package_info_file in $$(find debian/packages_to_build/ -mindepth 1 -maxdepth 1 -type f); do \
+	  . $$package_info_file; \
+	  if [ -f "$$src_path/CHANGELOG.md" ]; then \
+	   dh_installchangelogs \
+	    --package=$$deb_pkg_name \
+	    $$src_path/CHANGELOG.md; \
+	  elif [ -f "$$src_path/../CHANGELOG.md" ]; then \
+	   dh_installchangelogs \
+	    --package=$$deb_pkg_name \
+	    $$src_path/../CHANGELOG.md; \
+	  fi; \
+	 done

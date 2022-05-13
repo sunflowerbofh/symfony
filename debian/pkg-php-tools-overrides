@@ -1,0 +1,5 @@
+composer	package-versions-deprecated	none
+		composer-runtime-api		none
+composer	composer			composer
+egulias		email-validator			php-email-validator
+symfony		polyfill-uuid			php-uuid none
