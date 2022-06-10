@@ -6,7 +6,7 @@
 override_dh_auto_build:
 ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
 	# Check if licenses of all images are properly covered in d/copyright
-	# ./debian/licensing/bin/check_image_licenses --check !!!
+	./debian/licensing/bin/check_image_licenses --check
 else
 	@echo "** image license check disabled"
 endif
