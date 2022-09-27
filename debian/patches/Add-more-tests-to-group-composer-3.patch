@@ -1,0 +1,18 @@
+From: Katharina Drexel <katharina.drexel@bfh.ch>
+Date: Tue, 17 May 2022 11:28:18 +0200
+Subject: Skip tests which only run in a composer environment
+
+diff --git a/src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php b/src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php
+index b6e391625c..bf1ad2398f 100644
+--- a/src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php
++++ b/src/Symfony/Component/HttpKernel/Tests/HttpKernelBrowserTest.php
+@@ -44,6 +44,9 @@ class HttpKernelBrowserTest extends TestCase
+         $this->assertEquals('http://www.example.com/?parameter='.urlencode('http://example.com'), $client->getRequest()->getUri(), '->doRequest() uses the request handler to make the request');
+     }
+ 
++    /**
++     * @group composer
++     */
+     public function testGetScript()
+     {
+         $client = new TestClient(new TestHttpKernel());

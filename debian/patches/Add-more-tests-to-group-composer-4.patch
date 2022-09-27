@@ -1,0 +1,18 @@
+From: Katharina Drexel <katharina.drexel@bfh.ch>
+Date: Tue, 17 May 2022 11:38:44 +0200
+Subject: Skip tests which only run in a composer environment
+
+diff --git a/src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php b/src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php
+index 10139f53a8..6deee87b6b 100644
+--- a/src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php
++++ b/src/Symfony/Component/Config/Tests/Resource/ComposerResourceTest.php
+@@ -17,6 +17,9 @@ use Symfony\Component\Config\Resource\ComposerResource;
+ 
+ class ComposerResourceTest extends TestCase
+ {
++    /**
++     * @group composer
++     */
+     public function testGetVendor()
+     {
+         $res = new ComposerResource();
