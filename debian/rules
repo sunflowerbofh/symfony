@@ -121,8 +121,8 @@ override_dh_auto_test:
 		--exclude 'Symfony/Component/Routing/Tests/Fixtures/AttributesFixtures/*' \
 		Symfony
 	# Actual tests suite
-	# components=$$(find src/Symfony -mindepth 3 -maxdepth 4 -type f ! -path "src/Symfony/Component/HttpClient/*" -name phpunit.xml.dist -printf '%h\n') && \
-	 #echo "$$components" | parallel --gnu --keep-order '/bin/echo -e "\\nRunning {} tests"; SYMFONY_DEPRECATIONS_HELPER=weak phpunit -v --colors=always --exclude-group httpclient,network,tty,benchmark,intl-data,functional,composer {} || (/bin/echo -e "\\e[41mKO\\e[0m {}" && $$(exit 1));';
+	 components=$$(find src/Symfony -mindepth 3 -maxdepth 4 -type f -name phpunit.xml.dist -printf '%h\n') && \
+	 echo "$$components" | parallel --gnu --keep-order '/bin/echo -e "\\nRunning {} tests"; SYMFONY_DEPRECATIONS_HELPER=weak phpunit -v --colors=always --exclude-group httpclient,network,resource,tty,benchmark,intl-data,functional,core,composer {} || (/bin/echo -e "\\e[41mKO\\e[0m {}" && /bin/sleep 1 && /bin/echo "{} is FAIL: $$?" && $$(exit 1));';
 
 override_dh_phpcomposer:
 	dh_phpcomposer --package=php-symfony --sourcedirectory=./
