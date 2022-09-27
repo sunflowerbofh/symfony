@@ -11,7 +11,6 @@ PhpUnit-Drop-currently-broken-assertions.patch
 PhpUnit-Skip-test-currently-failing.patch
 VarDumper-Adapt-to-homemade-autoload.patch
 Yaml-Adapt-to-homemade-autoload.patch
-#HttpFoundation-Workaround-some-currently-broken-tests.patch
 Don-t-fail-on-warning.patch
 ErrorHandler-Drop-currently-broken-assertions.patch
 #ErrorHandler-Drop-currently-broken-assertions.patch
